@@ -1,4 +1,4 @@
-package wang.yobbo.admin.db;
+package wang.yobbo.db;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.apache.ibatis.session.SqlSessionFactory;

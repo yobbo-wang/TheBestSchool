@@ -1,4 +1,4 @@
-package wang.yobbo.admin.db;
+package wang.yobbo.db;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

@@ -1,4 +1,4 @@
-package wang.yobbo.dao;
+package wang.yobbo;
 
 import wang.yobbo.common.util.MybatisGeneratorUtil;
 import wang.yobbo.common.util.PropertiesFileUtil;
