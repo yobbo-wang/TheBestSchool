@@ -5,6 +5,7 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import asyncComponent from '../utils/asyncComponent';
+import PrivateRouter from './PrivateRouter';
 
 import Index from '../app/main/Index';
 const Login = asyncComponent(() => import('../app/container/Login'));
@@ -15,11 +16,11 @@ const Upcourseware = asyncComponent(() => import('../app/Upcourseware/index'));
 export default () => (
     <HashRouter>
         <Switch>
-            <Route path={"/"} exact component={Index}/>
+            <PrivateRouter path={"/"} exact component={Index}/>
             <Route path={"/404"} component={NotFound} />
             <Route path={"/login"} component={Login} />
-            <Route path={"/courseware"} component={Courseware}/>
-            <Route path={"/upcourseware"} component={Upcourseware}/>
+            <PrivateRouter path={"/courseware"} component={Courseware}/>
+            <PrivateRouter path={"/upcourseware"} component={Upcourseware}/>
             <Route component={NotFound} />
             <Redirect to="/" />
         </Switch>

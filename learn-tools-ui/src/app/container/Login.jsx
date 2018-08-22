@@ -2,11 +2,75 @@
  * Created by hao.cheng on 2018/8/8.
  */
 import React from 'react';
+import {setCookie} from "../../utils/cookieUtil";
+import {Form ,Input,Button }from 'element-react';
+import '../../resource/styles/login.css'
+import loginImg from  '../../resource/images/login-img.png'
+import logo from '../../resource/images/login_logo.png'
 
 export default class Login extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            form: {
+                username: '',
+                pwd: '',
+            },
+            rules: {
+                username: [{require: true, message: '请输入用户名',trigger: 'blur'}],
+                pwd: [{require: true, message: '请输入密码',trigger: 'blur'}]
+            }
+        }
+    }
+    onChange(key, value) {
+        this.setState({
+            form: Object.assign({}, this.state.form, { [key]: value })
+        });
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        this.refs.form.validate((valid) => {
+            if (valid) {
+                //TODO 登录实现
+                console.log(window.document.cookie)
+                setCookie('uid', '1000001', new Date().getTime() + 7*24*60*60*1000)
+                console.log(window.document.cookie)
+                let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/'
+                this.props.history.push({ pathname: `${path}`, state: {}})
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
     render() {
+        console.log()
         return (
-            <div>login</div>
+        <div className={"login-layout"}>
+            <div className="login_box">
+                <div className="login_l_img"><img src={loginImg}/></div>
+                <div className="login">
+                    <div className="login_logo"><a href="#"><img src={logo} /></a></div>
+                    <div className="login_name">
+                        <p>后台管理系统</p>
+                    </div>
+                    <Form ref="form" model={this.state.form} rules={this.state.rules}>
+                        <Form.Item prop="username">
+                            <Input value={this.state.form.username} onChange={this.onChange.bind(this, 'username')} placeholder="用户名"></Input>
+                        </Form.Item>
+                        <Form.Item prop="pwd">
+                            <Input type="password" value={this.state.form.pwd} onChange={this.onChange.bind(this, 'pwd')} placeholder="密码"></Input>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" onClick={this.handleSubmit.bind(this)}>登录</Button>
+                        </Form.Item>
+                    </Form>
+                </div>
+                <div className="copyright">创优科技 版权所有©2018-2019 技术支持电话：000-00000000</div>
+            </div>
+        </div>
         )
     }
 }

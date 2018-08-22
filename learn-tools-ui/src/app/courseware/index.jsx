@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
 
 import Header from '../component/header';
 import Navigation from '../component/navigation'
@@ -38,4 +37,4 @@ class Index extends React.Component {
     }
 }
 
-export default withCookies(Index);
+export default Index;

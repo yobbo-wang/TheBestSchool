@@ -25,9 +25,9 @@ const generateUrl = (baseUrl) => {
     }
 }
 
-const s = upyunConfig('/package.json', 1534782600)
-console.log(s.signature)
-console.log(s.policy)
+// const s = upyunConfig('/package.json', 1534782600)
+// console.log(s.signature)
+// console.log(s.policy)
 
 /**
  * environment config

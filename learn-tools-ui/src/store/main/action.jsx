@@ -6,7 +6,6 @@ const fetchMainList = (currentPage) =>{
     let params = {}
     params.currentPage = currentPage;
     params.pageSize = 10;
-    console.log(environment.oosUrl, environment.oosAuthorization)
     return http.get(environment.url.mainList)
 }
 

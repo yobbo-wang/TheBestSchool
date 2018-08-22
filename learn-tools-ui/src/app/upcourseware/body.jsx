@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import {Layout,Steps,Button }from 'element-react';
+import {Layout,Steps }from 'element-react';
 import FillIn from './FillIn'
 import './index.scss'
 
