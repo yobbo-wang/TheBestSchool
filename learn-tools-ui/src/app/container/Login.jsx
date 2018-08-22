@@ -19,7 +19,8 @@ export default class Login extends React.Component {
             rules: {
                 username: [{require: true, message: '请输入用户名',trigger: 'blur'}],
                 pwd: [{require: true, message: '请输入密码',trigger: 'blur'}]
-            }
+            },
+            loginIng: false
         }
     }
     onChange(key, value) {
@@ -32,6 +33,7 @@ export default class Login extends React.Component {
         e.preventDefault();
         this.refs.form.validate((valid) => {
             if (valid) {
+                this.setState({loginIng: true});
                 //TODO 登录实现
                 console.log(window.document.cookie)
                 setCookie('uid', '1000001', new Date().getTime() + 7*24*60*60*1000)
@@ -64,7 +66,7 @@ export default class Login extends React.Component {
                             <Input type="password" value={this.state.form.pwd} onChange={this.onChange.bind(this, 'pwd')} placeholder="密码"></Input>
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" onClick={this.handleSubmit.bind(this)}>登录</Button>
+                            <Button type="primary" loading={this.state.loginIng} onClick={this.handleSubmit.bind(this)}>{this.state.loginIng ? '登录中': '登录'}</Button>
                         </Form.Item>
                     </Form>
                 </div>
