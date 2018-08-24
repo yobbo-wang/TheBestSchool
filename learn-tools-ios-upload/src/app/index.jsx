@@ -1,39 +1,28 @@
 'use strict';
 import React from 'react';
-import { Layout, Menu, Table,Upload,Button } from 'element-react';
+import { Layout, Menu, Table,Upload } from 'element-react';
 import '../resources/styles/common.scss';
 
 export default class Index extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            columns: [ {label: "标题", prop: "title", width: 180 },
-                {  label: "文件大小", prop: "fileSize", width: 180 },
-                { label: "状态",  prop: "fileStatus"},
-                { label: "操作",  prop: "fileOperation"}
+            columns: [ {label: "标题", prop: "name", width: 180 },
+                {  label: "文件大小", prop: "size", width: 180 },
+                { label: "状态",  prop: "status"}
             ],
-            tableData: [],
             uploadData: {},
             canNotUpload: true,
             uploading: false,
             fileList:[]
         };
     }
-
-    // 点击已上传的文件链接时的钩子, 可以通过 file.response 拿到服务端返回数据
-    onPreview(file){
-        console.log(file, file.response)
-    }
-    //文件上传成功时调用
-    onSuccess(response, file, fileList){
-    }
     //文件状态改变时
     handleChange(file, fileList){
-        debugger
+        console.log(fileList)
         this.setState({
             fileList: fileList
         })
-        console.log(file, fileList)
     }
 
     render(){
@@ -64,13 +53,10 @@ export default class Index extends React.Component{
                                 </div>
                                 <div style={{width: '50%',padding:'20px 0',textAlign:'center',boxSizing:'border-box',display: 'inline-block'}}>
                                     <Upload
-                                        action={""}
+                                        action={"//jsonplaceholder.typicode.com/posts/"}
                                         drag
-                                        autoUpload={false}
-                                        // accept={'txt'} //,pdf,ppt,word,excel
+                                        accept={'.txt,.pdf,.ppt,.doc,.docx, .excel'}
                                         data={this.state.uploadData}
-                                        onPreview={this.onPreview.bind(this)}
-                                        onSuccess={this.onSuccess.bind(this)}
                                         onChange={(file, fileList) =>{this.handleChange(file, fileList)}}
                                         fileList={this.state.fileList}
                                         tip={<div className="el-upload__tip">支持上传txt、pdf、ppt、word、excel等</div>}
@@ -81,17 +67,17 @@ export default class Index extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="block-control">
+                        {/*<div className="block-control">
                             <Button size="small" type="info"
                                     disabled={this.state.canNotUpload}
                                     loading={this.state.uploading}
                                     style={{lineHeight:'19px',width:'100%'}}>开始上传</Button>
-                        </div>
+                        </div>*/}
                         <Table
                             style={{width: '100%',marginTop: 20}}
                             columns={this.state.columns}
                             maxHeight={200}
-                            data={this.state.tableData}
+                            data={this.state.fileList}
                             border={true}
                         />
                     </Layout.Col>
