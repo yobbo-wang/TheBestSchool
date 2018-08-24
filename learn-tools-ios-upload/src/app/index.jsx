@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { Layout, Menu, Table,Upload } from 'element-react';
+import { Layout, Menu, Table,Upload,Button } from 'element-react';
 import '../resources/styles/common.scss';
 
 export default class Index extends React.Component{
@@ -12,9 +12,28 @@ export default class Index extends React.Component{
                 { label: "状态",  prop: "fileStatus"},
                 { label: "操作",  prop: "fileOperation"}
             ],
-            data: [],
-            uploadData: {}
+            tableData: [],
+            uploadData: {},
+            canNotUpload: true,
+            uploading: false,
+            fileList:[]
         };
+    }
+
+    // 点击已上传的文件链接时的钩子, 可以通过 file.response 拿到服务端返回数据
+    onPreview(file){
+        console.log(file, file.response)
+    }
+    //文件上传成功时调用
+    onSuccess(response, file, fileList){
+    }
+    //文件状态改变时
+    handleChange(file, fileList){
+        debugger
+        this.setState({
+            fileList: fileList
+        })
+        console.log(file, fileList)
     }
 
     render(){
@@ -36,7 +55,7 @@ export default class Index extends React.Component{
                 <Layout.Row>
                     <Layout.Col span="4"><div className="grid-content bg-purple">&nbsp;</div></Layout.Col>
                     <Layout.Col span="16">
-                        <div style={{border: 'solid 1px #eaeefb', borderRadius: 4, transition: '0.2s', marginBottom:24, marginTop: 20}}>
+                        <div style={{border: 'solid 1px #eaeefb', borderRadius: 4, transition: '0.2s', marginTop: 20}}>
                             <div style={{padding: 5}}>
                                 <div style={{verticalAlign:'top',paddingTop:100,paddingLeft:20,width: '50%',boxSizing:'border-box',display: 'inline-block'}}>
                                     <h2 style={{color:'#1f2f3d',fontWeight:'normal',fontSize:28}}>Wi-Fi导入模式开启</h2>
@@ -47,10 +66,13 @@ export default class Index extends React.Component{
                                     <Upload
                                         action={""}
                                         drag
-                                        multiple
                                         autoUpload={false}
-                                        showFileList={false}
+                                        // accept={'txt'} //,pdf,ppt,word,excel
                                         data={this.state.uploadData}
+                                        onPreview={this.onPreview.bind(this)}
+                                        onSuccess={this.onSuccess.bind(this)}
+                                        onChange={(file, fileList) =>{this.handleChange(file, fileList)}}
+                                        fileList={this.state.fileList}
                                         tip={<div className="el-upload__tip">支持上传txt、pdf、ppt、word、excel等</div>}
                                     >
                                         <i className="el-icon-upload"></i>
@@ -59,11 +81,17 @@ export default class Index extends React.Component{
                                 </div>
                             </div>
                         </div>
+                        <div className="block-control">
+                            <Button size="small" type="info"
+                                    disabled={this.state.canNotUpload}
+                                    loading={this.state.uploading}
+                                    style={{lineHeight:'19px',width:'100%'}}>开始上传</Button>
+                        </div>
                         <Table
-                            style={{width: '100%'}}
+                            style={{width: '100%',marginTop: 20}}
                             columns={this.state.columns}
                             maxHeight={200}
-                            data={this.state.data}
+                            data={this.state.tableData}
                             border={true}
                         />
                     </Layout.Col>

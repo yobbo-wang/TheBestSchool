@@ -11,6 +11,19 @@ body {
   font-weight: 400;
 }
 
+.block-control{
+  height: 38px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  text-align: center;
+  margin-top: -1px;
+  color: #d3dce6;
+  transition: .2s;
+  position: relative;
+}
+
 .app {
   .header {
     background-color: #324157;
