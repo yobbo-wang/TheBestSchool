@@ -1,12 +1,18 @@
 import * as types from './type';
-import http from '../../api/ajax'
-import {environment} from '../../api/environment'
+import http from '../../api/http'
+import {environment, authorization} from '../../api/environment'
 
 const fetchMainList = (currentPage) =>{
-    let params = {}
-    params.currentPage = currentPage;
-    params.pageSize = 10;
-    return http.get(environment.url.mainList)
+    let options = {
+        params: {
+            currentPage: currentPage,
+            pageSize: 10
+        },
+        headers: {
+            Authorization: authorization.Authorization
+        }
+    }
+    return http.post(environment.url.mainList, options)
 }
 
 //初始化获取数据列表，保存至redux

@@ -4,9 +4,11 @@
 import React from 'react';
 import {setCookie} from "../../utils/cookieUtil";
 import {Form ,Input,Button }from 'element-react';
-import '../../resource/styles/login.css'
-import loginImg from  '../../resource/images/login-img.png'
-import logo from '../../resource/images/login_logo.png'
+import '../../resource/styles/login.css';
+import loginImg from  '../../resource/images/login-img.png';
+import logo from '../../resource/images/login_logo.png';
+import http from '../../api/http';
+import {environment} from '../../api/environment';
 
 export default class Login extends React.Component {
     constructor(props){
@@ -34,12 +36,16 @@ export default class Login extends React.Component {
         this.refs.form.validate((valid) => {
             if (valid) {
                 this.setState({loginIng: true});
-                //TODO 登录实现
-                console.log(window.document.cookie)
-                setCookie('uid', '1000001', new Date().getTime() + 7*24*60*60*1000)
-                console.log(window.document.cookie)
-                let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/'
-                this.props.history.push({ pathname: `${path}`, state: {}})
+                /******************** 调用远程api登录 *********************/
+                let result = http.post(environment.url.login, {params: {username: this.state.form.username, password: this.state.form.pwd}});
+                result.then((data) => {
+                    setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
+                    let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/'
+                    this.props.history.push({ pathname: `${path}`, state: {}})
+                }, error => {
+                    this.setState({loginIng: false});
+                    alert('登录失败！')
+                });
             } else {
                 console.log('error submit!!');
                 return false;

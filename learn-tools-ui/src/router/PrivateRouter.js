@@ -6,7 +6,7 @@ class PrivateRouter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuthenticated: checkCookie('uid') ? true : false
+            isAuthenticated: checkCookie('auth') ? true : false
         };
     }
 

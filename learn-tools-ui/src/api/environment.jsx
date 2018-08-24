@@ -1,17 +1,20 @@
 /**
  *
  */
-import {upyunConfig} from './upyunConfig';
+
 'use strict';
+import {getCookie} from "../utils/cookieUtil";
+
 const URL = () =>{
     if(process.env.NODE_ENV === 'development'){
         return {
-            baseURL: '//rap2api.taobao.org/app/mock/25977',
+            baseURL: 'http://127.0.0.1:8888',
+            // baseURL: 'http://rap2api.taobao.org/app/mock/26023',
             oosUrl: '//v0.api.upyun.com/learn-files-upyun'
         }
     }else{
         return{
-            baseURL: '//rap2api.taobao.org/app/mock/25977',
+            baseURL: 'http://rap2api.taobao.org/app/mock/26023',
             oosUrl: '//v0.api.upyun.com/learn-files-upyun'
         }
     }
@@ -20,14 +23,11 @@ const URL = () =>{
 const generateUrl = (baseUrl) => {
     return{
         learnUrl: baseUrl + '/learn/index',
-        login: baseUrl + '/sys/login',
-        mainList: baseUrl + '/lrean/getList'
+        login: baseUrl + '/login',
+        mainList: baseUrl + '/main/list',
+        sysRoleQuery: baseUrl + '/sysLoginInterface/signIn'
     }
 }
-
-// const s = upyunConfig('/package.json', 1534782600)
-// console.log(s.signature)
-// console.log(s.policy)
 
 /**
  * environment config
@@ -37,4 +37,11 @@ export const environment = {
     url: generateUrl(URL().baseURL),
     oosUrl: URL().oosUrl,
     oosAuthorization: ""
+}
+
+/**
+ * 获取token
+ */
+export const authorization = {
+    Authorization: getCookie('auth') != "" ? 'Bearer ' + getCookie('auth') : ""
 }

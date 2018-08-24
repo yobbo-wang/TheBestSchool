@@ -13,11 +13,10 @@ import axios from 'axios';
  * 注意：params中的数据会覆盖method url 参数，所以如果指定了这2个参数则不需要在params中带入
 */
 
-module.exports = (method, url, params) => {
+module.exports = (method, url, options) => {
     return new Promise((resolve, reject) => {
-        if(typeof params !== 'object') params = {};
-        let _option = params;
-        _option = {
+        if(typeof options !== 'object') options = {};
+        let _option = {
             method,
             url,
             timeout: 30000,
@@ -28,10 +27,10 @@ module.exports = (method, url, params) => {
             validateStatus:(status)=>{
                 return status >= 200 && status < 300;
             },
-            ...params,
+            ...options,
         }
         axios.request(_option).then(res => {
-            resolve(typeof res.data === 'object' ? res.data : JSON.parse(res.data))
+            resolve(typeof res.data === 'object' ? res.data : (res.data === "" ? res.data :JSON.parse(res.data)) )
         }, error => {
             if(error.response){
                 reject(error.response.data)
