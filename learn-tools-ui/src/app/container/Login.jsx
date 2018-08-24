@@ -40,7 +40,7 @@ export default class Login extends React.Component {
                 // let result = http.post(environment.url.login, {params: {username: this.state.form.username, password: this.state.form.pwd}});
                 // result.then((data) => {
                 //     setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
-                //     let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/'
+                //     let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
                 //     this.props.history.push({ pathname: `${path}`, state: {}})
                 // }, error => {
                 //     this.setState({loginIng: false});
@@ -48,6 +48,8 @@ export default class Login extends React.Component {
                 // });
                 /******************** 调用远程api登录结束 *********************/
                 setCookie('auth', '10000001111', new Date().getTime() + 7*24*60*60*1000)
+                let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
+                this.props.history.push({ pathname: `${path}`, state: {}})
             } else {
                 console.log('error submit!!');
                 return false;
