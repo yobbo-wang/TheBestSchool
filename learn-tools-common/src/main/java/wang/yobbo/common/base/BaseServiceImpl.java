@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.context.ApplicationContext;
 import wang.yobbo.common.db.DataSourceEnum;
 import wang.yobbo.common.db.DynamicDataSource;
+import wang.yobbo.common.util.SpringContextUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseService<Record, Example> {
 
-	public Mapper mapper;
+	private Mapper mapper;
 
 	@Override
 	public int countByExample(Example example) {
@@ -419,8 +420,8 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 	}
 
 	@Override
-	public void initMapper(ApplicationContext applicationContext) {
-		this.mapper = applicationContext.getBean(getMapperClass());
+	public void initMapper() {
+		this.mapper = SpringContextUtil.getInstance().getBean(getMapperClass());
 	}
 
 	/**
@@ -431,4 +432,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 		return (Class<Mapper>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
+	public Mapper getMapper() {
+		return SpringContextUtil.getInstance().getBean(getMapperClass());
+	}
 }

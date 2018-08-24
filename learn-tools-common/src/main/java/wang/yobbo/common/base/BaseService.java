@@ -172,6 +172,6 @@ public interface BaseService<Record, Example> {
     /**
      * 初始化mapper
      */
-    void initMapper(ApplicationContext applicationContext);
+    void initMapper();
 
 }

@@ -1,13 +1,17 @@
 package wang.yobbo.common.base;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import wang.yobbo.common.util.PropertiesFileUtil;
+import wang.yobbo.common.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * 控制器基类
@@ -15,35 +19,25 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public abstract class BaseController {
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
     /**
-     * 验证接口token
-     * @param name
+     * 统一异常处理
      * @param request
+     * @param response
+     * @param exception
      */
-    @RequestMapping( value = "/{name}/token", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    @ExceptionHandler
     @ResponseBody
-    public void token(@PathVariable String name, HttpServletRequest request){
-
+    public String exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception exception) {
+        LOGGER.error("统一异常处理：", exception);
+        request.setAttribute("ex", exception);
+        if (null != request.getHeader("X-Requested-With") && "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"))) {
+            request.setAttribute("requestHeader", "ajax");
+        }
+        BaseResult baseResult = new BaseResult();
+        baseResult.setSuccess(false);
+        baseResult.setErrorCode("400");
+        baseResult.setErrorMsg("系统异常，请联系管理员");
+        return JSONObject.toJSONString(baseResult);
     }
-
-    /**
-     * 返回jsp视图
-     * @param path
-     * @return
-     */
-    public static String jsp(String path) {
-        return path.concat(".jsp");
-    }
-
-    /**
-     * 返回thymeleaf视图
-     * @param path
-     * @return
-     */
-    public static String thymeleaf(String path) {
-        String folder = PropertiesFileUtil.getInstance().get("app.name");
-        return "/".concat(folder).concat(path).concat(".html");
-    }
-
 }

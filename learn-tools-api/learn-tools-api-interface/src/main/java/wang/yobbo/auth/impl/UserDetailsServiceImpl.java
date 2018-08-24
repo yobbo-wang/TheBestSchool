@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import wang.yobbo.system.entity.UpmsUser;
+import wang.yobbo.system.model.UpmsUser;
 import wang.yobbo.system.service.SystemUserService;
 
 import static java.util.Collections.emptyList;

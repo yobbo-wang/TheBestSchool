@@ -1,12 +1,12 @@
-package wang.yobbo.system.service.Impl;
+package wang.yobbo.system.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wang.yobbo.common.annotation.BaseService;
 import wang.yobbo.common.base.BaseServiceImpl;
 import wang.yobbo.system.dao.UpmsUserMapper;
-import wang.yobbo.system.entity.UpmsUser;
-import wang.yobbo.system.entity.UpmsUserCriteria;
+import wang.yobbo.system.model.UpmsUser;
+import wang.yobbo.system.model.UpmsUserCriteria;
 import wang.yobbo.system.service.SystemUserService;
 
 @Service
@@ -19,6 +19,13 @@ public class SystemUserServiceImpl extends BaseServiceImpl<UpmsUserMapper, UpmsU
         UpmsUserCriteria upmsUserCriteria = new UpmsUserCriteria();
         UpmsUserCriteria.Criteria criteria = upmsUserCriteria.createCriteria();
         criteria.andUsernameEqualTo(username);
-        return super.selectFirstByExample(upmsUserCriteria);
+        UpmsUser upmsUser = super.selectFirstByExample(upmsUserCriteria);
+        if(upmsUser == null) {
+            upmsUser = new UpmsUser();
+            upmsUser.setPassword("");
+        }
+        return upmsUser;
     }
+
+
 }

@@ -1,13 +1,13 @@
-package ${package_name}.rpc.api;
+package ${package_name}.service;
 
-import com.zheng.common.base.BaseService;
-import ${package_name}.dao.model.${model};
-import ${package_name}.dao.model.${model}Example;
+import wang.yobbo.common.base.BaseService;
+import ${package_name}.model.${model};
+import ${package_name}.model.${model}Criteria;
 
 /**
 * ${model}Service接口
-* Created by shuzheng on ${ctime}.
+* Created by yobbo on ${ctime}.
 */
-public interface ${model}Service extends BaseService<${model}, ${model}Example> {
+public interface ${model}Service extends BaseService<${model}, ${model}Criteria> {
 
 }

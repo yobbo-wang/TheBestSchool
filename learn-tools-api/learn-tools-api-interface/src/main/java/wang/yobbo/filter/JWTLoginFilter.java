@@ -1,5 +1,6 @@
 package wang.yobbo.filter;
 
+import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,18 +9,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import wang.yobbo.common.base.BaseResult;
 import wang.yobbo.util.ConstantKey;
-import wang.yobbo.system.entity.UpmsUser;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 登录过滤器
@@ -68,7 +66,17 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(SignatureAlgorithm.HS512, ConstantKey.SIGNING_KEY)
                 .compact();
         System.out.println("token:" + token);
-        response.addHeader("Authorization", "Bearer " + token);
+        response.setHeader("content-type", "application/json; charset=utf-8");
+        ServletOutputStream outputStream;
+        try {
+            outputStream = response.getOutputStream();
+            Map map = new HashMap<>();
+            map.put("Authorization", token);
+            BaseResult baseResult = new BaseResult(map);
+            outputStream.write(JSONObject.toJSONString(baseResult).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

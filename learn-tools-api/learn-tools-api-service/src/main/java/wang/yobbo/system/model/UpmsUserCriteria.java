@@ -1,4 +1,4 @@
-package wang.yobbo.system.entity;
+package wang.yobbo.system.model;
 
 import wang.yobbo.common.util.Page;
 

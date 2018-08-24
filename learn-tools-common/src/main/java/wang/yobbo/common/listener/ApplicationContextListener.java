@@ -25,13 +25,12 @@ public class ApplicationContextListener  implements ApplicationListener<ContextR
         if (null == contextRefreshedEvent.getApplicationContext().getParent()) {
             LOGGER.debug(">>>>> spring初始化完毕 <<<<<");
             // spring初始化完毕后，通过反射调用所有使用BaseService注解的initMapper方法
-            ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-            Map<String, Object> baseServices = applicationContext.getBeansWithAnnotation(BaseService.class);
+            Map<String, Object> baseServices = contextRefreshedEvent.getApplicationContext().getBeansWithAnnotation(BaseService.class);
             for (Object service : baseServices.values()) {
                 LOGGER.debug(">>>>> {}.initMapper()", service.getClass().getName());
                 try {
-                    Method initMapper = service.getClass().getMethod("initMapper", ApplicationContext.class);
-                    initMapper.invoke(service, applicationContext);
+                    Method initMapper = service.getClass().getMethod("initMapper");
+                    initMapper.invoke(service);
                 } catch (Exception e) {
                     LOGGER.error("初始化BaseService的initMapper方法异常", e);
                     e.printStackTrace();

@@ -1,7 +1,9 @@
 package wang.yobbo.common.db;
 
 /**
- * 多数据源配置
+ * 多数据源配置，实现读写分离
+ *  主库写入数据
+ *  从库查询数据
  */
 public enum DataSourceEnum{
     // 主库

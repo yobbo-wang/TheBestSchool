@@ -8,13 +8,15 @@ import java.util.Map;
 
 /**
  * 代码生成类
+ *  用法：MODULE为主模块
+ *
  */
 public class Generator {
     // 根据命名规范，只修改此常量值即可
-    private static String MODULE = "learn-tools-cms";
+    private static String MODULE = "learn-tools-api";
     private static String DATABASE = "zheng";
-    private static String TABLE_PREFIX = "cms_";
-    private static String PACKAGE_NAME = "yobbo.wang.cms";
+    private static String TABLE_PREFIX = "cour_";
+    private static String PACKAGE_NAME = "wang.yobbo.courseware";
     private static String JDBC_DRIVER = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.driver");
     private static String JDBC_URL = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.url");
     private static String JDBC_USERNAME = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.username");

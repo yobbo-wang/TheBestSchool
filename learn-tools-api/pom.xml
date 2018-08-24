@@ -15,7 +15,6 @@
     </parent>
 
     <modules>
-        <module>learn-tools-api-dao</module>
         <module>learn-tools-api-interface</module>
         <module>learn-tools-api-service</module>
     </modules>
@@ -51,6 +50,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

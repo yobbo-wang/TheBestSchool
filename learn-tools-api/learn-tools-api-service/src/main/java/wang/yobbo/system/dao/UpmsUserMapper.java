@@ -1,8 +1,8 @@
 package wang.yobbo.system.dao;
 
 import org.apache.ibatis.annotations.Param;
-import wang.yobbo.system.entity.UpmsUser;
-import wang.yobbo.system.entity.UpmsUserCriteria;
+import wang.yobbo.system.model.UpmsUser;
+import wang.yobbo.system.model.UpmsUserCriteria;
 
 import java.util.List;
 

@@ -16,12 +16,17 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
 
         <!-- 为生成的Java模型类添加序列化接口，并生成serialVersionUID字段 -->
-        <plugin type="com.zheng.common.plugin.SerializablePlugin">
+        <plugin type="wang.yobbo.common.plugin.SerializablePlugin">
             <property name="suppressJavaInterface" value="false"/>
         </plugin>
 
-        <!-- 生成一个新的selectByExample方法，这个方法可以接收offset和limit参数，主要用来实现分页，只支持mysql(已使用pagehelper代替) -->
-        <!--<plugin type="com.zheng.common.plugin.PaginationPlugin"></plugin>-->
+        <!-- 名字转换 -->
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$" />
+            <property name="replaceString" value="Criteria" />
+        </plugin>
+
+        <plugin type="wang.yobbo.common.plugin.MySQLPaginationPlugin"></plugin>
 
         <!-- 生成在XML中的<cache>元素 -->
         <plugin type="org.mybatis.generator.plugins.CachePlugin">
@@ -40,7 +45,7 @@
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
 
         <!-- 生成的代码去掉注释 -->
-        <commentGenerator type="com.zheng.common.plugin.CommentGenerator">
+        <commentGenerator type="wang.yobbo.common.plugin.CommentGenerator">
             <property name="suppressAllComments" value="true" />
             <property name="suppressDate" value="true"/>
         </commentGenerator>
@@ -55,7 +60,7 @@
         <javaModelGenerator targetPackage="${generator_javaModelGenerator_targetPackage}" targetProject="${targetProject}/src/main/java" />
 
         <!-- MapperXML生成 -->
-        <sqlMapGenerator targetPackage="${generator_sqlMapGenerator_targetPackage}" targetProject="${targetProject_sqlMap}/src/main/java" />
+        <sqlMapGenerator targetPackage="${generator_sqlMapGenerator_targetPackage}" targetProject="${targetProject}/src/main/java" />
 
         <!-- Mapper接口生成 -->
         <javaClientGenerator targetPackage="${generator_javaClientGenerator_targetPackage}" targetProject="${targetProject}/src/main/java" type="XMLMAPPER" />
