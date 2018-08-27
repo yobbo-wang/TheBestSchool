@@ -2,6 +2,7 @@ package wang.yobbo;
 
 import wang.yobbo.common.util.MybatisGeneratorUtil;
 import wang.yobbo.common.util.PropertiesFileUtil;
+import wang.yobbo.common.util.YamlFileUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +18,10 @@ public class Generator {
     private static String DATABASE = "zheng";
     private static String TABLE_PREFIX = "cour_";
     private static String PACKAGE_NAME = "wang.yobbo.courseware";
-    private static String JDBC_DRIVER = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.driver");
-    private static String JDBC_URL = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.url");
-    private static String JDBC_USERNAME = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.username");
-    private static String JDBC_PASSWORD = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.password");
+    private static String JDBC_DRIVER = YamlFileUtil.getInstance("application-dev.yml").get("master.jdbc.driverClassName");
+    private static String JDBC_URL = YamlFileUtil.getInstance("application-dev.yml").get("master.jdbc.url");
+    private static String JDBC_USERNAME = YamlFileUtil.getInstance("application-dev.yml").get("master.jdbc.username");
+    private static String JDBC_PASSWORD = YamlFileUtil.getInstance("application-dev.yml").get("master.jdbc.password");
     // 需要insert后返回主键的表配置，key:表名,value:主键名
     private static Map<String, String> LAST_INSERT_ID_TABLES = new HashMap<>();
     static {
