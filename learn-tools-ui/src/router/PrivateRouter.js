@@ -11,7 +11,7 @@ class PrivateRouter extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
+        //TODO 先获取auth 去后端做校验
         if(!this.state.isAuthenticated){
             this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
         }

@@ -1,10 +1,13 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import * as mainData from './main/reducer';
 import thunk from 'redux-thunk';
+
+import * as mainData from './main/reducer';
+import * as coursewareData from './courseware/reducer'
 
 const store = createStore(
     combineReducers({
-        ...mainData
+        ...mainData,
+        ...coursewareData
     }),
     applyMiddleware(thunk)
 );

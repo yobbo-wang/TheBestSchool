@@ -12,6 +12,11 @@ import 'echarts/lib/chart/pie';
 
 export default class Body extends React.Component {
 
+    constructor(props){
+        super(props)
+        this.state = {};
+    }
+
     componentDidMount(){
         const userVolume = echarts.init(document.getElementById('userVolume'));
         const learningMaterials = echarts.init(document.getElementById('learningMaterials'));

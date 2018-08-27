@@ -45,7 +45,7 @@ public class BaseResult {
     }
 
     public void setSuccess(boolean success) {
-        success = success;
+        this.success = success;
     }
 
     public String getErrorCode() {

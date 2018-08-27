@@ -39,7 +39,6 @@ export default class http {
         try{
             let result = await new $axios('post',url, options );
             if(result.success){
-                console.log(result.data)
                 return result.data;
             }else{
                 throw result.errorMsg;

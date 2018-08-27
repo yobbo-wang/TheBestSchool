@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
 
 import Header from '../component/header';
