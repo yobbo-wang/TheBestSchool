@@ -9,7 +9,8 @@ export default class Index extends React.Component{
         this.state = {
             columns: [ {label: "标题", prop: "name", width: 180 },
                 {  label: "文件大小", prop: "size", width: 180 },
-                { label: "状态",  prop: "status"}
+                { label: "状态",  prop: "status"},
+                { label: "操作",  prop: "operation"}
             ],
             uploadData: {},
             canNotUpload: true,
