@@ -54,7 +54,7 @@ export default class Index extends React.Component{
                                 </div>
                                 <div style={{width: '50%',padding:'20px 0',textAlign:'center',boxSizing:'border-box',display: 'inline-block'}}>
                                     <Upload
-                                        action={"//jsonplaceholder.typicode.com/posts/"}
+                                        action={"/v1/upload"}
                                         drag
                                         accept={'.txt,.pdf,.ppt,.doc,.docx, .excel'}
                                         data={this.state.uploadData}
@@ -68,12 +68,6 @@ export default class Index extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        {/*<div className="block-control">
-                            <Button size="small" type="info"
-                                    disabled={this.state.canNotUpload}
-                                    loading={this.state.uploading}
-                                    style={{lineHeight:'19px',width:'100%'}}>开始上传</Button>
-                        </div>*/}
                         <Table
                             style={{width: '100%',marginTop: 20}}
                             columns={this.state.columns}
