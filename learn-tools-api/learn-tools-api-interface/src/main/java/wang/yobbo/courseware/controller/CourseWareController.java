@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import wang.yobbo.common.annotation.ApiVersion;
+import wang.yobbo.common.base.BaseController;
 import wang.yobbo.common.base.BaseResult;
 import wang.yobbo.controller.MainController;
 
@@ -20,7 +21,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/v1/courseware")
 @Api(value = "精品课程列表", description = "精品课程列表管理接口")
-public class CourseWareController {
+public class CourseWareController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 

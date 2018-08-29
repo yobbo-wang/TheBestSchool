@@ -21,7 +21,7 @@ import java.util.*;
 
 /**
  * 登录过滤器
- *      1.使用方法 用post请求 host:port/login (param username=xx&password=xx)
+ *      1.使用方法 用post请求 /login (param username=xx&password=xx)
  */
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;

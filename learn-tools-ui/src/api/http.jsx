@@ -6,11 +6,9 @@
 
 'use strict';
 import $axios from './axiosConfig'
-import {getCookie} from "../utils/cookieUtil";
 
 export default class http {
     /**
-     * 获取cookie中的auth, 然后加到options的headers中
     * ajax get
      * @param url
      * @param params

@@ -47,3 +47,11 @@ export const checkCookie = (key) => {
         return false;
     }
 }
+
+export const getAuthorization = () => {
+    const token = getCookie('auth');
+    if(token){
+        return 'Bearer ' + token
+    }
+    return "";
+}

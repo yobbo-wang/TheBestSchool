@@ -1,9 +1,8 @@
 /**
  *
  */
-
 'use strict';
-import {getCookie} from "../utils/cookieUtil";
+import {getAuthorization} from "../utils/cookieUtil";
 
 const URL = () =>{
     if(process.env.NODE_ENV === 'development'){
@@ -11,13 +10,13 @@ const URL = () =>{
             version: "v1",
             baseURL: 'http://127.0.0.1:8888',
             // baseURL: 'http://rap2api.taobao.org/app/mock/26023',
-            oosUrl: '//v0.api.upyun.com/learn-files-upyun'
+            oosUrl: 'http://v0.api.upyun.com/learn-files-upyun'
         }
     }else{
         return{
             version: "v1",
             baseURL: 'http://rap2api.taobao.org/app/mock/26023',
-            oosUrl: '//v0.api.upyun.com/learn-files-upyun'
+            oosUrl: 'http://v0.api.upyun.com/learn-files-upyun'
         }
     }
 }
@@ -25,7 +24,6 @@ const URL = () =>{
 const generateUrl = (baseUrl) => {
     return{
         learnUrl: baseUrl + '/learn/index',
-        login: baseUrl + '/login',
         mainList: baseUrl + '/main/list',
         coursewareList: baseUrl + '/courseware/list',
         sysRoleQuery: baseUrl + '/sysLoginInterface/signIn'
@@ -38,13 +36,14 @@ const generateUrl = (baseUrl) => {
  */
 export const environment = {
     url: generateUrl(URL().baseURL + '/' + URL().version),
+    loginUrl: URL().baseURL + '/login',
+    logoutUrl: URL().baseURL + '/logout',
     oosUrl: URL().oosUrl,
     oosAuthorization: ""
 }
 
-/**
- * 获取token
- */
-export const authorization = {
-    Authorization: getCookie('auth') != "" ? 'Bearer ' + getCookie('auth') : ""
+export const getToken = () => {
+    return {
+        token: getAuthorization()
+    }
 }

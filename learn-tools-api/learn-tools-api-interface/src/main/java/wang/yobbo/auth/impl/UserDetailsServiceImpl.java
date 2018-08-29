@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import wang.yobbo.system.model.UpmsUser;
-import wang.yobbo.system.service.SystemUserService;
+import wang.yobbo.system.model.SysUser;
+import wang.yobbo.system.service.SysUserService;
 
 import static java.util.Collections.emptyList;
 /**
@@ -15,12 +15,12 @@ import static java.util.Collections.emptyList;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired private SystemUserService systemUserService;
+    @Autowired private SysUserService sysUserService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UpmsUser upmsUser = this.systemUserService.findUserByUsername(username);
-        return new org.springframework.security.core.userdetails.User(username, upmsUser.getPassword(), emptyList());
+        SysUser sysUser = this.sysUserService.findUserByUsername(username);
+        return new org.springframework.security.core.userdetails.User(username, sysUser.getPassword(), emptyList());
     }
 
 }

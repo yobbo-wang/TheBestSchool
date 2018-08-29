@@ -1,16 +1,24 @@
 'use strict';
 import React from 'react';
-import { Layout, Menu, Table,Upload } from 'element-react';
+import { Layout, Menu, Table,Upload,Button } from 'element-react';
 import '../resources/styles/common.scss';
+import axios from 'axios';
 
 export default class Index extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             columns: [ {label: "标题", prop: "name", width: 180 },
-                {  label: "文件大小", prop: "size", width: 180 },
+                { label: "文件大小", prop: "size", width: 180 },
                 { label: "状态",  prop: "status"},
-                { label: "操作",  prop: "operation"}
+                { label: "操作",  prop: "operation", render: (row, column, index) => {
+                        return (
+                            <span>
+                                <Button type="danger" size="small" onClick={this.deleteRow.bind(this, row, index)}>删除</Button>
+                            </span>
+                        )
+                    }
+                }
             ],
             uploadData: {},
             canNotUpload: true,
@@ -20,9 +28,27 @@ export default class Index extends React.Component{
     }
     //文件状态改变时
     handleChange(file, fileList){
-        console.log(fileList)
         this.setState({
             fileList: fileList
+        })
+    }
+
+    deleteRow(row, index) {
+        const { fileList } = this.state;
+        fileList.splice(index, 1);
+        this.setState({
+            fileList: [...fileList]
+        })
+        //TODO /v1/delete 实现
+        axios({
+            method: 'POST',
+            headers:{'Content-type':'application/json'},
+            url: '/v1/delete',
+            data: {name: row.name}
+        }).then((response) => {
+
+        }).catch((error) => {
+
         })
     }
 
@@ -54,7 +80,8 @@ export default class Index extends React.Component{
                                 </div>
                                 <div style={{width: '50%',padding:'20px 0',textAlign:'center',boxSizing:'border-box',display: 'inline-block'}}>
                                     <Upload
-                                        action={"/v1/upload"}
+                                        // action={"/v1/upload"}
+                                        action="//jsonplaceholder.typicode.com/posts/"
                                         drag
                                         accept={'.txt,.pdf,.ppt,.doc,.docx, .excel'}
                                         data={this.state.uploadData}

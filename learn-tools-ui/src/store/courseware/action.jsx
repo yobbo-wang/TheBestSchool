@@ -1,6 +1,6 @@
 import * as types from './type';
 import http from '../../api/http'
-import {authorization, environment} from '../../api/environment'
+import {environment, getToken} from '../../api/environment'
 
 const fetchCoursewareList = (currentPage, pageSize) =>{
     let options = {
@@ -9,7 +9,7 @@ const fetchCoursewareList = (currentPage, pageSize) =>{
             pageSize: pageSize
         },
         headers: {
-            Authorization: authorization.Authorization
+            Authorization: getToken().token
         }
     }
     return http.post(environment.url.coursewareList, options)
