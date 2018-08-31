@@ -1,6 +1,6 @@
 import * as types from './type';
 import http from '../../api/http'
-import {environment, authorization} from '../../api/environment'
+import {environment, getToken} from '../../api/environment'
 
 const fetchMainList = (currentPage) =>{
     let options = {
@@ -9,7 +9,7 @@ const fetchMainList = (currentPage) =>{
             pageSize: 10
         },
         headers: {
-            Authorization: authorization.Authorization
+            Authorization: getToken().authorization
         }
     }
     return http.post(environment.url.mainList, options)

@@ -3,6 +3,9 @@ import React from 'react';
 import { Layout, Menu, Badge } from 'element-react';
 import { NavLink } from 'react-router-dom';
 
+/**
+ * TODO 实现动态菜单
+ */
 class Header extends React.Component{
     constructor(props) {
         super(props);

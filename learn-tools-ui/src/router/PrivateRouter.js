@@ -1,20 +1,39 @@
 import React from 'react';
 import {Route, withRouter} from 'react-router-dom';
-import{checkCookie}  from '../utils/cookieUtil'
+import {environment ,getToken} from "../api/environment";
+import http from '../api/http';
 
+/**
+ * 每次进去项目之前校验auth可用性
+ */
 class PrivateRouter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuthenticated: checkCookie('auth') ? true : false
+            isAuthenticated: false
         };
     }
 
     componentDidMount() {
-        //TODO 先获取auth 去后端做校验
-        if(!this.state.isAuthenticated){
+        const authorization =  getToken().authorization;
+        if(authorization == "") {
             this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
         }
+        let options = {
+            headers: {
+                Authorization: authorization
+            }
+        }
+        http.head(environment.url.checkAuth, options).then(() => {
+           this.setState({
+               isAuthenticated: true
+           })
+        }).catch(() => {
+            this.setState({
+                isAuthenticated: false
+            })
+            this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
+        })
     }
 
     render() {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import wang.yobbo.common.annotation.ApiVersion;
 import wang.yobbo.common.base.BaseController;
 import wang.yobbo.common.base.BaseResult;
-import wang.yobbo.controller.MainController;
+import wang.yobbo.main.controller.MainController;
 
 import java.util.*;
 

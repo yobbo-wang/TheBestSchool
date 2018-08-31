@@ -9,7 +9,7 @@ const fetchCoursewareList = (currentPage, pageSize) =>{
             pageSize: pageSize
         },
         headers: {
-            Authorization: getToken().token
+            Authorization: getToken().authorization
         }
     }
     return http.post(environment.url.coursewareList, options)

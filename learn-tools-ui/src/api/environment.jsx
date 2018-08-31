@@ -23,7 +23,8 @@ const URL = () =>{
 
 const generateUrl = (baseUrl) => {
     return{
-        learnUrl: baseUrl + '/learn/index',
+        checkAuth: baseUrl + '/auth/check',
+        learn: baseUrl + '/learn/index',
         mainList: baseUrl + '/main/list',
         coursewareList: baseUrl + '/courseware/list',
         sysRoleQuery: baseUrl + '/sysLoginInterface/signIn'
@@ -44,6 +45,6 @@ export const environment = {
 
 export const getToken = () => {
     return {
-        token: getAuthorization()
+        authorization: getAuthorization()
     }
 }

@@ -16,10 +16,10 @@ public class FileToPDFUtil {
     private static final int xlTypePDF = 0;
     private static final int ppSaveAsPDF = 32;
 
-    public static void main(String[] a){
-        int time = convert2PDF("D:\\ws\\权限角色用户管理需求文档_v0.1.docx", "d:/ws/权限角色用户管理需求文档_v0.1.pdf");
-        System.out.println("转化成功，用时：  " + time + "s...");
-    }
+//    public static void main(String[] a){
+////        int time = convert2PDF("D:\\需求文档\\V0.2.0\\需求\\返还物业停车费需求变更\\返还物业停车费需求更变—0829(2).docx", "D:\\需求文档\\V0.2.0\\需求\\返还物业停车费需求变更\\返还物业停车费需求更变—0829(2).pdf");
+////        System.out.println("转化成功，用时：  " + time + "s...");
+//    }
 
     /***
      * 判断需要转化文件的类型（Excel、Word、ppt）

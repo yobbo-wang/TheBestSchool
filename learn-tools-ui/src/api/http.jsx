@@ -102,4 +102,18 @@ export default class http {
             throw error;
         }
     }
+
+    /**
+     *
+     * @param url
+     * @param options
+     * @returns {Promise<void>}
+     */
+    static async head(url, options){
+        try{
+            return await new $axios('head',url, options );
+        }catch (error){
+            throw error;
+        }
+    }
 }
