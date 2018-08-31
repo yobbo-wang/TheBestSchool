@@ -1,20 +1,55 @@
 'use strict';
 import React from 'react';
-import { Layout, Menu, Table,Upload } from 'element-react';
+import { Layout, Menu, Table,Upload,Button } from 'element-react';
 import '../resources/styles/common.scss';
+import axios from 'axios';
 
 export default class Index extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            columns: [ {label: "标题", prop: "title", width: 180 },
-                {  label: "文件大小", prop: "fileSize", width: 180 },
-                { label: "状态",  prop: "fileStatus"},
-                { label: "操作",  prop: "fileOperation"}
+            columns: [ {label: "标题", prop: "name", width: 180 },
+                { label: "文件大小", prop: "size", width: 180 },
+                { label: "状态",  prop: "status"},
+                { label: "操作",  prop: "operation", render: (row, column, index) => {
+                        return (
+                            <span>
+                                <Button type="danger" size="small" onClick={this.deleteRow.bind(this, row, index)}>删除</Button>
+                            </span>
+                        )
+                    }
+                }
             ],
-            data: [],
-            uploadData: {}
+            uploadData: {},
+            canNotUpload: true,
+            uploading: false,
+            fileList:[]
         };
+    }
+    //文件状态改变时
+    handleChange(file, fileList){
+        this.setState({
+            fileList: fileList
+        })
+    }
+
+    deleteRow(row, index) {
+        const { fileList } = this.state;
+        fileList.splice(index, 1);
+        this.setState({
+            fileList: [...fileList]
+        })
+        //TODO /v1/delete 实现
+        axios({
+            method: 'POST',
+            headers:{'Content-type':'application/json'},
+            url: '/v1/delete',
+            data: {name: row.name}
+        }).then((response) => {
+
+        }).catch((error) => {
+
+        })
     }
 
     render(){
@@ -36,7 +71,7 @@ export default class Index extends React.Component{
                 <Layout.Row>
                     <Layout.Col span="4"><div className="grid-content bg-purple">&nbsp;</div></Layout.Col>
                     <Layout.Col span="16">
-                        <div style={{border: 'solid 1px #eaeefb', borderRadius: 4, transition: '0.2s', marginBottom:24, marginTop: 20}}>
+                        <div style={{border: 'solid 1px #eaeefb', borderRadius: 4, transition: '0.2s', marginTop: 20}}>
                             <div style={{padding: 5}}>
                                 <div style={{verticalAlign:'top',paddingTop:100,paddingLeft:20,width: '50%',boxSizing:'border-box',display: 'inline-block'}}>
                                     <h2 style={{color:'#1f2f3d',fontWeight:'normal',fontSize:28}}>Wi-Fi导入模式开启</h2>
@@ -45,12 +80,13 @@ export default class Index extends React.Component{
                                 </div>
                                 <div style={{width: '50%',padding:'20px 0',textAlign:'center',boxSizing:'border-box',display: 'inline-block'}}>
                                     <Upload
-                                        action={""}
+                                        // action={"/v1/upload"}
+                                        action="//jsonplaceholder.typicode.com/posts/"
                                         drag
-                                        multiple
-                                        autoUpload={false}
-                                        showFileList={false}
+                                        accept={'.txt,.pdf,.ppt,.doc,.docx, .excel'}
                                         data={this.state.uploadData}
+                                        onChange={(file, fileList) =>{this.handleChange(file, fileList)}}
+                                        fileList={this.state.fileList}
                                         tip={<div className="el-upload__tip">支持上传txt、pdf、ppt、word、excel等</div>}
                                     >
                                         <i className="el-icon-upload"></i>
@@ -60,10 +96,10 @@ export default class Index extends React.Component{
                             </div>
                         </div>
                         <Table
-                            style={{width: '100%'}}
+                            style={{width: '100%',marginTop: 20}}
                             columns={this.state.columns}
                             maxHeight={200}
-                            data={this.state.data}
+                            data={this.state.fileList}
                             border={true}
                         />
                     </Layout.Col>

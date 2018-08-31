@@ -1,32 +1,22 @@
 'use strict';
 import React from 'react';
-import { Input,Button,Table,Tag,Pagination } from 'element-react';
-import { Redirect } from 'react-router-dom';
+import {Button, Input, Pagination, Table, Tag} from 'element-react';
+import {Redirect} from 'react-router-dom';
+import {connect} from "react-redux";
 
-export default class Body extends React.Component{
+import { queryCourseWareDate } from '../../store/courseware/action'
+
+class Body extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            columns: [
-                {
-                    label: "上传日期",
-                    prop: "date",
-                    width: 180
-                },
-                {
-                    label: "授课教师",
-                    prop: "name",
-                    width: 180
-                },
-                {
-                    label: "课件名称",
-                    prop: "address"
-                },
-                {
-                    label: '类型',
-                    prop: 'tag',
-                    width: 100,
-                    filters: [{text: '实验讲义', value: '实验讲义'}, {text: '课件', value: '课件'}],
+            pageSize: 10,
+            currentPage: 1,
+            total: 0,
+            columns: [ { label: "上传日期", prop: "date", width: 180  },
+                { label: "授课教师",  prop: "name", width: 180  },
+                { label: "课件名称", prop: "address" },
+                { label: '类型', prop: 'tag', width: 100, filters: [{text: '实验讲义', value: '实验讲义'}, {text: '课件', value: '课件'}],
                     filterMethod(value, row) {
                         return row.tag === value;
                     },
@@ -38,73 +28,35 @@ export default class Body extends React.Component{
                         }
                     }
                 }
-            ],
-            data: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄',
-                tag: '课件'
-            },{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄',
-                tag: '课件'
-            },{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄',
-                tag: '实验讲义'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄',
-                tag: '实验讲义'
-            }]
+            ]
         };
     }
 
-    onSizeChange() {
+    componentDidMount(){
+        // query data
+        this.queryData();
     }
 
-    onCurrentChange(){
+    onSizeChange(size) {
+        this.setState({ pageSize: size });
+        this.queryData();
+    }
+
+    onCurrentChange(currentPage){
+        this.setState({ currentPage: currentPage })
+        this.queryData();
+    }
+
+    queryData() {
+        this.props.queryCourseWareDate(this.state.currentPage, this.state.pageSize, "dataList");
     }
 
     handleOnClick(url) {
         this.setState({redirect: true, url: url});
-
     }
 
     render(){
+        console.log(this.props)
         if (this.state.redirect) {
             return <Redirect push to={this.state.url}/>
         }
@@ -121,15 +73,14 @@ export default class Body extends React.Component{
                 <Table
                     style={{width: '100%'}}
                     columns={this.state.columns}
-                    data={this.state.data}
+                    data={this.props.coursewareData.dataList}
                     border={true}
                 />
                 <Pagination layout="total, sizes, prev, pager, next, jumper"
                             style={{marginTop: '20px'}}
-                            total={40}
+                            total={this.state.total}
                             pageSizes={[10, 20, 30, 40]}
                             pageSize={10}
-                            currentPage={5}
                             onSizeChange={this.onSizeChange.bind(this)}
                             onCurrentChange={this.onCurrentChange.bind(this)}
                 />
@@ -137,3 +88,9 @@ export default class Body extends React.Component{
         )
     }
 }
+
+export default connect(state => ({
+    coursewareData: state.coursewareData,
+}), {
+    queryCourseWareDate
+})(Body);

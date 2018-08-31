@@ -27,8 +27,8 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any()).build();
     }
     private ApiInfo apiInfo(){
-        return new ApiInfoBuilder().title("优学堂公共api文档")
-                .description("learn-tools 公共api文档，相关请查看详情 http://www.wang.yobbo")
+        return new ApiInfoBuilder().title("learn tools api docs")
+                .description("learn tools api docs. can do anything")
                 .termsOfServiceUrl("http://www.wang.yobbo")
                 .version("1.0")
                 .build();

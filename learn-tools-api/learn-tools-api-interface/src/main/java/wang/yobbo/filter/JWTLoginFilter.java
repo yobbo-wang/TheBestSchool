@@ -3,6 +3,8 @@ package wang.yobbo.filter;
 import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import wang.yobbo.common.base.BaseResult;
+import wang.yobbo.main.controller.MainController;
 import wang.yobbo.util.ConstantKey;
 
 import javax.servlet.FilterChain;
@@ -21,9 +24,10 @@ import java.util.*;
 
 /**
  * 登录过滤器
- *      1.使用方法 用post请求 host:port/login (param username=xx&password=xx)
+ *      1.使用方法 用post请求 /login (param username=xx&password=xx)
  */
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private AuthenticationManager authenticationManager;
 
     public JWTLoginFilter(AuthenticationManager authenticationManager) {
@@ -65,7 +69,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                 .setExpiration(new Date(System.currentTimeMillis() + ConstantKey.SINGING_KEY_VALIDITY)) //token有效期 TODO 可以动态设置
                 .signWith(SignatureAlgorithm.HS512, ConstantKey.SIGNING_KEY)
                 .compact();
-        System.out.println("token:" + token);
+        LOGGER.info("ip = {} 登录系统, token = {}", request.getRemoteHost() , token);
         response.setHeader("content-type", "application/json; charset=utf-8");
         ServletOutputStream outputStream;
         try {

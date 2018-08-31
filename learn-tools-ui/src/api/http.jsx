@@ -6,11 +6,9 @@
 
 'use strict';
 import $axios from './axiosConfig'
-import {getCookie} from "../utils/cookieUtil";
 
 export default class http {
     /**
-     * 获取cookie中的auth, 然后加到options的headers中
     * ajax get
      * @param url
      * @param params
@@ -39,7 +37,6 @@ export default class http {
         try{
             let result = await new $axios('post',url, options );
             if(result.success){
-                console.log(result.data)
                 return result.data;
             }else{
                 throw result.errorMsg;
@@ -101,6 +98,20 @@ export default class http {
             }else{
                 throw result.errorMsg;
             }
+        }catch (error){
+            throw error;
+        }
+    }
+
+    /**
+     *
+     * @param url
+     * @param options
+     * @returns {Promise<void>}
+     */
+    static async head(url, options){
+        try{
+            return await new $axios('head',url, options );
         }catch (error){
             throw error;
         }
