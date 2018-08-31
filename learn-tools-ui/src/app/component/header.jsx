@@ -43,6 +43,7 @@ class Header extends React.Component{
                         <Menu.SubMenu index={"3"} title={"系统设置"} >
                             <Menu.Item index="3-1">授课教师</Menu.Item>
                             <Menu.Item index="3-2">院系维护</Menu.Item>
+                            <Menu.Item index="2-1"><NavLink to={"/menu"} exact style={{textDecoration:'none',display:"block"}}>菜单管理</NavLink></Menu.Item>
                         </Menu.SubMenu>
                     </Menu>
                 </Layout.Col>
