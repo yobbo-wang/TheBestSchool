@@ -13,10 +13,14 @@ export default class Add extends React.Component{
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入菜单名', trigger: 'name' },
-                    { required: true, message: '请输入序号', trigger: 'sort' },
-                    { required: true, message: '请输入菜单url', trigger: 'url' }
+                    { required: true, message: '请输入菜单名', trigger: 'blur' },
                 ],
+                url: [
+                    { required: true, message: '请输入菜单url', trigger: 'blur' }
+                ],
+                sort: [
+                    { type: 'number', required: true, message: '请输入序号', trigger: 'sort' },
+                ]
             }
         }
     }
