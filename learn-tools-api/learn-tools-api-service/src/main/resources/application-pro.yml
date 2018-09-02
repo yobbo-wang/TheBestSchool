@@ -1,0 +1,25 @@
+#数据源一
+master:
+  jdbc:
+    url: jdbc:mysql://db4free.net:3306/learn-tools?characterEncoding=utf8
+    driverClassName: com.mysql.jdbc.Driver
+    username: learn_user
+    password: e1Hkm3oWzLTeky08EQ+PcA==
+slave:
+  jdbc:
+      url: jdbc:mysql://db4free.net:3307/learn-tools?characterEncoding=utf8
+      driverClassName: com.mysql.jdbc.Driver
+      username: learn_user
+      password: e1Hkm3oWzLTeky08EQ+PcA==
+
+#跨域域名限制访问
+admin:
+  host: http://127.0.0.1:3000
+app:
+  host: http://127.0.0.1:3400
+
+#mybatis配置
+mybatis:
+  typeAliasesPackage: wang.yobbo.**.model
+  mapperLocations: classpath*:wang/yobbo/**/mapper/*Mapper.xml
+  configLocation: classpath:mybatis-config.xml

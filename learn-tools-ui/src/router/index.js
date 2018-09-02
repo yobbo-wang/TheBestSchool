@@ -1,6 +1,7 @@
 /**
  * Created by yobbo.wang on 2018/8/8.
  *  router config
+ *  每增加一个路由需要去数据维护url，和组件，以便于做权限控制
  */
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -13,14 +14,26 @@ const NotFound = asyncComponent(() => import('../app/container/NotFound'));
 const Courseware = asyncComponent(() => import('../app/courseware/index'));
 const Upcourseware = asyncComponent(() => import('../app/Upcourseware/index'));
 const Menu = asyncComponent(() => import('../app/menu/index'));
+const User = asyncComponent(() => import('../app/user/index'));
+const Role = asyncComponent(() => import('../app/role/index'));
+
+const authS = [
+    {path: "/courseware", component : "Courseware"},
+    {path: "/upcourseware", component : "Upcourseware"},
+    {path: "/menu", component : "Menu"},
+    {path: "/user", component : "User"},
+    {path: "/role", component : "Role"},
+];
 
 export default () => (
     <HashRouter>
         <Switch>
             <PrivateRouter path={"/"} exact component={Index}/>
-            <PrivateRouter path={"/courseware"} component={Courseware}/>
-            <PrivateRouter path={"/upcourseware"} component={Upcourseware}/>
-            <PrivateRouter path={"/menu"} component={Menu} />
+            {
+                authS.map((item, i) => {
+                    return <PrivateRouter path={item.path} key={i} component={eval(item.component)} />
+                })
+            }
             <Route path={"/404"} component={NotFound} />
             <Route path={"/login"} component={Login} />
             <Route component={NotFound} />

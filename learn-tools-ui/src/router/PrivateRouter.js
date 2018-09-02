@@ -15,6 +15,7 @@ class PrivateRouter extends React.Component {
     }
 
     componentDidMount() {
+        /**************** 开启api校验 ****************/
         const authorization =  getToken().authorization;
         if(authorization == "") {
             this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
@@ -34,6 +35,13 @@ class PrivateRouter extends React.Component {
             })
             this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
         })
+        /*******************************************/
+
+        /*********关闭api校验*********/
+            // this.setState({
+            //     isAuthenticated: true
+            // })
+        /*****************/
     }
 
     render() {

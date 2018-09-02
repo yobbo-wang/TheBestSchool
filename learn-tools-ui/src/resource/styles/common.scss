@@ -141,11 +141,8 @@ body {
   }
 
   .main {
-    .navigation{
-      padding: 24px;
-    }
     .body{
-      top: 121px;
+      top: 60px;
       left: 24px;
       bottom: 32px;
       position: absolute;
@@ -153,12 +150,22 @@ body {
       width: auto;
       overflow: hidden;
       overflow-y: auto;
-      box-sizing: border-box;
 
-      .search {
-        input{
-          width: 220px;
-          margin: 15px 0;
+      .navigation{
+        padding: 24px;
+      }
+
+      .body-context{
+        padding-left: 24px;
+        padding-top: 15px;
+        .body-child {
+          margin-bottom: 15px;
+        }
+
+        .search {
+          input{
+            width: 220px;
+          }
         }
       }
     }

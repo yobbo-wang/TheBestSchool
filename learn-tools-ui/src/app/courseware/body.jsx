@@ -62,11 +62,11 @@ class Body extends React.Component{
         }
         return(
             <div>
-                <div className="search">
+                <div className="body-child search">
                     <Input placeholder="请输入授课教师" style={{width: '240px'}}/>
                     <Input placeholder="请输入课件/实验讲义名" style={{width: '240px'}}/>
                     <Button type="primary" icon="search">搜索</Button>
-                    <Button type="primary" icon="plus" onClick={this.handleOnClick.bind(this, '/upcourseware')}>新增</Button>
+                    <Button type="success" icon="plus" onClick={this.handleOnClick.bind(this, '/upcourseware')}>新增</Button>
                     <Button type="primary" icon="edit" disabled={true}>修改</Button>
                     <Button type="primary" icon="delete" disabled={true}>删除</Button>
                 </div>

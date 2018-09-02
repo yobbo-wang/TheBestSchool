@@ -5,7 +5,7 @@
 import React from 'react';
 import {Select,Form,Switch,Button,Input,Tag }from 'element-react';
 
-export default class FillIn extends React.Component{
+export default class Add extends React.Component{
     constructor(props) {
         super(props);
         this.state ={

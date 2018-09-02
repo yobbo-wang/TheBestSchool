@@ -26,10 +26,12 @@ class Index extends React.Component {
         return (
             <div className={"main"}>
                 <Header />
-                <Navigation _navigation_={_navigation_} />
-                <div className={"line"}></div>
                 <div className={"body"}>
-                    <Body />
+                    <Navigation _navigation_={_navigation_} />
+                    <div className={"line"}></div>
+                    <div className={"body-context"}>
+                        <Body />
+                    </div>
                 </div>
                 <Footer />
             </div>

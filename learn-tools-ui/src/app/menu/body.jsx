@@ -1,11 +1,14 @@
 'use strict';
 import React from 'react';
-import {Table, Button} from 'element-react'
+import {Table, Button, Loading} from 'element-react'
+import Add from './add';
 
 class Body extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
+            loading: false, //TODO
+            dialogVisible: false,
             columns: [
                 {
                     type: 'expand',
@@ -44,7 +47,7 @@ class Body extends React.Component{
                             <span>
                                 <Button type="primary" icon="edit" size="small">编辑</Button>
                                 <Button type="danger" icon="delete" size="small">删除</Button>
-                                <Button  type="success" icon="add" size="small">添加子菜单</Button>
+                                <Button  type="success" icon="plus" size="small">添加子菜单</Button>
                             </span>
                         )
                     }
@@ -75,15 +78,30 @@ class Body extends React.Component{
         )
     }
 
+    // child component callback change state. and close Dialog
+    callback(status){
+        this.setState({
+            dialogVisible: false
+        });
+    }
+
     render () {
         return (
-            <Table
-                style={{width: '100%'}}
-                columns={this.state.columns}
-                data={this.state.data}
-                border={true}
-                onExpand={() => {}}
-            />
+            <div>
+                <Loading text="拼命加载中" loading = {this.state.loading}>
+                <div className={"body-child"}>
+                    <Button type="success" icon="plus" onClick={ () => {this.setState({ dialogVisible: true })}} >添加主菜单</Button>
+                    {<Add dialogVisible = {this.state.dialogVisible} callback = {this.callback.bind(this)} />}
+                </div>
+                <Table
+                    style={{width: '100%'}}
+                    columns={this.state.columns}
+                    data={this.state.data}
+                    border={true}
+                    onExpand={() => {}}
+                />
+                </Loading>
+            </div>
         )
     }
 }

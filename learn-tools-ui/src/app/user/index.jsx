@@ -1,8 +1,7 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
+import { instanceOf } from 'prop-types';
 
-import { requestData } from '../../store/main/action'
 import Header from '../component/header';
 import Navigation from '../component/navigation'
 import Body from './body';
@@ -13,18 +12,16 @@ class Index extends React.Component {
     }
 
     componentDidMount(){
-        //set cookie
-        this.props.requestData("1", "dataList");
     }
 
     constructor(props) {
         super(props);
         this.state = {
-        };
+        }
     }
 
     render() {
-        const _navigation_ = [{text: "首页", url: "/"}, {text: "数据统计"}]
+        const _navigation_ = [{text: "首页", url: "/"}, {text: "用户管理"}]
         return (
             <div className={"main"}>
                 <Header />
@@ -41,8 +38,4 @@ class Index extends React.Component {
     }
 }
 
-export default connect(state => ({
-    mainData: state.mainData,
-}), {
-    requestData
-})(Index);
+export default Index;

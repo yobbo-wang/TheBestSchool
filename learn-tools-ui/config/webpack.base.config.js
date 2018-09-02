@@ -10,7 +10,7 @@ module.exports = {
     },
     output:{
         path:path.join(__dirname,"../bulid"),
-        filename:"[name].js",
+        filename:"[name].js"
     },
     resolve:{
         extensions:['.js','.jsx','.json','.css','.less','sass','scss'],

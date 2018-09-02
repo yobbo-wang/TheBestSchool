@@ -3,7 +3,7 @@ import axios from 'axios';
  * 主要params参数
  * @params method {string} 方法名
  * @params url {string} 请求地址  例如：/login 配合baseURL组成完整请求地址
- * @params timeout {number} 请求超时时间 默认 30000
+ * @params timeout {number} 请求超时时间 默认 100000: 10秒
  * @params params {object}  get方式传参key值
  * @params headers {string} 指定请求头信息
  * @params withCredentials {boolean} 请求是否携带本地cookies信息默认开启
@@ -19,7 +19,7 @@ module.exports = (method, url, options) => {
         let _option = {
             method,
             url,
-            timeout: 30000,
+            timeout: 100000,
             params: null,
             data: null,
             headers: null,
