@@ -2,6 +2,8 @@
 import React from 'react';
 import {Table, Button, Loading, Pagination} from 'element-react'
 import Add from './add.jsx';
+import {requestData} from '../../store/user/action'
+import {connect} from "react-redux";
 
 class Body extends React.Component {
     constructor(props) {
@@ -46,12 +48,8 @@ class Body extends React.Component {
         }
     }
 
-    onSizeChange(size) {
-        this.setState({ pageSize: size });
-    }
-
-    onCurrentChange(currentPage){
-        this.setState({ currentPage: currentPage })
+    componentDidMount(){
+        this.props.requestData(this.state.currentPage, this.state.pageSize, "userList");
     }
 
     // child component callback change state. and close Dialog
@@ -80,8 +78,14 @@ class Body extends React.Component {
                                 total={this.state.total}
                                 pageSizes={[10, 20, 30, 40]}
                                 pageSize={10}
-                                onSizeChange={this.onSizeChange.bind(this)}
-                                onCurrentChange={this.onCurrentChange.bind(this)}
+                                onSizeChange={(size)=>{
+                                    this.setState({ pageSize: size });
+                                    this.props.requestData(this.state.currentPage, this.state.pageSize, "userList");
+                                }}
+                                onCurrentChange={(currentPage)=>{
+                                    this.setState({ currentPage: currentPage });
+                                    this.props.requestData(this.state.currentPage, this.state.pageSize, "userList");
+                                }}
                     />
                 </Loading>
             </div>
@@ -89,4 +93,8 @@ class Body extends React.Component {
     }
 }
 
-export default Body;
+export default connect(state => ({
+    usersData: state.usersData,
+}), {
+    requestData
+})(Body);
