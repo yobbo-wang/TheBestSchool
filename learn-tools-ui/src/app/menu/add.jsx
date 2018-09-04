@@ -1,27 +1,30 @@
 'use strict';
 import React from 'react';
-import {Dialog, Button, Form, Input, Select, InputNumber} from 'element-react'
+import {Dialog, Button, Form, Input, InputNumber, Message} from 'element-react'
+import { saveMenu } from '../../store/menu/action';
 
 export default class Add extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            form: {
-                name: '',
-                sort: 1,
-                url: ''
-            },
+            dialogVisible: false,
+            saving: false,
+            form: {},
             rules: {
-                name: [
+                text: [
                     { required: true, message: '请输入菜单名', trigger: 'blur' },
-                ],
-                url: [
-                    { required: true, message: '请输入菜单url', trigger: 'blur' }
-                ],
-                sort: [
-                    { type: 'number', required: true, message: '请输入序号', trigger: 'sort' },
                 ]
             }
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.row.type && (nextProps.row.type == 'menu' || nextProps.row.type == 'auth')){
+            if(!nextProps.row.sort) nextProps.row.sort = 1;
+            this.setState( {
+                dialogVisible: true,
+                form: nextProps.row
+            } );
         }
     }
 
@@ -31,38 +34,49 @@ export default class Add extends React.Component{
         });
     }
 
-    save() {
-        //TODO 保存
-        this.props.callback(false, true)
+    save(e) {
+        e.preventDefault();
+        this.refs.form.validate((valid) => {
+            if(valid){
+                this.setState({ saving: true });
+                saveMenu(this.state.form).then(() => {
+                    this.setState({ saving: false, dialogVisible: false });
+                    Message({ showClose: true, message: '恭喜您，保存成功！', type: 'success' });
+                    this.props.callback(); // callback fetch menu list
+                }).catch((e) => {
+                    console.log(e)
+                    this.setState({ saving: false });
+                    Message({ showClose: true, message: '保存失败！', type: 'error'  });
+                });
+            }
+        });
     }
 
     render(){
         return (
             <Dialog
                 title="菜单编辑"
-                visible={ this.props.dialogVisible }
-                onCancel={ () => this.props.callback(false) }
-                onClose={ () => this.props.callback(false) }
+                visible={ this.state.dialogVisible }
+                onCancel={ () => this.setState({ dialogVisible: false }) }
+                onClose={ () => this.setState({ dialogVisible: false }) }
             >
                 <Dialog.Body>
-                    <Form model={this.state.form} labelPosition={'left'} labelWidth={"80%"} rules={this.state.rules}>
-                        <Form.Item label="菜单名" prop="name">
-                            <Input value={this.state.form.name} icon="menu" onChange={this.onChange.bind(this, 'name')} placeholder="菜单名字数最多15个字" />
+                    <Form model={this.state.form} ref="form" labelPosition={'left'} labelWidth={"80%"} rules={this.state.rules}>
+                        <Form.Item label="菜单名" prop="text">
+                            <Input value={this.state.form.text} icon="menu" onChange={this.onChange.bind(this, 'text')} placeholder="菜单名字数最多15个字" />
                         </Form.Item>
-                        {this.props.type == 'menu' ? null :
-                            <Form.Item label="菜单url" prop="url">
-                                <Input value={this.state.form.url} onChange={this.onChange.bind(this, 'url')} placeholder="菜单url只能为英文、数字、字符组成"></Input>
-                            </Form.Item>
-                        }
+                        <Form.Item label="菜单url">
+                            <Input value={this.state.form.url} onChange={this.onChange.bind(this, 'url')} placeholder="菜单url只能为英文、数字、字符组成"></Input>
+                        </Form.Item>
                         <Form.Item label="序号" prop="sort">
-                            <InputNumber defaultValue={this.state.form.sort} min={"1"} onChange={this.onChange.bind(this, 'sort')}></InputNumber>
+                            <InputNumber value={this.state.form.sort} min={"1"} onChange={this.onChange.bind(this, 'sort')}></InputNumber>
                         </Form.Item>
                     </Form>
                 </Dialog.Body>
 
                 <Dialog.Footer className="dialog-footer">
-                    <Button onClick={ () => this.props.callback(false) }>取 消</Button>
-                    <Button type="primary" onClick={ this.save.bind(this) }>确 定</Button>
+                    <Button onClick={ () => this.setState({ dialogVisible: false }) }>取 消</Button>
+                    <Button type="primary" onClick={ this.save.bind(this) } loading={this.state.saving} >{ this.state.saving ? '保存中...' : '确 定'}</Button>
                 </Dialog.Footer>
             </Dialog>
         )

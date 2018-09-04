@@ -15,7 +15,7 @@ const fetchUserList = (currentPage, pageSize) =>{
     return http.post(environment.url.userList, options)
 }
 
-export const requestData = (currentPage, pageSize, datatype) => {
+export const requestData = (currentPage, pageSize, dataType) => {
     return async dispatch => {
         try {
             let result = await fetchUserList(currentPage, pageSize);
@@ -25,7 +25,7 @@ export const requestData = (currentPage, pageSize, datatype) => {
             dispatch({
                 type: types.REQUESTUSERLIST,
                 value: result,
-                datatype
+                dataType
             })
         }catch (error){
             console.error(error)

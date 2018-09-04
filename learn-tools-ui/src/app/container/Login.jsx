@@ -37,7 +37,7 @@ export default class Login extends React.Component {
             if (valid) {
                 this.setState({loginIng: true});
                 /******************** 调用远程api登录 *********************/
-                let result = http.post(environment.loginUrl, {params: {username: this.state.form.username, password: this.state.form.pwd}});
+                let result = http.post(environment.url.loginUrl, {params: {username: this.state.form.username, password: this.state.form.pwd}});
                 result.then((data) => {
                     setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
                     let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
@@ -78,7 +78,7 @@ export default class Login extends React.Component {
                             <Input type="password" value={this.state.form.pwd} onChange={this.onChange.bind(this, 'pwd')} placeholder="密码"></Input>
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" loading={this.state.loginIng} onClick={this.handleSubmit.bind(this)}>{this.state.loginIng ? '登录中': '登录'}</Button>
+                            <Button type="primary" loading={this.state.loginIng} onClick={this.handleSubmit.bind(this)}>{this.state.loginIng ? '登录中...': '登录'}</Button>
                         </Form.Item>
                     </Form>
                 </div>

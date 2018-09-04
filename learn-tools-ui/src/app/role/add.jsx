@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
-import {Dialog, Button, Form, Input, Checkbox } from 'element-react'
+import {Button, Checkbox, Dialog, Form, Input} from 'element-react'
+import {fetchMenuList} from "../../store/menu/action";
 
 class Add extends React.Component{
     constructor(props){
@@ -22,7 +23,7 @@ class Add extends React.Component{
             isIndeterminate: true,
             menus: ['用户管理', '角色管理', '菜单管理'],
             checkedCities: [],
-
+            menuList: [],
         };
         this.options = {
             label: 'name',
@@ -30,7 +31,13 @@ class Add extends React.Component{
         }
     }
 
+    componentDidMount(){
+        fetchMenuList().then(() => {
 
+        }).catch((e) => {
+            
+        });
+    }
 
     onClose() {
         this.props.callback(false);
@@ -56,7 +63,7 @@ class Add extends React.Component{
     render(){
         return (
             <Dialog
-                title="菜单编辑"
+                title="角色编辑"
                 visible={ this.props.dialogVisible }
                 onCancel={ this.onClose.bind(this) }
                 onClose={() => this.onClose.bind(this)}
@@ -82,6 +89,7 @@ class Add extends React.Component{
                                     }
                                 </Checkbox.Group>
                             </div>
+
                             <div style={{border: 'solid 1px #eaeefb', borderRadius: 4, padding: 5, marginBottom: 5}}>
                                 <Checkbox
                                     checked={this.state.checkAll}

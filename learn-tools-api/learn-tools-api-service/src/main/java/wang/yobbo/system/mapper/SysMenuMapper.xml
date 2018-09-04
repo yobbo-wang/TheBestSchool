@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, text, type, url, pid, sort, create_user_id, create_time
+    id, text, type, url, pid, sort, create_user_id, create_time, (select name from `sys_user` u where u.id = create_user_id) userUserName
   </sql>
   <select id="selectByExample" parameterType="wang.yobbo.system.model.SysMenuCriteria" resultMap="BaseResultMap">
     select
@@ -260,7 +260,9 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="findMenuByParentId" resultType="wang.yobbo.system.model.SysMenu">
-        SELECT id,text,type,pid,url,sort FROM `sys_menu` WHERE pid = #{id} ORDER BY `sort` ASC
+        SELECT
+          <include refid="Base_Column_List" />
+        FROM `sys_menu` WHERE pid = #{id} ORDER BY `sort` ASC
     </select>
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 </mapper>

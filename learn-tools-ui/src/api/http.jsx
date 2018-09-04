@@ -6,6 +6,7 @@
 
 'use strict';
 import $axios from './axiosConfig'
+import {Message} from "element-react";
 
 export default class http {
     /**
@@ -20,7 +21,7 @@ export default class http {
             if(result.success){
                 return result.data;
             }else{
-                throw result.errorMsg;
+                throw {errorCode: result.errorCode, errorMsg: result.errorMsg};
             }
         }catch(error){
             throw error
@@ -39,7 +40,7 @@ export default class http {
             if(result.success){
                 return result.data;
             }else{
-                throw result.errorMsg;
+                throw {errorCode: result.errorCode, errorMsg: result.errorMsg};
             }
         }catch(error){
             throw error;
@@ -58,7 +59,8 @@ export default class http {
             if(result.success){
                 return result.data;
             }else{
-                throw result.errorMsg;
+                Message({ showClose: true, message:  result.errorMsg ?  result.errorMsg : '系统异常', type: 'error'  });
+                throw {errorCode: result.errorCode, errorMsg: result.errorMsg};
             }
         }catch (error){
             throw error;
@@ -71,13 +73,13 @@ export default class http {
      * @param params
      * @returns {Promise<void>}
      */
-    static async put(url, params){
+    static async put(url, options){
         try{
             let result = await new $axios('put',url, options );
             if(result.success){
                 return result.data;
             }else{
-                throw result.errorMsg;
+                throw {errorCode: result.errorCode, errorMsg: result.errorMsg};
             }
         }catch (error){
             throw error;
@@ -96,7 +98,7 @@ export default class http {
             if(result.success){
                 return result.data;
             }else{
-                throw result.errorMsg;
+                throw {errorCode: result.errorCode, errorMsg: result.errorMsg};
             }
         }catch (error){
             throw error;

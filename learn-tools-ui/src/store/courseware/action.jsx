@@ -16,7 +16,7 @@ const fetchCoursewareList = (currentPage, pageSize) =>{
 }
 
 //初始化获取数据列表，保存至redux
-export const queryCourseWareDate = (currentPage, pageSize, datatype) => {
+export const queryCourseWareDate = (currentPage, pageSize, dataType) => {
     // 返回函数，异步dispatch
     return async dispatch => {
         try {
@@ -27,7 +27,7 @@ export const queryCourseWareDate = (currentPage, pageSize, datatype) => {
             dispatch({
                 type: types.QUERYLIST,
                 value: result,
-                datatype
+                dataType
             })
         }catch (error){
             console.error(error)

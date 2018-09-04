@@ -2,6 +2,9 @@ package wang.yobbo.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import wang.yobbo.system.model.SysUser;
+import wang.yobbo.system.model.SysUserCriteria;
+import wang.yobbo.system.service.SysUserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +43,17 @@ public class SystemUtils {
                 .parseClaimsJws(token)
                 .getBody();
         return body.get("roles", List.class);
+    }
+
+    public static String getSysUserName(SysUserService sysUserService, String id){
+        if(id == null || sysUserService == null) return new String();
+        SysUserCriteria sysUserCriteria = new SysUserCriteria();
+        SysUserCriteria.Criteria criteria = sysUserCriteria.createCriteria();
+        criteria.andIdEqualTo(id);
+        SysUser sysUser = sysUserService.selectFirstByExample(sysUserCriteria);
+        if(sysUser != null ){
+            return sysUser.getName();
+        }
+        return new String();
     }
 }

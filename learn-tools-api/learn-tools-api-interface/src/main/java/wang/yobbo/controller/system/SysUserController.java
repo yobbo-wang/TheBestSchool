@@ -1,4 +1,4 @@
-package wang.yobbo.controller.user;
+package wang.yobbo.controller.system;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

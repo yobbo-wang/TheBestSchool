@@ -9,7 +9,7 @@ export const coursewareData = (state = initState , action = {}) => {
         case courseware.QUERYLIST:
             return {
                 ...state,
-                ...{[action.datatype]: action.value}
+                ...{[action.dataType]: action.value}
             };
         default:
             return {...state};

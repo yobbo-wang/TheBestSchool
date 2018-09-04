@@ -21,12 +21,15 @@ const generateUrl = (baseUrl) => {
     return{
         oosUrl: oosUrl,
         oosAuthorization: "",
-        loginUrl: baseURL + '/login',   //登录
-        logoutUrl: baseURL + '/logout', //注销
+        loginUrl: baseURL + 'login',   //登录
+        logoutUrl: baseURL + 'logout', //注销
         checkAuth: baseUrl + version + '/auth/check',  //检查authorization可用性
         learn:  baseUrl + version + '/learn/index',
         mainList: baseUrl + version + '/main/list',
-        menuList: baseUrl + version + '/menu/list',
+        menuList: baseUrl + version + '/menu/list',  //查询菜单列表
+        saveMenu: baseUrl + version + '/menu/edit',  //保存或更新菜单
+        roleList:  baseUrl + version + '/role/list',  //查询角色列表
+        saveRole: baseUrl + version + '/role/edit',  //保存或更新角色
         userList: baseUrl + version + '/user/list',
         coursewareList: baseUrl + version + '/courseware/list',
         sysRoleQuery: baseUrl + version + '/sysLoginInterface/signIn',

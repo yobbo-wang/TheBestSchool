@@ -9,7 +9,7 @@ export const usersData = (state = initState , action = {}) => {
         case types.REQUESTUSERLIST:
             return {
                 ...state,
-                ...{[action.datatype]: action.value}
+                ...{[action.dataType]: action.value}
             };
         default:
             return {...state};

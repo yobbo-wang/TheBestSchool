@@ -1,18 +1,18 @@
 'use strict';
 import React from 'react';
-import {Table, Button, Loading} from 'element-react'
+import {Button, Loading, Table} from 'element-react'
 import Add from './add';
-import { requestMenuData } from '../../store/menu/action';
+import {requestMenuData} from '../../store/menu/action';
 import {connect} from "react-redux";
 
 class Body extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            loading: false, //TODO
             dialogVisible: false,
-            type: '',
-            menuId: '',
+            row:{
+              type: ''
+            },
             columns: [
                 {
                     type: 'expand',
@@ -25,14 +25,14 @@ class Body extends React.Component{
                                 return (
                                     <span>
                                         <Button type="primary" icon="edit" size="small" onClick={()=>{
-                                            this.setState({ dialogVisible: true,type: data.type,menuId: data.id})
+                                            this.setState({ row: { id:data.id, text: data.text, type: data.type, sort: data.sort, url: data.url, pid: data.pid } })
                                         }}>编辑</Button>
                                         <Button type="danger" icon="delete" size="small">删除</Button>
                                     </span>
                                 )
                             }
                         })
-                        const _data_ = [{id: "1", name: '首页控制2', url: '/main/list', type: 'auth'}]
+                        const _data_ = data.children;
                         return (
                             <Table
                                 style={{borderTop: 0}}
@@ -52,52 +52,45 @@ class Body extends React.Component{
                         return (
                             <span>
                                 <Button type="primary" icon="edit" size="small" onClick={()=>{
-                                    this.setState({ dialogVisible: true,type: data.type,menuId: data.id})
+                                    this.setState({ row: { id:data.id, text: data.text, type: data.type, sort: data.sort, url: data.url } })
                                 }} >编辑</Button>
                                 <Button type="danger" icon="delete" size="small">删除</Button>
                                 <Button  type="success" icon="plus" size="small" onClick={()=>{
-                                    this.setState({ dialogVisible: true,type: 'auth',menuId: data.id})
+                                    this.setState({ row: { type: 'auth', pid: data.id } })
                                 }} >添加功能菜单</Button>
                             </span>
                         )
                     }
                 }
-            ],
-
-            data: [{
-                id: "1",
-                name: '首页控制',
-                url: '/main',
-                type: 'menu'
-            }, {
-                id: "2",
-                name: '用户管理',
-                url: '/user',
-                type: 'menu'
-            }]
+            ]
         }
     }
 
     getColumns() {
         return (
             [
-                {label: "菜单名称", prop: "name", width: 180},
-                {label: "菜单url", prop: "url", width: 360},
-                {label: "菜单类型", prop: "type", width: 150}
+                {label: "菜单名称", prop: "text", width: 180},
+                {label: "菜单url", prop: "url", width: 200},
+                {label: "菜单类型", prop: "type", width: 150},
+                {label: "创建人", prop: "userUserName", width: 150},
+                {label: "创建时间", prop: "createTime", width: 170},
             ]
         )
     }
 
     // child component callback change state. and close Dialog
-    callback(status, saveResult){
-        this.setState({
-            dialogVisible: false
+    callback(){
+        this.setState({ loading : true, row: {} });
+        this.props.requestMenuData("menuList").then(() => {
+            this.setState({ loading : false });
         });
-        if(saveResult) this.props.requestMenuData("menuList");
     }
 
     componentDidMount(){
-        this.props.requestMenuData("menuList");
+        this.setState({ loading : true });
+        this.props.requestMenuData("menuList").then(() => {
+            this.setState({ loading : false });
+        });
     }
 
     render () {
@@ -106,14 +99,14 @@ class Body extends React.Component{
                 <Loading text="拼命加载中" loading = {this.state.loading}>
                 <div className={"body-child"}>
                     <Button type="success" icon="plus" onClick={()=>{
-                        this.setState({ dialogVisible: true, type: 'menu'})
+                        this.setState({ row: { type: 'menu' } })
                     }} >添加主菜单</Button>
-                    {<Add dialogVisible = {this.state.dialogVisible} callback = {this.callback.bind(this)} type={this.state.type} id={this.state.menuId} />}
+                    {<Add callback = {this.callback.bind(this)} row={this.state.row} />}
                 </div>
                 <Table
                     style={{width: '100%'}}
                     columns={this.state.columns}
-                    data={this.state.data}
+                    data={this.props.menuData.menuList}
                     border={true}
                     onExpand={() => {}}
                 />

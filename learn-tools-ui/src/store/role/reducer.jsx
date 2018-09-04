@@ -1,12 +1,12 @@
-import * as menu from './type';
+import * as role from './type';
 
 const initState = {
-    menuList: [],
+    roleList: [],
 }
 
-export const menuData = (state = initState , action = {}) => {
+export const roleData = (state = initState , action = {}) => {
     switch(action.type){
-        case menu.QUESTMENULIST:
+        case role.QUESTROLELIST:
             return {
                 ...state,
                 ...{[action.dataType]: action.value}

@@ -36,7 +36,6 @@ export default class Add extends React.Component{
 
     handleSubmit(e) {
         e.preventDefault();
-        debugger
         this.refs.form.validate((valid) => {
             if (valid) {
                 let active = this.state.active + 1;

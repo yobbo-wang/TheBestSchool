@@ -54,6 +54,8 @@ public class SysMenu implements Serializable {
      */
     private String createUserId;
 
+    private String userUserName;
+
     /**
      * 创建时间
      *
@@ -135,6 +137,14 @@ public class SysMenu implements Serializable {
 
     public void setChildren(List<SysMenu> children) {
         this.children = children;
+    }
+
+    public String getUserUserName() {
+        return userUserName;
+    }
+
+    public void setUserUserName(String userUserName) {
+        this.userUserName = userUserName;
     }
 
     @Override
