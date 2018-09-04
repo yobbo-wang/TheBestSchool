@@ -4,31 +4,32 @@
 'use strict';
 import {getAuthorization} from "../utils/cookieUtil";
 
-const URL = () =>{
-    if(process.env.NODE_ENV === 'development'){
-        return {
-            version: "v1",
-            baseURL: 'http://127.0.0.1:8888',
-            // baseURL: 'http://rap2api.taobao.org/app/mock/26023',
-            oosUrl: 'http://v0.api.upyun.com/learn-files-upyun'
-        }
-    }else{
-        return{
-            version: "v1",
-            baseURL: 'http://rap2api.taobao.org/app/mock/26023',
-            oosUrl: 'http://v0.api.upyun.com/learn-files-upyun'
-        }
-    }
+const version = "v1";
+let baseURL; // sAAs服务地址
+let oosUrl; //又拍云对象存储url
+
+if(process.env.NODE_ENV === 'development'){
+    baseURL = 'http://127.0.0.1:8888/',
+        // baseURL: 'http://rap2api.taobao.org/app/mock/26023',
+    oosUrl = 'http://v0.api.upyun.com/learn-files-upyun'
+}else{
+    baseURL = 'http://rap2api.taobao.org/app/mock/26023/',
+    oosUrl = 'http://v0.api.upyun.com/learn-files-upyun'
 }
 
 const generateUrl = (baseUrl) => {
     return{
-        checkAuth: baseUrl + '/auth/check',
-        userList: baseUrl + '/user/list',
-        learn: baseUrl + '/learn/index',
-        mainList: baseUrl + '/main/list',
-        coursewareList: baseUrl + '/courseware/list',
-        sysRoleQuery: baseUrl + '/sysLoginInterface/signIn'
+        oosUrl: oosUrl,
+        oosAuthorization: "",
+        loginUrl: baseURL + '/login',   //登录
+        logoutUrl: baseURL + '/logout', //注销
+        checkAuth: baseUrl + version + '/auth/check',  //检查authorization可用性
+        learn:  baseUrl + version + '/learn/index',
+        mainList: baseUrl + version + '/main/list',
+        menuList: baseUrl + version + '/menu/list',
+        userList: baseUrl + version + '/user/list',
+        coursewareList: baseUrl + version + '/courseware/list',
+        sysRoleQuery: baseUrl + version + '/sysLoginInterface/signIn',
     }
 }
 
@@ -37,11 +38,7 @@ const generateUrl = (baseUrl) => {
  * @type {{url: {learnUrl, login, mainList}}}
  */
 export const environment = {
-    url: generateUrl(URL().baseURL + '/' + URL().version),
-    loginUrl: URL().baseURL + '/login',
-    logoutUrl: URL().baseURL + '/logout',
-    oosUrl: URL().oosUrl,
-    oosAuthorization: ""
+    url: generateUrl(baseURL)
 }
 
 export const getToken = () => {
