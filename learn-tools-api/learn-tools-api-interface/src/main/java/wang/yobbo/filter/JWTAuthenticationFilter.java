@@ -1,10 +1,16 @@
 package wang.yobbo.filter;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import wang.yobbo.auth.impl.GrantedAuthorityImpl;
 import wang.yobbo.util.ConstantKey;
 
 import javax.servlet.FilterChain;
@@ -13,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * token的校验
@@ -43,14 +51,15 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader("Authorization");
         if (token != null) {
             // parse the token.
-            String user = Jwts.parser()
+            Claims user = Jwts.parser()
                     .setSigningKey(ConstantKey.SIGNING_KEY)
                     .parseClaimsJws(token.replace("Bearer ", ""))
-                    .getBody()
-                    .getSubject();
+                    .getBody();
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            String userId = user.get("userId", String.class);
+
+            if (StringUtils.isNotBlank(userId)) {
+                return new UsernamePasswordAuthenticationToken(user, null, null);
             }
             return null;
         }

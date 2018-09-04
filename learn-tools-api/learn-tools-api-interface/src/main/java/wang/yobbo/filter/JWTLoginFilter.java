@@ -11,8 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import wang.yobbo.auth.impl.UserDetailsCustomer;
 import wang.yobbo.common.base.BaseResult;
-import wang.yobbo.main.controller.MainController;
+import wang.yobbo.controller.main.MainController;
 import wang.yobbo.util.ConstantKey;
 
 import javax.servlet.FilterChain;
@@ -65,8 +66,9 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             roleList.add(grantedAuthority.getAuthority());
         }
         String token = Jwts.builder()
-                .setSubject(auth.getName() + "-" + roleList)
-                .setExpiration(new Date(System.currentTimeMillis() + ConstantKey.SINGING_KEY_VALIDITY)) //token有效期 TODO 可以动态设置
+                .claim("userId", auth.getPrincipal())
+                .claim("roles", roleList)
+                .setExpiration(new Date(System.currentTimeMillis() + ConstantKey.SINGING_KEY_VALIDITY)) //token有效期时间戳
                 .signWith(SignatureAlgorithm.HS512, ConstantKey.SIGNING_KEY)
                 .compact();
         LOGGER.info("ip = {} 登录系统, token = {}", request.getRemoteHost() , token);

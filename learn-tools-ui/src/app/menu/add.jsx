@@ -31,6 +31,11 @@ export default class Add extends React.Component{
         });
     }
 
+    save() {
+        //TODO 保存
+        this.props.callback(false, true)
+    }
+
     render(){
         return (
             <Dialog
@@ -44,9 +49,11 @@ export default class Add extends React.Component{
                         <Form.Item label="菜单名" prop="name">
                             <Input value={this.state.form.name} icon="menu" onChange={this.onChange.bind(this, 'name')} placeholder="菜单名字数最多15个字" />
                         </Form.Item>
-                        <Form.Item label="菜单url" prop="url">
-                            <Input value={this.state.form.url} onChange={this.onChange.bind(this, 'url')} placeholder="菜单url只能为英文、数字、字符组成"></Input>
-                        </Form.Item>
+                        {this.props.type == 'menu' ? null :
+                            <Form.Item label="菜单url" prop="url">
+                                <Input value={this.state.form.url} onChange={this.onChange.bind(this, 'url')} placeholder="菜单url只能为英文、数字、字符组成"></Input>
+                            </Form.Item>
+                        }
                         <Form.Item label="序号" prop="sort">
                             <InputNumber defaultValue={this.state.form.sort} min={"1"} onChange={this.onChange.bind(this, 'sort')}></InputNumber>
                         </Form.Item>
@@ -55,7 +62,7 @@ export default class Add extends React.Component{
 
                 <Dialog.Footer className="dialog-footer">
                     <Button onClick={ () => this.props.callback(false) }>取 消</Button>
-                    <Button type="primary" onClick={ () => this.props.callback(false) }>确 定</Button>
+                    <Button type="primary" onClick={ this.save.bind(this) }>确 定</Button>
                 </Dialog.Footer>
             </Dialog>
         )

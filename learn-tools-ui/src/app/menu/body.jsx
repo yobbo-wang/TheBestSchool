@@ -2,6 +2,8 @@
 import React from 'react';
 import {Table, Button, Loading} from 'element-react'
 import Add from './add';
+import { requestMenuData } from '../../store/menu/action';
+import {connect} from "react-redux";
 
 class Body extends React.Component{
     constructor(props){
@@ -9,6 +11,8 @@ class Body extends React.Component{
         this.state = {
             loading: false, //TODO
             dialogVisible: false,
+            type: '',
+            menuId: '',
             columns: [
                 {
                     type: 'expand',
@@ -17,10 +21,12 @@ class Body extends React.Component{
                         _columns_.push({
                             label: "操作",
                             prop: "operation",
-                            render: function(data){
+                            render: (data) => {
                                 return (
                                     <span>
-                                        <Button type="primary" icon="edit" size="small">编辑</Button>
+                                        <Button type="primary" icon="edit" size="small" onClick={()=>{
+                                            this.setState({ dialogVisible: true,type: data.type,menuId: data.id})
+                                        }}>编辑</Button>
                                         <Button type="danger" icon="delete" size="small">删除</Button>
                                     </span>
                                 )
@@ -42,12 +48,16 @@ class Body extends React.Component{
                 {
                     label: "操作",
                     prop: "operation",
-                    render: function(data){
+                    render: (data) => {
                         return (
                             <span>
-                                <Button type="primary" icon="edit" size="small">编辑</Button>
+                                <Button type="primary" icon="edit" size="small" onClick={()=>{
+                                    this.setState({ dialogVisible: true,type: data.type,menuId: data.id})
+                                }} >编辑</Button>
                                 <Button type="danger" icon="delete" size="small">删除</Button>
-                                <Button  type="success" icon="plus" size="small">添加子菜单</Button>
+                                <Button  type="success" icon="plus" size="small" onClick={()=>{
+                                    this.setState({ dialogVisible: true,type: 'auth',menuId: data.id})
+                                }} >添加功能菜单</Button>
                             </span>
                         )
                     }
@@ -79,10 +89,15 @@ class Body extends React.Component{
     }
 
     // child component callback change state. and close Dialog
-    callback(status){
+    callback(status, saveResult){
         this.setState({
             dialogVisible: false
         });
+        if(saveResult) this.props.requestMenuData("menuList");
+    }
+
+    componentDidMount(){
+        this.props.requestMenuData("menuList");
     }
 
     render () {
@@ -90,8 +105,10 @@ class Body extends React.Component{
             <div>
                 <Loading text="拼命加载中" loading = {this.state.loading}>
                 <div className={"body-child"}>
-                    <Button type="success" icon="plus" onClick={ () => {this.setState({ dialogVisible: true })}} >添加主菜单</Button>
-                    {<Add dialogVisible = {this.state.dialogVisible} callback = {this.callback.bind(this)} />}
+                    <Button type="success" icon="plus" onClick={()=>{
+                        this.setState({ dialogVisible: true, type: 'menu'})
+                    }} >添加主菜单</Button>
+                    {<Add dialogVisible = {this.state.dialogVisible} callback = {this.callback.bind(this)} type={this.state.type} id={this.state.menuId} />}
                 </div>
                 <Table
                     style={{width: '100%'}}
@@ -106,4 +123,8 @@ class Body extends React.Component{
     }
 }
 
-export default Body;
+export default connect(state => ({
+    menuData: state.menuData,
+}), {
+    requestMenuData
+})(Body);

@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 主从配置 dataSourceConfig
+ */
 @Configuration
 public class DataSourceConfig {
 
@@ -94,6 +97,8 @@ public class DataSourceConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeAliasesPackage(this.environment.getProperty("mybatis.typeAliasesPackage"));
+        sqlSessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver()
+                .getResource(this.environment.getProperty("mybatis.configLocation")));
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources(this.environment.getProperty("mybatis.mapperLocations")));
         return sqlSessionFactoryBean.getObject();
