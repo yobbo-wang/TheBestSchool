@@ -24,6 +24,7 @@ const URL = () =>{
 const generateUrl = (baseUrl) => {
     return{
         checkAuth: baseUrl + '/auth/check',
+        userList: baseUrl + '/user/list',
         learn: baseUrl + '/learn/index',
         mainList: baseUrl + '/main/list',
         coursewareList: baseUrl + '/courseware/list',
