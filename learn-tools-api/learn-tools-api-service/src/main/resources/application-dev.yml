@@ -5,12 +5,22 @@ master:
     driverClassName: com.mysql.jdbc.Driver
     username: root
     password: rWd3Hb+AzNg3IXF1b5vD+g==
+    initialSize: 1
+    minIdle: 1
+    maxActive: 20
+    maxWaitMillis: 60000
+    timeBetweenEvictionRunsMillis: 60000
 slave:
   jdbc:
     url: jdbc:mysql://dbserver:3306/learn_tools?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     driverClassName: com.mysql.jdbc.Driver
     username: root
     password: rWd3Hb+AzNg3IXF1b5vD+g==
+    initialSize: 1
+    minIdle: 1
+    maxActive: 20
+    maxWaitMillis: 60000
+    timeBetweenEvictionRunsMillis: 60000
 
 #跨域域名限制访问
 admin:

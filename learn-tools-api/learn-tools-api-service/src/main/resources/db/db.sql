@@ -27,7 +27,7 @@ CREATE TABLE `sys_menu`  (
   `type` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '菜单类型(menu|auth）',
   `url` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单url',
   `pid` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级菜单id',
-  `sort` int(255) NOT NULL DEFAULT '' COMMENT '序号',
+  `sort` int(255) NOT NULL DEFAULT 1 COMMENT '序号',
   `create_user_id` varchar(0) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人id',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY USING BTREE (`id`)

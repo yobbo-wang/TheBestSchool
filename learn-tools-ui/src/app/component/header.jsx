@@ -10,9 +10,29 @@ class Header extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            menuDefaultActive : "1",
-            onSelectSettingActive : "1"
+            onSelectSettingActive : "1",
+            menuDefaultActive: "",
+            menu: [],
         };
+    }
+
+    componentDidMount(){
+        let menu = [
+            {id: "AAA1", text: "数据统计", url: "/", children: []},
+            {id: "2AA", text: "学习资料", url: "", children:[
+                    {id: "2aaa1", text: "精品课件", url: "/courseware", children: []},
+                    {id: "2aa1aaa", text: "实验讲义", url: "", children: []},
+                ]},
+            {id: "aa3aaa", text: "系统设置", url: "", children:[
+                    {id: "a2a22", text: "用户管理", url: "/user", children: []},
+                    {id: "aaaa", text: "角色管理", url: "/role", children: []},
+                    {id: "3aaaa2", text: "菜单管理", url: "/menu", children: []},
+                ]},
+        ];
+        this.setState({
+            menu: menu,
+            menuDefaultActive: menu[0].id
+        });
     }
 
     onSelectMenu(index){
@@ -33,18 +53,22 @@ class Header extends React.Component{
                 </Layout.Col>
                 <Layout.Col span="14" className="header-col">
                     <Menu defaultActive={this.state.menuDefaultActive} theme="dark" className="nav" mode="horizontal" onSelect={this.onSelectMenu.bind(this)}>
-                        <Menu.Item index="1" className="nav-customer" ><NavLink to={"/"} exact style={{textDecoration:'none',display:"block"}}>数据统计</NavLink></Menu.Item>
-                        <Menu.SubMenu index="2" title="学习资料">
-                            <Menu.Item index="2-1"><NavLink to={"/courseware"} exact style={{textDecoration:'none',display:"block"}}>精品课件</NavLink></Menu.Item>
-                            <Menu.Item index="2-2">实验讲义</Menu.Item>
-                            <Menu.Item index="2-3">精选视频</Menu.Item>
-                            <Menu.Item index="2-4">网络精品课</Menu.Item>
-                        </Menu.SubMenu>
-                        <Menu.SubMenu index={"3"} title={"系统设置"} >
-                            <Menu.Item index="3-1"><NavLink to={"/user"} exact style={{textDecoration:'none',display:"block"}}>用户管理</NavLink></Menu.Item>
-                            <Menu.Item index="3-2"><NavLink to={"/role"} exact style={{textDecoration:'none',display:"block"}}>角色管理</NavLink></Menu.Item>
-                            <Menu.Item index="3-3"><NavLink to={"/menu"} exact style={{textDecoration:'none',display:"block"}}>菜单管理</NavLink></Menu.Item>
-                        </Menu.SubMenu>
+                        {
+                            this.state.menu.map((item, index) => {
+                                return(
+                                    item.children.length == 0 ?
+                                        <Menu.Item key={item.id} index={item.id} className="nav-customer" ><NavLink to={item.url} exact style={{textDecoration:'none',display:"block"}}>{item.text}</NavLink></Menu.Item>
+                                        :
+                                        <Menu.SubMenu key={item.id} index={item.id} title={item.text}>
+                                            {
+                                                item.children.map((item_c, index_c) => {
+                                                    return <Menu.Item key={item_c.id} index={item_c.id}><NavLink to={item_c.url} exact style={{textDecoration:'none',display:"block"}}>{item_c.text}</NavLink></Menu.Item>
+                                                })
+                                            }
+                                        </Menu.SubMenu>
+                                )
+                            })
+                        }
                     </Menu>
                 </Layout.Col>
                 <Layout.Col span="5" className = "header-col">

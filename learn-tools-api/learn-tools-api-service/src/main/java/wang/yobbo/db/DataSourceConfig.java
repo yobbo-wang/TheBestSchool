@@ -37,9 +37,11 @@ public class DataSourceConfig {
             props.setProperty("driverClassName", environment.getProperty("master.jdbc.driverClassName"));
             props.setProperty("username", environment.getProperty("master.jdbc.username"));
             props.setProperty("password", AESUtil.aesDecode(environment.getProperty("master.jdbc.password")));
-            props.setProperty("initialSize", "1");
-            props.setProperty("minIdle", "1");
-            props.setProperty("maxActive", "20");
+            props.setProperty("initialSize", environment.getProperty("master.jdbc.initialSize"));
+            props.setProperty("minIdle", environment.getProperty("master.jdbc.minIdle"));
+            props.setProperty("maxActive", environment.getProperty("master.jdbc.maxActive"));
+            props.setProperty("maxWaitMillis", environment.getProperty("master.jdbc.maxWaitMillis"));
+            props.setProperty("timeBetweenEvictionRunsMillis", environment.getProperty("master.jdbc.timeBetweenEvictionRunsMillis"));
             return DruidDataSourceFactory.createDataSource(props);
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,9 +57,11 @@ public class DataSourceConfig {
             props.setProperty("driverClassName", environment.getProperty("slave.jdbc.driverClassName"));
             props.setProperty("username", environment.getProperty("slave.jdbc.username"));
             props.setProperty("password", AESUtil.aesDecode(environment.getProperty("slave.jdbc.password")));
-            props.setProperty("initialSize", "1");
-            props.setProperty("minIdle", "1");
-            props.setProperty("maxActive", "20");
+            props.setProperty("initialSize", environment.getProperty("master.jdbc.initialSize"));
+            props.setProperty("minIdle", environment.getProperty("master.jdbc.minIdle"));
+            props.setProperty("maxActive", environment.getProperty("master.jdbc.maxActive"));
+            props.setProperty("maxWaitMillis", environment.getProperty("master.jdbc.maxWaitMillis"));
+            props.setProperty("timeBetweenEvictionRunsMillis", environment.getProperty("master.jdbc.timeBetweenEvictionRunsMillis"));
             return DruidDataSourceFactory.createDataSource(props);
         } catch (Exception e) {
             e.printStackTrace();

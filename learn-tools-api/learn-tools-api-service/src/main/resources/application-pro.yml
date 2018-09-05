@@ -5,12 +5,22 @@ master:
     driverClassName: com.mysql.jdbc.Driver
     username: learn_user
     password: e1Hkm3oWzLTeky08EQ+PcA==
+    initialSize: 1
+    minIdle: 1
+    maxActive: 20
+    maxWaitMillis: 60000
+    timeBetweenEvictionRunsMillis: 60000
 slave:
   jdbc:
       url: jdbc:mysql://db4free.net:3307/learn-tools?characterEncoding=utf8
       driverClassName: com.mysql.jdbc.Driver
       username: learn_user
       password: e1Hkm3oWzLTeky08EQ+PcA==
+      initialSize: 1
+      minIdle: 1
+      maxActive: 20
+      maxWaitMillis: 60000
+      timeBetweenEvictionRunsMillis: 60000
 
 #跨域域名限制访问
 admin:

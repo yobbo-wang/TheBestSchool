@@ -16,31 +16,31 @@ class PrivateRouter extends React.Component {
 
     componentDidMount() {
         /**************** 开启api校验 ****************/
-        const authorization =  getToken().authorization;
-        if(authorization == "") {
-            this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
-        }
-        let options = {
-            headers: {
-                Authorization: authorization
-            }
-        }
-        http.head(environment.url.checkAuth, options).then(() => {
-           this.setState({
-               isAuthenticated: true
-           })
-        }).catch(() => {
-            this.setState({
-                isAuthenticated: false
-            })
-            this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
-        })
+        // const authorization =  getToken().authorization;
+        // if(authorization == "") {
+        //     this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
+        // }
+        // let options = {
+        //     headers: {
+        //         Authorization: authorization
+        //     }
+        // }
+        // http.head(environment.url.checkAuth, options).then(() => {
+        //    this.setState({
+        //        isAuthenticated: true
+        //    })
+        // }).catch(() => {
+        //     this.setState({
+        //         isAuthenticated: false
+        //     })
+        //     this.props.history.push({ pathname: `/login`, state: {path: this.props.path}})
+        // })
         /*******************************************/
 
         /*********关闭api校验*********/
-            // this.setState({
-            //     isAuthenticated: true
-            // })
+            this.setState({
+                isAuthenticated: true
+            })
         /*****************/
     }
 
