@@ -4,7 +4,7 @@ import {environment, getToken} from '../../api/environment'
 
 const fetchCoursewareList = (currentPage, pageSize) =>{
     let options = {
-        params: {
+        data: {
             currentPage: currentPage,
             pageSize: pageSize
         },

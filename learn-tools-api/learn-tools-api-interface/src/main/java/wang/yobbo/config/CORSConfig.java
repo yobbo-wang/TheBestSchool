@@ -27,7 +27,7 @@ public class CORSConfig {
         corsConfiguration.setAllowedOrigins(origins); // 1.允许任何域名使用
         corsConfiguration.addAllowedHeader("*"); // 2. 请求头
         corsConfiguration.addAllowedMethod("*"); // 3. 方法
-        corsConfiguration.setMaxAge((36000L));
+        corsConfiguration.setMaxAge((3600L));
         corsConfiguration.setAllowCredentials(true);
         return corsConfiguration;
     }

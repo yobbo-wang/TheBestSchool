@@ -20,3 +20,11 @@ export const formarDateT = (d) =>{
     let _d_ = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
     return _d_;
 }
+
+export const fromatObjectToformData= (d) =>{
+    let data = [];
+    for(let key in d){
+        data.push(key + "=" + d[key]);
+    }
+    return data.join('&');
+}

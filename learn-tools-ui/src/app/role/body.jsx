@@ -53,9 +53,10 @@ class Body extends React.Component {
     }
 
     // child component callback change state. and close Dialog
-    callback(status){
-        this.setState({
-            dialogVisible: false
+    callback(){
+        this.setState({ loading : true });
+        this.props.requestRoleData("roleList").then(() => {
+            this.setState({ loading : false });
         });
     }
 

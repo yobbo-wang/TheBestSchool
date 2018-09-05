@@ -4,9 +4,11 @@
  *  {"data": [], "success": true, "errorCode": 0, "errorMsg": ""}
  */
 
+
 'use strict';
 import $axios from './axiosConfig'
 import {Message} from "element-react";
+import {fromatObjectToformData} from "../utils/comUtil";
 
 export default class http {
     /**
@@ -29,13 +31,16 @@ export default class http {
     }
 
     /**
-     * ajax post
+     * ajax post 主要用于form表单提交
      * @param url
      * @param params
      * @returns {Promise<*>}
      */
     static async post(url, options){
         try{
+            if(options.data &&  typeof options == 'object'){
+                options.data = fromatObjectToformData(options.data);
+            }
             let result = await new $axios('post',url, options );
             if(result.success){
                 return result.data;

@@ -2,6 +2,7 @@ import * as types from './type';
 import http from '../../api/http'
 import {environment, getToken} from '../../api/environment'
 
+
 /**
  * 保存菜单
  * @param params
@@ -9,12 +10,12 @@ import {environment, getToken} from '../../api/environment'
  */
 export const saveMenu = (params) => {
     let options = {
-        params: params,
+        data: params,
         headers: {
             Authorization: getToken().authorization
         }
     }
-    return http.put(environment.url.saveMenu, options);
+    return http.post(environment.url.saveMenu, options);
 }
 
 /**

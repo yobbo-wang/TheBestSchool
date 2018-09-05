@@ -4,7 +4,7 @@ import {environment, getToken} from '../../api/environment'
 
 const fetchMainList = (currentPage) =>{
     let options = {
-        params: {
+        data: {
             currentPage: currentPage,
             pageSize: 10
         },

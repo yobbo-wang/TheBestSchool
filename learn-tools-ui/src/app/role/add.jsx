@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
-import {Button, Checkbox, Dialog, Form, Input} from 'element-react'
+import {Button, Checkbox, Dialog, Form, Input, Message} from 'element-react'
+import {saveRole} from "../../store/role/action";
 
 class Add extends React.Component{
     constructor(props){
@@ -21,6 +22,12 @@ class Add extends React.Component{
 
     onClose() {
         this.props.callback(false);
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState( {
+            dialogVisible: nextProps.dialogVisible
+        } );
     }
 
     onChange(key, value) {
@@ -82,9 +89,17 @@ class Add extends React.Component{
                 }
                 let params = {
                     name: this.state.form.name,
-                    auths: menuAuth
+                    menuAuth: JSON.stringify(menuAuth)
                 };
-                //TODO 保存
+                this.setState({ saving: true });
+                saveRole(params).then(() => {
+                    Message({ showClose: true, message: '恭喜您，保存成功！', type: 'success' });
+                    this.props.callback(); // callback fetch menu list
+                }).catch(e => {
+                    console.log(e)
+                    this.setState({ saving: false });
+                    Message({ showClose: true, message: '保存失败！', type: 'error'  });
+                })
             }
         });
     }
@@ -93,9 +108,9 @@ class Add extends React.Component{
         return (
             <Dialog
                 title="角色编辑"
-                visible={ this.props.dialogVisible }
-                onCancel={ this.onClose.bind(this) }
-                onClose={() => this.onClose.bind(this)}
+                visible={ this.state.dialogVisible }
+                onCancel={ () => this.setState({ dialogVisible: false }) }
+                onClose={ () => this.setState({ dialogVisible: false }) }
             >
                 <Dialog.Body>
                     <Form model={this.state.form} ref="form" labelPosition={'left'} labelWidth={"80%"} rules={this.state.rules}>
@@ -136,7 +151,7 @@ class Add extends React.Component{
                 </Dialog.Body>
 
                 <Dialog.Footer className="dialog-footer">
-                    <Button onClick={ this.onClose.bind(this) }>取 消</Button>
+                    <Button onClick={ () => this.setState({ dialogVisible: false }) }>取 消</Button>
                     <Button type="primary" onClick={ this.save.bind(this) } loading={this.state.saving}>{ this.state.saving ? '保存中...' : '确 定'}</Button>
                 </Dialog.Footer>
             </Dialog>

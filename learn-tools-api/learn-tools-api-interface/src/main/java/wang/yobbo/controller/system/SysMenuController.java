@@ -35,13 +35,10 @@ public class SysMenuController extends BaseController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     @Autowired
     private SysMenuService sysMenuService;
-    @Autowired
-    private SysUserService sysUserService;
-
 
     @ApiVersion(1)
     @ApiOperation(value = "保存菜单版本1", response = BaseResult.class)
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public BaseResult saveMenuV1(SysMenu sysMenu, HttpServletRequest request){
         BaseResult baseResult = new BaseResult();
         try{
