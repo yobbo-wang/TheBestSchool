@@ -12,6 +12,7 @@ import wang.yobbo.system.model.SysUser;
 import wang.yobbo.system.service.SysMenuService;
 import wang.yobbo.system.service.SysUserService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -25,12 +26,21 @@ public class LearnToolsApiInterfaceApplicationTests {
 
     @Test
     public void contextLoads() {
-        SysUser admin = this.sysUserService.findUserByUsername("admin");
+        SysUser admin = null;
+        try {
+            admin = this.sysUserService.findUserByUsername("admin");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         System.out.println(admin);
     }
 
     @Test
-    public void queryMenuList(){
+    public void queryMenuList() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         SysMenuCriteria sysMenuCriteria = new SysMenuCriteria();
         SysMenuCriteria.Criteria criteria = sysMenuCriteria.createCriteria();
         criteria.andPidIsNull();

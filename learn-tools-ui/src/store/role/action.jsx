@@ -12,6 +12,16 @@ export const saveRole = (params) => {
     return http.post(environment.url.saveRole, options)
 }
 
+export const changeStatus = (params) => {
+    let options = {
+        data: params,
+        headers: {
+            Authorization: getToken().authorization
+        }
+    }
+    return http.post(environment.url.changeStatus, options)
+}
+
 /**
  * 查询角色列表
  * @returns {Promise<*>}

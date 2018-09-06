@@ -94,7 +94,7 @@ class Add extends React.Component{
                 }).catch(e => {
                     console.log(e)
                     this.setState({ saving: false });
-                    Message({ showClose: true, message: '保存失败！', type: 'error'  });
+                    Message({ showClose: true, message: e.errorCode + ": " + e.errorMsg, type: 'error' });
                 })
             }
         });

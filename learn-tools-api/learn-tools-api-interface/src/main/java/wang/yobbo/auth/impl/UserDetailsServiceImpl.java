@@ -29,17 +29,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser sysUser = this.sysUserService.findUserByUsername(username);
-        // 查询角色并设置
-        SysUserRoleCriteria sysUserRoleCriteria = new SysUserRoleCriteria();
-        SysUserRoleCriteria.Criteria criteria = sysUserRoleCriteria.createCriteria();
-        criteria.andUserIdEqualTo(sysUser.getId());
-        List<SysUserRole> sysUserRoles = this.sysUserRoleService.selectByExample(sysUserRoleCriteria);
-        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        for(SysUserRole sysUserRole : sysUserRoles){
-            authorities.add( new GrantedAuthorityImpl(sysUserRole.getRoleId()));
+        try{
+            SysUser sysUser = this.sysUserService.findUserByUsername(username);
+            // 查询角色并设置
+            SysUserRoleCriteria sysUserRoleCriteria = new SysUserRoleCriteria();
+            SysUserRoleCriteria.Criteria criteria = sysUserRoleCriteria.createCriteria();
+            criteria.andUserIdEqualTo(sysUser.getId());
+            List<SysUserRole> sysUserRoles = this.sysUserRoleService.selectByExample(sysUserRoleCriteria);
+            ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+            for(SysUserRole sysUserRole : sysUserRoles){
+                authorities.add( new GrantedAuthorityImpl(sysUserRole.getRoleId()));
+            }
+            return new UserDetailsCustomer(sysUser.getId(), sysUser.getUsername(), sysUser.getPassword(), authorities);
+        }catch (Exception e){
+            return null;
         }
-        return new UserDetailsCustomer(sysUser.getId(), sysUser.getUsername(), sysUser.getPassword(), authorities);
     }
 
 }

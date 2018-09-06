@@ -6,6 +6,7 @@ import wang.yobbo.system.model.SysUser;
 import wang.yobbo.system.model.SysUserCriteria;
 import wang.yobbo.system.service.SysUserService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class SystemUtils {
         return body.get("roles", List.class);
     }
 
-    public static String getSysUserName(SysUserService sysUserService, String id){
+    public static String getSysUserName(SysUserService sysUserService, String id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if(id == null || sysUserService == null) return new String();
         SysUserCriteria sysUserCriteria = new SysUserCriteria();
         SysUserCriteria.Criteria criteria = sysUserCriteria.createCriteria();

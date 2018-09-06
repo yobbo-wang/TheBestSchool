@@ -30,6 +30,7 @@ const generateUrl = (baseUrl) => {
         saveMenu: baseUrl + version + '/menu/edit',  //保存或更新菜单
         roleList:  baseUrl + version + '/role/list',  //查询角色列表
         saveRole: baseUrl + version + '/role/edit',  //保存或更新角色
+        changeStatus: baseUrl + version + '/role/change/status', // 更新角色状态
         userList: baseUrl + version + '/user/list',
         coursewareList: baseUrl + version + '/courseware/list',
         sysRoleQuery: baseUrl + version + '/sysLoginInterface/signIn',

@@ -7,10 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wang.yobbo.common.annotation.ApiVersion;
 import wang.yobbo.common.base.BaseController;
 import wang.yobbo.common.base.BaseResult;
@@ -37,6 +34,8 @@ public class SysRoleController extends BaseController {
     @Autowired  private SysRoleService sysRoleService;
     @Autowired private SysMenuRoleService sysMenuRoleService;
 
+    /******************************** query start ****************************************/
+    // url: /v1/role/list
     @ApiVersion(1)
     @ApiOperation(value = "查看角色列表版本1", response = BaseResult.class)
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -50,16 +49,43 @@ public class SysRoleController extends BaseController {
             throw new RuntimeException(e); //如果异常会统一交给异常处理返回结果
         }
     }
+    /******************************** query end ****************************************/
 
+    /******************************** save or update start ****************************************/
+    // url: /v1/role/change/status
     @ApiVersion(1)
-    @ApiOperation(value = "编辑角色版本1", response = BaseResult.class)
+    @ApiOperation(value = "改变角色状态版本1", response = BaseResult.class)
+    @RequestMapping(value = "/change/status", method = RequestMethod.POST)
+    public BaseResult updateStatusV1(SysRole sysRole) {
+        BaseResult baseResult = new BaseResult();
+        try{
+            if(StringUtils.isBlank(sysRole.getStatus())){
+                baseResult.setSuccess(false);
+                baseResult.setErrorCode("status.must.not.null");
+                return baseResult;
+            }
+            if(StringUtils.isBlank(sysRole.getId())){
+                baseResult.setSuccess(false);
+                baseResult.setErrorCode("id.must.not.null");
+                return baseResult;
+            }
+            this.sysRoleService.updateByPrimaryKeySelective(sysRole);
+            baseResult.setSuccess(true);
+            return baseResult;
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    // url: /v1/role/edit
+    @ApiVersion(1)
+    @ApiOperation(value = "保存或者更新角色版本1", response = BaseResult.class)
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public BaseResult saveMenuV1(HttpServletRequest request) {
         String name = request.getParameter("name");
         String menuAuth = request.getParameter("menuAuth");
         String id = request.getParameter("id");
-        String status = request.getParameter("status");
-        String uuid = UUID.randomUUID().toString().replace("-", "");
 
         BaseResult baseResult = new BaseResult();
         try{
@@ -80,6 +106,7 @@ public class SysRoleController extends BaseController {
 
             SysRole sysRole = new SysRole();
             sysRole.setName(name);
+            String uuid = UUID.randomUUID().toString().replace("-", "");
             if(StringUtils.isBlank(id)){
                 sysRole.setId(uuid);
                 sysRole.setStatus("0");
@@ -88,7 +115,6 @@ public class SysRoleController extends BaseController {
                 this.sysRoleService.insertSelective(sysRole);
             }else{
                 sysRole.setId(id);
-                sysRole.setStatus(status);
                 this.sysRoleService.updateByPrimaryKeySelective(sysRole);
             }
 
@@ -113,5 +139,12 @@ public class SysRoleController extends BaseController {
             throw new RuntimeException(e);
         }
     }
+    /******************************** save or update end ****************************************/
+
+    /******************************** delete start ****************************************/
+    public BaseResult deleteV1(){
+        return new BaseResult();
+    }
+    /******************************** delete end ****************************************/
 
 }

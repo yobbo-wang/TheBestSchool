@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
 * SysUserService实现
 * Created by yobbo on 2018/8/29.
@@ -24,7 +26,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Override
-    public SysUser findUserByUsername(String username) {
+    public SysUser findUserByUsername(String username) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         SysUserCriteria sysUserCriteria = new SysUserCriteria();
         SysUserCriteria.Criteria criteria = sysUserCriteria.createCriteria();
         criteria.andUsernameEqualTo(username);

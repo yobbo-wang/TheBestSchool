@@ -1,5 +1,8 @@
 package wang.yobbo.common.base;
 
+import java.util.Date;
+import java.util.Map;
+
 /**
  * 统一返回结果类
  * Created by on 2017/2/18.
@@ -25,6 +28,11 @@ public class BaseResult {
      * 数据结果集
      */
     public Object data;
+
+    /**
+     * 时间戳
+     */
+    public Date timestamp = new Date();
 
     public BaseResult(){}
 
@@ -70,5 +78,13 @@ public class BaseResult {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
