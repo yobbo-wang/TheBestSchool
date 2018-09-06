@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { Layout, Menu, Badge } from 'element-react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router';
 
 /**
  * menu
@@ -57,12 +57,18 @@ class Header extends React.Component{
                             this.state.menu.map((item, index) => {
                                 return(
                                     item.children.length == 0 ?
-                                        <Menu.Item key={item.id} index={item.id} className="nav-customer" ><NavLink to={item.url} exact style={{textDecoration:'none',display:"block"}}>{item.text}</NavLink></Menu.Item>
+                                        <Menu.Item key={item.id} index={item.id} className="nav-customer" >
+                                            <Link to={{ pathname:item.url, state:[{text: "首页", url: "/"}]}} style={{textDecoration:'none',display:"block"}}>{item.text}</Link>
+                                        </Menu.Item>
                                         :
                                         <Menu.SubMenu key={item.id} index={item.id} title={item.text}>
                                             {
                                                 item.children.map((item_c, index_c) => {
-                                                    return <Menu.Item key={item_c.id} index={item_c.id}><NavLink to={item_c.url} exact style={{textDecoration:'none',display:"block"}}>{item_c.text}</NavLink></Menu.Item>
+                                                    return (
+                                                        <Menu.Item key={item_c.id} index={item_c.id}>
+                                                            <Link to={{ pathname:item_c.url, state:[{text: "首页", url: "/"}, {text: "精品课件"}]}} style={{textDecoration:'none',display:"block"}}>{item_c.text}</Link>
+                                                        </Menu.Item>
+                                                    )
                                                 })
                                             }
                                         </Menu.SubMenu>

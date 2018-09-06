@@ -24,6 +24,7 @@ class Index extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         const _navigation_ = [{text: "首页", url: "/"}, {text: "数据统计"}]
         return (
             <div className={"main"}>
@@ -32,7 +33,7 @@ class Index extends React.Component {
                     <Navigation _navigation_={_navigation_} />
                     <div className={"line"}></div>
                     <div className={"body-context"}>
-                        <Body />
+                        { this.props.children.props.location.pathname == '/' ? <Body /> : this.props.children }
                     </div>
                 </div>
                 <Footer />

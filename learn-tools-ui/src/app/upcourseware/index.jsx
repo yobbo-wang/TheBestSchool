@@ -1,42 +1,36 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
-import { instanceOf } from 'prop-types';
+import {Layout,Steps }from 'element-react';
+import Add from './add'
+import './index.scss'
 
-import Header from '../component/header';
-import Navigation from '../component/navigation';
-import Body from './body';
-import Footer from "../component/footer";
-
-class Index extends React.Component {
-    static propTypes = {
-    }
-
-    componentDidMount(){
-    }
-
+export default class Index extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-        }
+            active: 0,
+        };
     }
 
-    render() {
-        const _navigation_ = [{text: "首页", url: "/"},{text: "精品课程", url: "/courseware"}, {text: "实验讲义"}]
-        return (
-            <div className={"main"}>
-                <Header />
-                <div className={"body"}>
-                    <Navigation _navigation_={_navigation_} />
-                    <div className={"line"}></div>
-                    <div className={"body-context"}>
-                        <Body />
-                    </div>
-                </div>
-                <Footer />
-            </div>
+    fillInCallback() {
+
+    }
+
+    render(){
+        return(
+            <Layout.Row gutter="20">
+                <Layout.Col span="4"><div className="grid-content bg-purple">&nbsp;</div></Layout.Col>
+                <Layout.Col span="16">
+                    <Steps space={100} active={this.state.active} finishStatus="success" style={{marginLeft: '20%'}}>
+                        <Steps.Step title="填写课件信息"></Steps.Step>
+                        <Steps.Step title="上传课件"></Steps.Step>
+                        <Steps.Step title="等待审核"></Steps.Step>
+                        <Steps.Step title="审核通过"></Steps.Step>
+                    </Steps>
+                    <Add callback={this.fillInCallback}/>
+                </Layout.Col>
+                <Layout.Col span="4"><div className="grid-content bg-purple">&nbsp;</div></Layout.Col>
+            </Layout.Row>
         )
     }
 }
-
-export default Index;

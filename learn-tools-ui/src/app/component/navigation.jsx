@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router'
 import { Breadcrumb } from 'element-react';
 
 export default class Navigation extends React.Component {
@@ -17,7 +17,7 @@ export default class Navigation extends React.Component {
                     _navigation_.map((item) => {
                         return(
                             item.url ?
-                                <Breadcrumb.Item key={item.text}><NavLink to={item.url} exact style={{textDecoration:'none'}}>{item.text}</NavLink></Breadcrumb.Item> :
+                                <Breadcrumb.Item key={item.text}><Link to={item.url} style={{textDecoration:'none'}}>{item.text}</Link></Breadcrumb.Item> :
                                 <Breadcrumb.Item key={item.text}>{item.text}</Breadcrumb.Item>
                         )
                     })
