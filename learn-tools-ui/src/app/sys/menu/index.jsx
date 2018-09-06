@@ -2,10 +2,10 @@
 import React from 'react';
 import { instanceOf } from 'prop-types';
 
-import Header from '../component/header';
-import Navigation from '../component/navigation'
+import Header from '../../component/header';
+import Navigation from '../../component/navigation'
 import Body from './body';
-import Footer from "../component/footer";
+import Footer from "../../component/footer";
 import './index.scss';
 
 class Index extends React.Component {

@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Dialog, Button, Form, Input, InputNumber, Message} from 'element-react'
-import { saveMenu } from '../../store/menu/action';
+import { saveMenu } from '../../../store/menu/action';
 
 export default class Add extends React.Component{
     constructor(props){
@@ -19,13 +19,10 @@ export default class Add extends React.Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.row.type && (nextProps.row.type == 'menu' || nextProps.row.type == 'auth')){
-            if(!nextProps.row.sort) nextProps.row.sort = 1;
-            this.setState( {
-                dialogVisible: true,
-                form: nextProps.row
-            } );
-        }
+        this.setState( {
+            dialogVisible: nextProps.row.dialogVisible,
+            form: nextProps.row
+        } );
     }
 
     onChange(key, value) {

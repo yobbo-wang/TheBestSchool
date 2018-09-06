@@ -2,16 +2,15 @@
 import React from 'react';
 import {Button, Loading, Table} from 'element-react'
 import Add from './add';
-import {requestMenuData} from '../../store/menu/action';
+import {requestMenuData} from '../../../store/menu/action';
 import {connect} from "react-redux";
 
 class Body extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            dialogVisible: false,
             row:{
-              type: ''
+                dialogVisible: false
             },
             columns: [
                 {
@@ -25,7 +24,7 @@ class Body extends React.Component{
                                 return (
                                     <span>
                                         <Button type="primary" icon="edit" size="small" onClick={()=>{
-                                            this.setState({ row: { id:data.id, text: data.text, type: data.type, sort: data.sort, url: data.url, pid: data.pid } })
+                                            this.setState({ row: { id:data.id, text: data.text, type: data.type, sort: data.sort, url: data.url, pid: data.pid, dialogVisible: true } })
                                         }}>编辑</Button>
                                         <Button type="danger" icon="delete" size="small">删除</Button>
                                     </span>
@@ -52,7 +51,7 @@ class Body extends React.Component{
                         return (
                             <span>
                                 <Button type="primary" icon="edit" size="small" onClick={()=>{
-                                    this.setState({ row: { id:data.id, text: data.text, type: data.type, sort: data.sort, url: data.url } })
+                                    this.setState({ row: { id:data.id, text: data.text, type: data.type, sort: data.sort, url: data.url, dialogVisible: true } })
                                 }} >编辑</Button>
                                 <Button type="danger" icon="delete" size="small">删除</Button>
                                 <Button  type="success" icon="plus" size="small" onClick={()=>{
@@ -99,7 +98,7 @@ class Body extends React.Component{
                 <Loading text="拼命加载中" loading = {this.state.loading}>
                 <div className={"body-child"}>
                     <Button type="success" icon="plus" onClick={()=>{
-                        this.setState({ row: { type: 'menu' } })
+                        this.setState({ row: { type: 'menu', dialogVisible: true } })
                     }} >添加主菜单</Button>
                     {<Add callback = {this.callback.bind(this)} row={this.state.row} />}
                 </div>

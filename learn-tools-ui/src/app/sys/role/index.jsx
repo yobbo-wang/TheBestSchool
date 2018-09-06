@@ -2,10 +2,10 @@
 import React from 'react';
 import { instanceOf } from 'prop-types';
 
-import Header from '../component/header';
-import Navigation from '../component/navigation'
+import Header from '../../component/header';
+import Navigation from '../../component/navigation'
 import Body from './body';
-import Footer from "../component/footer";
+import Footer from "../../component/footer";
 
 class Index extends React.Component {
     static propTypes = {
@@ -21,7 +21,7 @@ class Index extends React.Component {
     }
 
     render() {
-        const _navigation_ = [{text: "首页", url: "/"}, {text: "用户管理"}]
+        const _navigation_ = [{text: "首页", url: "/"}, {text: "角色管理"}]
         return (
             <div className={"main"}>
                 <Header />
