@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Button, Checkbox, Dialog, Form, Input, Message} from 'element-react'
-import {saveRole} from "../../store/role/action";
+import {saveRole} from "../../../store/role/action";
 
 class Add extends React.Component{
     constructor(props){
@@ -20,13 +20,9 @@ class Add extends React.Component{
         };
     }
 
-    onClose() {
-        this.props.callback(false);
-    }
-
     componentWillReceiveProps(nextProps){
         this.setState( {
-            dialogVisible: nextProps.dialogVisible
+            dialogVisible: nextProps.row.dialogVisible
         } );
     }
 
@@ -98,7 +94,7 @@ class Add extends React.Component{
                 }).catch(e => {
                     console.log(e)
                     this.setState({ saving: false });
-                    Message({ showClose: true, message: '保存失败！', type: 'error'  });
+                    Message({ showClose: true, message: e.errorCode + ": " + e.errorMsg, type: 'error' });
                 })
             }
         });

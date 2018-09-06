@@ -2,7 +2,7 @@
 import React from 'react';
 import {Table, Button, Loading, Pagination} from 'element-react'
 import Add from './add.jsx';
-import {requestData} from '../../store/user/action'
+import {requestData} from '../../../store/user/action'
 import {connect} from "react-redux";
 
 class Body extends React.Component {

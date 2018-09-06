@@ -13,9 +13,9 @@ const Login = asyncComponent(() => import('../app/container/Login'));
 const NotFound = asyncComponent(() => import('../app/container/NotFound'));
 const Courseware = asyncComponent(() => import('../app/courseware/index'));
 const Upcourseware = asyncComponent(() => import('../app/Upcourseware/index'));
-const Menu = asyncComponent(() => import('../app/menu/index'));
-const User = asyncComponent(() => import('../app/user/index'));
-const Role = asyncComponent(() => import('../app/role/index'));
+const Menu = asyncComponent(() => import('../app/sys/menu/index'));
+const User = asyncComponent(() => import('../app/sys/user/index'));
+const Role = asyncComponent(() => import('../app/sys/role/index'));
 
 const authS = [
     {path: "/courseware", component : "Courseware"},

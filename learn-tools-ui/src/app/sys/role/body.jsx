@@ -1,17 +1,19 @@
 'use strict';
 import React from 'react';
-import {Table, Button, Loading} from 'element-react'
+import {Table, Button, Loading, Message} from 'element-react'
 import Add from './add';
-import {requestRoleData} from "../../store/role/action";
+import {requestRoleData, changeStatus} from "../../../store/role/action";
 import {connect} from "react-redux";
-import {fetchMenuList} from "../../store/menu/action";
+import {fetchMenuList} from "../../../store/menu/action";
 
 class Body extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialogVisible: false,
             menuList: [],
+            row:{
+                dialogVisible: false
+            },
             columns: [
                 {label: "角色名", prop: "name", width: 180},
                 {label: "用户状态", prop: "status", width: 150, render: (data) => {
@@ -27,8 +29,8 @@ class Body extends React.Component {
                             <span>
                                 <Button type="primary" icon="edit" size="small">编辑</Button>
                                 {data.status == "1" ?
-                                    <Button type="success" icon="check" size="small" onClick={()=>{}} >激活角色</Button> :
-                                    <Button type="danger" icon="close" size="small" onClick={()=>{}} >禁用角色</Button>
+                                    <Button type="success" icon="check" size="small" onClick={this.editRoleStatus.bind(this, data.id, '0') } >激活角色</Button> :
+                                    <Button type="danger" icon="close" size="small" onClick={this.editRoleStatus.bind(this, data.id, '1') } >禁用角色</Button>
                                 }
                             </span>
                         )
@@ -36,6 +38,19 @@ class Body extends React.Component {
                 }
             ]
         }
+    }
+
+    editRoleStatus(id, status) {
+        changeStatus({id: id, status: status}).then(() => {
+            Message({ showClose: true, message: '恭喜您，操作成功！', type: 'success' });
+            this.setState({ loading : true });
+            this.props.requestRoleData("roleList").then(() => {
+                this.setState({ loading : false });
+            });
+        }).catch(e => {
+            console.log(e)
+            Message({ showClose: true, message: e.errorCode + " : " + e.errorMsg, type: 'error'  });
+        })
     }
 
     componentDidMount(){
@@ -65,8 +80,8 @@ class Body extends React.Component {
             <div>
                 <Loading text="拼命加载中" loading = {this.state.loading}>
                     <div className={"body-child"}>
-                        <Button type="success" icon="plus" onClick={ () => {this.setState({ dialogVisible: true })}} >添加角色</Button>
-                        {<Add dialogVisible = {this.state.dialogVisible} callback = {this.callback.bind(this)} menuList={this.state.menuList} />}
+                        <Button type="success" icon="plus" onClick={ () => this.setState({row: {dialogVisible: true} }) }>添加角色</Button>
+                        { <Add callback = {this.callback.bind(this)} menuList={this.state.menuList} row={this.state.row} /> }
                     </div>
                     <Table
                         style={{width: '100%'}}

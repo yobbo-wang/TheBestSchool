@@ -15,7 +15,7 @@ export default class http {
     * ajax get
      * @param url
      * @param params
-     * @returns
+     * @returns result.data
      */
     static async get(url, options){
         try{
@@ -31,7 +31,7 @@ export default class http {
     }
 
     /**
-     * ajax post 主要用于form表单提交
+     * ajax post 主要用于form表单式提交
      * @param url
      * @param params
      * @returns {Promise<*>}
