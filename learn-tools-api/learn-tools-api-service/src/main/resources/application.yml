@@ -3,4 +3,10 @@ server:
 
 spring:
   profiles:
-    active: pro, redis
+    active: dev, redis
+
+#mybatis配置
+mybatis:
+  typeAliasesPackage: wang.yobbo.**.model
+  mapperLocations: classpath*:wang/yobbo/**/mapper/*Mapper.xml
+  configLocation: classpath:mybatis-config.xml

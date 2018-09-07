@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Button, Checkbox, Dialog, Form, Input, Message} from 'element-react'
-import {saveRole} from "../../../store/role/action";
+import {saveRole, queryMenuIdByRoleId} from "../../../store/role/action";
 
 class Add extends React.Component{
     constructor(props){
@@ -9,9 +9,7 @@ class Add extends React.Component{
         this.state = {
             dialogVisible: false,
             saving: false,
-            form: {
-                name: ''
-            },
+            form: {},
             rules: {
                 name: [
                     { required: true, message: '请输入角色名', trigger: 'blur' }
@@ -21,9 +19,31 @@ class Add extends React.Component{
     }
 
     componentWillReceiveProps(nextProps){
+        if(nextProps.row.form && nextProps.row.form.id){
+            queryMenuIdByRoleId({roleId: nextProps.row.form.id}).then(result => { //查询权限并选中
+                console.log(this.props.menuList, result)
+                const menuList = this.props.menuList;
+                for(let i=0;i<result.length;i++){
+                    for(let j=0;j<menuList.length;j++){
+                        if(result[i].menuId == menuList[j].id){
+                            this.handleCheckAllChange(j, true);
+                            break;
+                        }else{
+                            let _value_ = [];
+                            for(let k=0;k<menuList[j].children.length;k++){
+                                if(result[i].menuId == menuList[j].children[k].id){
+                                    _value_.push(menuList[j].children[k].text);
+                                }
+                            }
+                            if(_value_.length > 0) this.handleCheckedAuthChange(j, _value_);
+                        }
+                    }
+                }
+            }).catch(e=>{})
+        }
         this.setState( {
-            dialogVisible: nextProps.row.dialogVisible
-        } );
+            ...nextProps.row
+        });
     }
 
     onChange(key, value) {
@@ -33,13 +53,13 @@ class Add extends React.Component{
     }
 
     handleCheckAllChange(index, checked){
-        if(this.props.menuList[index].children.length == 0){
+        if(this.props.menuList[index].children.length == 0){ //只有主菜单情况
             this.setState({
                 ['isIndeterminate'+index]: false,
                 ['check'+index]: checked,
                 ['checkAuth'+index]: [].push(this.props.menuList[index].text)
             })
-        }else{
+        }else{ //有二级菜单
             let _c_ = [];
             for(let i=0;i<this.props.menuList[index].children.length;i++){
                 _c_.push(this.props.menuList[index].children[i].text);
@@ -85,11 +105,14 @@ class Add extends React.Component{
                 }
                 let params = {
                     name: this.state.form.name,
+                    id: this.state.form.id,
                     menuAuth: JSON.stringify(menuAuth)
                 };
                 this.setState({ saving: true });
                 saveRole(params).then(() => {
                     Message({ showClose: true, message: '恭喜您，保存成功！', type: 'success' });
+                    this.onClose()
+                    this.setState({ saving: false });
                     this.props.callback(); // callback fetch menu list
                 }).catch(e => {
                     console.log(e)
@@ -100,13 +123,27 @@ class Add extends React.Component{
         });
     }
 
+    onClose() {
+        this.refs.form.resetFields();
+        this.setState({ dialogVisible: false });
+        let count = 0;
+        while(this.state['checkAuth' + count]){
+            this.setState({
+                ['isIndeterminate'+count]: undefined,
+                ['check'+count]: undefined,
+                ['checkAuth'+count]: []
+            })
+            count ++;
+        }
+    }
+
     render(){
         return (
             <Dialog
                 title="角色编辑"
                 visible={ this.state.dialogVisible }
-                onCancel={ () => this.setState({ dialogVisible: false }) }
-                onClose={ () => this.setState({ dialogVisible: false }) }
+                onCancel={ this.onClose.bind(this) }
+                onClose={ this.onClose.bind(this) }
             >
                 <Dialog.Body>
                     <Form model={this.state.form} ref="form" labelPosition={'left'} labelWidth={"80%"} rules={this.state.rules}>
@@ -147,7 +184,7 @@ class Add extends React.Component{
                 </Dialog.Body>
 
                 <Dialog.Footer className="dialog-footer">
-                    <Button onClick={ () => this.setState({ dialogVisible: false }) }>取 消</Button>
+                    <Button onClick={ this.onClose.bind(this) }>取 消</Button>
                     <Button type="primary" onClick={ this.save.bind(this) } loading={this.state.saving}>{ this.state.saving ? '保存中...' : '确 定'}</Button>
                 </Dialog.Footer>
             </Dialog>

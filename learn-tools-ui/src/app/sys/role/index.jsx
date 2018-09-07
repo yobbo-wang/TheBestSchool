@@ -27,7 +27,8 @@ class Index extends React.Component {
                     render: (data) => {
                         return (
                             <span>
-                                <Button type="primary" icon="edit" size="small">编辑</Button>
+                                <Button type="primary" icon="edit" size="small" onClick={() =>
+                                    this.setState({row: {dialogVisible: true, form: {name: data.name, id: data.id}} })}>编辑</Button>
                                 {data.status == "1" ?
                                     <Button type="success" icon="check" size="small" onClick={this.editRoleStatus.bind(this, data.id, '0') } >激活角色</Button> :
                                     <Button type="danger" icon="close" size="small" onClick={this.editRoleStatus.bind(this, data.id, '1') } >禁用角色</Button>
@@ -43,7 +44,7 @@ class Index extends React.Component {
     editRoleStatus(id, status) {
         changeStatus({id: id, status: status}).then(() => {
             Message({ showClose: true, message: '恭喜您，操作成功！', type: 'success' });
-            this.setState({ loading : true });
+            this.setState({ loading : true, row: {dialogVisible: false} });
             this.props.requestRoleData("roleList").then(() => {
                 this.setState({ loading : false });
             });
@@ -69,19 +70,19 @@ class Index extends React.Component {
 
     // child component callback change state. and close Dialog
     callback(){
-        this.setState({ loading : true });
+        this.setState({ loading : true, row: {dialogVisible: false} });
         this.props.requestRoleData("roleList").then(() => {
-            this.setState({ loading : false });
+            this.setState({ loading : false, row: {dialogVisible: false} });
         });
     }
 
     render(){
         return(
             <div>
-                <Loading text="拼命加载中" loading = {this.state.loading}>
+                <Loading text="拼命加载中..." loading = {this.state.loading}>
                     <div className={"body-child"}>
-                        <Button type="success" icon="plus" onClick={ () => this.setState({row: {dialogVisible: true} }) }>添加角色</Button>
-                        { <Add callback = {this.callback.bind(this)} menuList={this.state.menuList} row={this.state.row} /> }
+                        <Button type="success" icon="plus" onClick={ () => this.setState({row: {dialogVisible: true, form: {}} }) }>添加角色</Button>
+                        { <Add callback = {this.callback.bind(this)} menuList={this.state.menuList} row={this.state.row} />  }
                     </div>
                     <Table
                         style={{width: '100%'}}

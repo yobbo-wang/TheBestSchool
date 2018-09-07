@@ -39,6 +39,8 @@ public class SysRole implements Serializable {
      */
     private Date createTime;
 
+    private String createUserName;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -79,6 +81,14 @@ public class SysRole implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
     }
 
     @Override

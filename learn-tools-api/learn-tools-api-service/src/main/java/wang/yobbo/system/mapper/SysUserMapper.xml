@@ -73,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, username, password, name, mobile_phone, email, status, update_user_id, update_time, 
-    create_time
+    create_time, (select group_concat(ur.role_id) from `sys_user_role` ur where ur.user_id = sys_user.id ) roles
   </sql>
   <select id="selectByExample" parameterType="wang.yobbo.system.model.SysUserCriteria" resultMap="BaseResultMap">
     select

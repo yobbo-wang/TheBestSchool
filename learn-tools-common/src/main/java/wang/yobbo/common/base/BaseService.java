@@ -116,7 +116,7 @@ public interface BaseService<Record, Example> {
      * @param id
      * @return
      */
-    Record selectByPrimaryKey(Integer id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
+    Record selectByPrimaryKey(String id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
 
     /**
      * 根据条件更新有效字段

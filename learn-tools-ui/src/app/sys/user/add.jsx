@@ -1,18 +1,14 @@
 'use strict';
 import React from 'react';
-import {Dialog, Button, Form, Input, Checkbox} from 'element-react'
+import {Dialog, Button, Form, Input, Checkbox, Message} from 'element-react'
+import {saveUser} from "../../../store/user/action";
 
 class Add extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            form: {
-                name: '',
-                username: '',
-                email: '',
-                mobilePhone: '',
-                roles: []
-            },
+            dialogVisible: false,
+            form: {},
             rules: {
                 username: [
                     { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -24,16 +20,26 @@ class Add extends React.Component{
                     { required: true, message: '请输入手机号', trigger: 'blur' }
                 ],
                 email: [
-                    { required: true, message: '请输入邮箱', trigger: 'blur' },
                     { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
                 ],
                 roles: [
-                    { type: 'array', required: true, message: '请至少选择一个角色', trigger: 'change' }
+                    {validator: (rule, value, callback) => {
+                        if(this.state.roleGroup.length == 0){
+                            callback(new Error('请至少选择一个角色'));
+                        }else{
+                            callback();
+                        }
+                    }}
                 ]
             },
-            roles: [{id: "Aaaaaaa", text: "系统管理岗"}, {id: "Aaaaaa4a", text: "销售岗"}],
             roleGroup: [],
         }
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            ...nextProps.row
+        })
     }
 
     onChange(key, value) {
@@ -45,18 +51,38 @@ class Add extends React.Component{
     roleChange(value){
         let ids = [];
         for(let i=0;i<value.length;i++){
-            for(let j=0;j<this.state.roles.length;j++){
-                if(value[i] == this.state.roles[j].text){
-                    ids.push(this.state.roles[j].id);
+            for(let j=0;j<this.props.roles.length;j++){
+                if(value[i] == this.props.roles[j].name){
+                    ids.push(this.props.roles[j].id);
                 }
             }
         }
-        this.onChange('roles', ids);
+        this.onChange('roleIds', ids);
     }
 
-    //TODO
-    save(){
-        this.onClose.bind(this);
+    save(e){
+        e.preventDefault();
+        this.refs.form.validate((valid) => {
+            if (valid) {
+                this.setState({ saving: true });
+                saveUser(this.state.form).then(()=>{
+                    Message({ showClose: true, message: '恭喜您，保存成功！', type: 'success' });
+                    this.onClose()
+                    this.setState({ saving: false });
+                    this.props.callback(); // callback fetch menu list
+                }).catch(e=>{
+                    console.log(e)
+                    this.setState({ saving: false });
+                    Message({ showClose: true, message: e.errorCode + ": " + e.errorMsg, type: 'error' });
+                })
+            }
+        });
+
+    }
+
+    onClose() {
+        this.refs.form.resetFields();
+        this.setState({roleGroup: [], dialogVisible: false})
         this.props.callback(false);
     }
 
@@ -64,12 +90,12 @@ class Add extends React.Component{
         return (
             <Dialog
                 title="用户编辑"
-                visible={ this.props.dialogVisible }
-                onCancel={ ()=> {this.props.callback(false)} }
-                onClose={ ()=> {this.props.callback(false)} }
+                visible={ this.state.dialogVisible }
+                onCancel={ this.onClose.bind(this) }
+                onClose={ this.onClose.bind(this) }
             >
                 <Dialog.Body>
-                    <Form model={this.state.form} labelPosition={'left'} labelWidth={"80%"} rules={this.state.rules}>
+                    <Form ref="form" model={this.state.form} labelPosition={'left'} labelWidth={"80%"} rules={this.state.rules}>
                         <Form.Item label="用户名" prop="username">
                             <Input  value={this.state.form.username} onChange={this.onChange.bind(this, 'username')} placeholder="用户名由英文、数字、字符组成且长度在15以内"/>
                         </Form.Item>
@@ -85,8 +111,8 @@ class Add extends React.Component{
                         <Form.Item label="角色" prop={"roles"}>
                             <Checkbox.Group value={this.state.roleGroup} onChange={this.roleChange.bind(this)}>
                                 {
-                                    this.state.roles.map((data, index) => {
-                                        return <Checkbox.Button key={index} label={data.text}>{data.text}</Checkbox.Button>
+                                    this.props.roles.map((data, index) => {
+                                        return <Checkbox.Button key={index} label={data.name}>{data.name}</Checkbox.Button>
                                     })
                                 }
                             </Checkbox.Group>
@@ -95,8 +121,8 @@ class Add extends React.Component{
                 </Dialog.Body>
 
                 <Dialog.Footer className="dialog-footer">
-                    <Button onClick={ ()=> {this.props.callback(false)} }>取 消</Button>
-                    <Button type="primary" onClick={ this.save.bind(this) }>确 定</Button>
+                    <Button onClick={ this.onClose.bind(this)} >取 消</Button>
+                    <Button type="primary" onClick={ this.save.bind(this) } loading={this.state.saving}>{ this.state.saving ? '保存中...' : '确 定'}</Button>
                 </Dialog.Footer>
             </Dialog>
         )

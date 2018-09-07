@@ -24,7 +24,6 @@ class Index extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         const _navigation_ = [{text: "首页", url: "/"}, {text: "数据统计"}]
         return (
             <div className={"main"}>

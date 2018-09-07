@@ -12,6 +12,19 @@ export const saveRole = (params) => {
     return http.post(environment.url.saveRole, options)
 }
 
+/**
+ * 根据角色id查找菜单id集合
+ */
+export const queryMenuIdByRoleId = (params) =>{
+    let options = {
+        data: params,
+        headers: {
+            Authorization: getToken().authorization
+        }
+    }
+    return http.post(environment.url.queryMenuIdSByRoleId, options)
+}
+
 export const changeStatus = (params) => {
     let options = {
         data: params,
@@ -26,7 +39,7 @@ export const changeStatus = (params) => {
  * 查询角色列表
  * @returns {Promise<*>}
  */
-const fetchRoleList = () =>{
+export const fetchRoleList = () =>{
     let options = {
         headers: {
             Authorization: getToken().authorization

@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, status, create_user_id, create_time
+    id, name, status, create_user_id, create_time, (select name from `sys_user` where id = create_user_id) createUserName
   </sql>
   <select id="selectByExample" parameterType="wang.yobbo.system.model.SysRoleCriteria" resultMap="BaseResultMap">
     select

@@ -37,20 +37,20 @@ export default class Login extends React.Component {
             if (valid) {
                 this.setState({loginIng: true});
                 /******************** 调用远程api登录 *********************/
-                // let result = http.post(environment.url.loginUrl, {params: {username: this.state.form.username, password: this.state.form.pwd}});
-                // result.then((data) => {
-                //     setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
-                //     let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
-                //     this.props.history.push({ pathname: `${path}`, state: {}})
-                // }, error => {
-                //     this.setState({loginIng: false});
-                //     alert('登录失败！')
-                // });
+                let result = http.post(environment.url.loginUrl, {params: {username: this.state.form.username, password: this.state.form.pwd}});
+                result.then((data) => {
+                    setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
+                    let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
+                    this.props.history.push({ pathname: `${path}`, state: {}})
+                }, error => {
+                    this.setState({loginIng: false});
+                    alert('登录失败！')
+                });
                 /******************** 调用远程api登录结束 *********************/
                 /**************************** 如果关闭远程api登录需要开启以下 ****************************/
-                setCookie('auth', '10000001111', new Date().getTime() + 7*24*60*60*1000)
-                let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
-                this.props.history.push({ pathname: `${path}`, state: {}})
+                // setCookie('auth', '10000001111', new Date().getTime() + 7*24*60*60*1000)
+                // let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
+                // this.props.history.push({ pathname: `${path}`, state: {}})
                 /********************************************************/
             } else {
                 console.log('error submit!!');
