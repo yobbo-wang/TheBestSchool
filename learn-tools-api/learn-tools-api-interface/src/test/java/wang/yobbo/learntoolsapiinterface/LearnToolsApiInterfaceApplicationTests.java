@@ -10,6 +10,7 @@ import wang.yobbo.system.model.SysMenu;
 import wang.yobbo.system.model.SysMenuCriteria;
 import wang.yobbo.system.model.SysUser;
 import wang.yobbo.system.service.SysMenuService;
+import wang.yobbo.system.service.SysUserRoleService;
 import wang.yobbo.system.service.SysUserService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +23,8 @@ public class LearnToolsApiInterfaceApplicationTests {
     @Autowired private SysUserService sysUserService;
     @Autowired
     SysMenuService sysMenuService;
+    @Autowired
+    SysUserRoleService sysUserRoleService;
 
 
     @Test
@@ -47,5 +50,19 @@ public class LearnToolsApiInterfaceApplicationTests {
         sysMenuCriteria.setOrderByClause("sort asc");
         List<SysMenu> sysMenus = this.sysMenuService.selectByExample(sysMenuCriteria);
         System.out.println(sysMenus);
+    }
+
+    @Test
+    public void delete(){
+        try {
+            this.sysUserService.deleteByPrimaryKey("11111");
+            this.sysUserRoleService.deleteByPrimaryKey(2);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }

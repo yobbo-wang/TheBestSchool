@@ -8,6 +8,6 @@ import wang.yobbo.system.model.SysRoleCriteria;
 * SysRoleService接口
 * Created by yobbo on 2018/8/29.
 */
-public interface SysRoleService extends BaseService<SysRole, SysRoleCriteria> {
+public interface SysRoleService extends BaseService<SysRole, SysRoleCriteria, String> {
 
 }

@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 @Service
 @Transactional
 @BaseService
-public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, SysUserCriteria> implements SysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, SysUserCriteria, String> implements SysUserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
 

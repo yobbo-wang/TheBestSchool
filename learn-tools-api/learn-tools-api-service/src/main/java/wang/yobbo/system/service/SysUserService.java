@@ -10,6 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 * SysUserService接口
 * Created by yobbo on 2018/8/29.
 */
-public interface SysUserService extends BaseService<SysUser, SysUserCriteria> {
+public interface SysUserService extends BaseService<SysUser, SysUserCriteria,String> {
     SysUser findUserByUsername(String username) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

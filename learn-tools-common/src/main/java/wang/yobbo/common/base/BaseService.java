@@ -3,6 +3,7 @@ package wang.yobbo.common.base;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.ApplicationContext;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * BaseService接口
  * Created by ZhangShuzheng on 2017/01/07.
  */
-public interface BaseService<Record, Example> {
+public interface BaseService<Record, Example, ID extends Serializable> {
 
     /**
      * 根据条件查询记录数量
@@ -31,7 +32,7 @@ public interface BaseService<Record, Example> {
      * @param id
      * @return
      */
-    int deleteByPrimaryKey(Integer id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
+    int deleteByPrimaryKey(ID id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
 
     /**
      * 插入记录
@@ -116,7 +117,7 @@ public interface BaseService<Record, Example> {
      * @param id
      * @return
      */
-    Record selectByPrimaryKey(String id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
+    Record selectByPrimaryKey(Serializable id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
 
     /**
      * 根据条件更新有效字段
@@ -168,7 +169,7 @@ public interface BaseService<Record, Example> {
      * @param ids
      * @return
      */
-    int deleteByPrimaryKeys(String ids) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
+    int deleteByPrimaryKeys(Serializable[] ids) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;;
 
     /**
      * 初始化mapper

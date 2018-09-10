@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @BaseService
-public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, SysUserRole, SysUserRoleCriteria> implements SysUserRoleService {
+public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, SysUserRole, SysUserRoleCriteria, Integer> implements SysUserRoleService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserRoleServiceImpl.class);
 

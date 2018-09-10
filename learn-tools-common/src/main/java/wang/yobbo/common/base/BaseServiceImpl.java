@@ -8,6 +8,7 @@ import wang.yobbo.common.db.DataSourceEnum;
 import wang.yobbo.common.db.DynamicDataSource;
 import wang.yobbo.common.util.SpringContextUtil;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -17,7 +18,7 @@ import java.util.List;
  * 实现BaseService抽象类
  * Created by on 2017/01/07.
  */
-public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseService<Record, Example> {
+public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serializable> implements BaseService<Record, Example, ID> {
 
 	private Mapper mapper;
 
@@ -50,7 +51,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 	}
 
 	@Override
-	public int deleteByPrimaryKey(Integer id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	public int deleteByPrimaryKey(Serializable id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
 			Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", id.getClass());
@@ -217,7 +218,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 	}
 
 	@Override
-	public Record selectByPrimaryKey(String id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	public Record selectByPrimaryKey(Serializable id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
 			Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("selectByPrimaryKey", id.getClass());
@@ -315,19 +316,15 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 	}
 
 	@Override
-	public int deleteByPrimaryKeys(String ids) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+	public int deleteByPrimaryKeys(Serializable[] ids) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
 		try {
-			if (StringUtils.isBlank(ids)) {
+			if (ids.length == 0) {
 				return 0;
 			}
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
-			String[] idArray = ids.split("-");
 			int count = 0;
-			for (String idStr : idArray) {
-				if (StringUtils.isBlank(idStr)) {
-					continue;
-				}
-				Integer id = Integer.parseInt(idStr);
+			for (Serializable id : ids) {
+				if(id == null) continue;
 				Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", id.getClass());
 				Object result = deleteByPrimaryKey.invoke(mapper, id);
 				count += Integer.parseInt(String.valueOf(result));

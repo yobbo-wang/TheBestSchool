@@ -8,6 +8,6 @@ import wang.yobbo.system.model.SysMenuRoleCriteria;
 * SysMenuRoleService接口
 * Created by yobbo on 2018/9/3.
 */
-public interface SysMenuRoleService extends BaseService<SysMenuRole, SysMenuRoleCriteria> {
+public interface SysMenuRoleService extends BaseService<SysMenuRole, SysMenuRoleCriteria, Integer> {
 
 }

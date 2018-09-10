@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @BaseService
-public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu, SysMenuCriteria> implements SysMenuService {
+public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu, SysMenuCriteria, String> implements SysMenuService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysMenuServiceImpl.class);
 

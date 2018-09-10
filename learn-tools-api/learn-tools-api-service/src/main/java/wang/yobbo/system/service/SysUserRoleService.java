@@ -8,6 +8,6 @@ import wang.yobbo.system.model.SysUserRoleCriteria;
 * SysUserRoleService接口
 * Created by yobbo on 2018/8/29.
 */
-public interface SysUserRoleService extends BaseService<SysUserRole, SysUserRoleCriteria> {
+public interface SysUserRoleService extends BaseService<SysUserRole, SysUserRoleCriteria, Integer> {
 
 }
