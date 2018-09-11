@@ -9,6 +9,7 @@ import loginImg from  '../../resource/images/login-img.png';
 import logo from '../../resource/images/login_logo.png';
 import http from '../../api/http';
 import {environment} from '../../api/environment';
+import { hashHistory } from 'react-router'
 
 export default class Login extends React.Component {
     constructor(props){
@@ -41,7 +42,7 @@ export default class Login extends React.Component {
                 result.then((data) => {
                     setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
                     let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
-                    this.props.history.push({ pathname: `${path}`, state: {}})
+                    hashHistory.replace("/");
                 }, error => {
                     this.setState({loginIng: false});
                     alert('登录失败！')

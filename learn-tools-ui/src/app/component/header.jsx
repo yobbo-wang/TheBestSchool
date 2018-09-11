@@ -2,6 +2,7 @@
 import React from 'react';
 import { Layout, Menu, Badge } from 'element-react';
 import { Link } from 'react-router';
+import {queryMenuByUID} from "../../store/menu/action";
 
 /**
  * menu
@@ -16,23 +17,15 @@ class Header extends React.Component{
         };
     }
 
-    componentDidMount(){
-        let menu = [
-            {id: "AAA1", text: "数据统计", url: "/", children: []},
-            {id: "2AA", text: "学习资料", url: "", children:[
-                    {id: "2aaa1", text: "精品课件", url: "/courseware", children: []},
-                    {id: "2aa1aaa", text: "实验讲义", url: "", children: []},
-                ]},
-            {id: "aa3aaa", text: "系统设置", url: "", children:[
-                    {id: "a2a22", text: "用户管理", url: "/user", children: []},
-                    {id: "aaaa", text: "角色管理", url: "/role", children: []},
-                    {id: "3aaaa2", text: "菜单管理", url: "/menu", children: []},
-                ]},
-        ];
-        this.setState({
-            menu: menu,
-            menuDefaultActive: menu[0].id
-        });
+    componentDidMount() {
+        // query menu bu current uid
+        queryMenuByUID().then(menu => {
+            this.setState({
+                menu: menu,
+                menuDefaultActive: menu[0].id
+            });
+        }).catch(e => {
+        })
     }
 
     onSelectMenu(index){

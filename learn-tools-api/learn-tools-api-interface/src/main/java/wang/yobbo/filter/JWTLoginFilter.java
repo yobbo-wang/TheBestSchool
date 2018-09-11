@@ -67,7 +67,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         }
         String token = Jwts.builder()
                 .claim("userId", auth.getPrincipal())
-                .claim("roles", roleList)
+                .claim("roles", JSONObject.toJSONString(roleList))
                 .setExpiration(new Date(System.currentTimeMillis() + ConstantKey.SINGING_KEY_VALIDITY)) //token有效期时间戳
                 .signWith(SignatureAlgorithm.HS512, ConstantKey.SIGNING_KEY)
                 .compact();

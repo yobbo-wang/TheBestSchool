@@ -60,7 +60,7 @@ public class SysMenuController extends BaseController {
                 return baseResult;
             }
             if(StringUtils.isBlank(sysMenu.getId())){
-                String currentUserID = SystemUtils.getCurrentUserID(request.getHeader("Authorization"));
+                String currentUserID = SystemUtils.getCurrentUserID(request);
                 sysMenu.setId(UUID.randomUUID().toString().replace("-", ""));
                 sysMenu.setCreateUserId(currentUserID);
                 sysMenu.setCreateTime(new Date());

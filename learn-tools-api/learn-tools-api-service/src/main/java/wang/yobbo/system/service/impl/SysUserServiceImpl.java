@@ -31,7 +31,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, 
         SysUserCriteria.Criteria criteria = sysUserCriteria.createCriteria();
         criteria.andUsernameEqualTo(username);
         SysUser sysUser = super.selectFirstByExample(sysUserCriteria);
-        LOGGER.debug("查询记录用户名为：{}, 密码为：{}", sysUser.getUsername(), sysUser.getPassword());
         if(sysUser == null) {
             sysUser = new SysUser();
             sysUser.setPassword("");

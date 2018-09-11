@@ -19,6 +19,19 @@ export const saveMenu = (params) => {
 }
 
 /**
+ * 根据用户id查询用户拥有菜单权限
+ * @returns {result.data}
+ */
+export const queryMenuByUID = () => {
+    let options = {
+        headers: {
+            Authorization: getToken().authorization
+        }
+    }
+    return http.get(environment.url.queryMenuByUID, options);
+}
+
+/**
  * 查询菜单列表
  * @returns {Promise<*>}
  */

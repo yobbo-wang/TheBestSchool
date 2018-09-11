@@ -74,6 +74,13 @@ public class SysUser implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 创建人
+     *
+     * @mbg.generated
+     */
+    private String createUserId;
+
     private String roles;
 
     private String rolesName;
@@ -170,6 +177,14 @@ public class SysUser implements Serializable {
 
     public String getRolesName() {
         return rolesName;
+    }
+
+    public String getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(String createUserId) {
+        this.createUserId = createUserId;
     }
 
     public void setRolesName(String rolesName) {

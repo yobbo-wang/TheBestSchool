@@ -1,23 +1,29 @@
 package wang.yobbo.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.apache.commons.lang.StringUtils;
 import wang.yobbo.system.model.SysUser;
 import wang.yobbo.system.model.SysUserCriteria;
 import wang.yobbo.system.service.SysUserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SystemUtils {
+    public final static String PWD = "e10adc3949ba59abbe56e057f20f883e";
 
     /**
      * 获取当前用户id
-     * @param authorization
+     * @param request
      * @return
      */
-    public static String getCurrentUserID(String authorization){
+    public static String getCurrentUserID(HttpServletRequest request){
+        String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return new String();
         }
@@ -31,10 +37,11 @@ public class SystemUtils {
 
     /**
      * 获取当前角色集合
-     * @param authorization
+     * @param request
      * @return
      */
-    public static List getCurrentRoles(String authorization){
+    public static List getCurrentRoles(HttpServletRequest request){
+        String authorization = request.getHeader("Authorization");
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return new ArrayList();
         }
@@ -43,7 +50,12 @@ public class SystemUtils {
                 .setSigningKey(ConstantKey.SIGNING_KEY)
                 .parseClaimsJws(token)
                 .getBody();
-        return body.get("roles", List.class);
+        String roles = body.get("roles", String.class);
+        if(StringUtils.isNotBlank(roles)){
+            return JSONArray.parseArray(roles);
+        }else{
+            return new ArrayList();
+        }
     }
 
     public static String getSysUserName(SysUserService sysUserService, String id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {

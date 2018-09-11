@@ -4,9 +4,9 @@
  *  每增加一个路由需要去数据维护url，和组件，以便于做权限控制
  */
 import React from 'react';
-import { Router, Route, Redirect, hashHistory,IndexRoute,useRouterHistory } from 'react-router';
+import { Router, Route, Redirect, hashHistory,IndexRoute } from 'react-router';
 import asyncComponent from '../utils/asyncComponent';
-import PrivateRouter from './PrivateRouter';
+import {checkToken} from './checkToken';
 
 import Index from '../app/main/Index';
 const Login = asyncComponent(() => import('../app/component/Login'));
@@ -27,14 +27,14 @@ const authS = [
 
 export default () => (
     <Router history={hashHistory} >
-        <PrivateRouter path={"/"} component={Index}>
+        <Route path={"/"} component={Index} onEnter={checkToken}>
             <IndexRoute component={Index} />
         {
             authS.map((item, i) => {
-                return <PrivateRouter path={item.path} key={i} component={eval(item.component)} />
+                return <Route path={item.path} key={i} component={eval(item.component)} />
             })
         }
-        </PrivateRouter>
+        </Route>
         <Route path={"/404"} component={NotFound} />
         <Route path={"/login"} component={Login} />
         <Route component={NotFound} />

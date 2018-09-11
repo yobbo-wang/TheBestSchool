@@ -10,6 +10,9 @@ import wang.yobbo.system.model.SysUser;
 import wang.yobbo.system.service.SysUserService;
 
 import java.util.ArrayList;
+
+import static java.util.Collections.emptyList;
+
 /**
  * 验证用户
  */
@@ -23,15 +26,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try{
             SysUser sysUser = this.sysUserService.findUserByUsername(username);
-            String[] roles = sysUser.getRoles().split(",");
             ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-            for(String id : roles){
-                authorities.add( new GrantedAuthorityImpl(id));
+            if(sysUser.getRoles() != null){
+                String[] roles = sysUser.getRoles().split(",");
+                for(String id : roles){
+                    authorities.add( new GrantedAuthorityImpl(id));
+                }
             }
             return new UserDetailsCustomer(sysUser.getId(), sysUser.getUsername(), sysUser.getPassword(), authorities);
         }catch (Exception e){
             return null;
         }
     }
-
 }

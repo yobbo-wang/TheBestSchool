@@ -111,7 +111,7 @@ public class SysRoleController extends BaseController {
                 sysRole.setId(uuid);
                 sysRole.setStatus("0");
                 sysRole.setCreateTime(new Date());
-                sysRole.setCreateUserId(SystemUtils.getCurrentUserID(request.getHeader("Authorization")));
+                sysRole.setCreateUserId(SystemUtils.getCurrentUserID(request));
                 this.sysRoleService.insertSelective(sysRole);
             }else{
                 sysRole.setId(id);
