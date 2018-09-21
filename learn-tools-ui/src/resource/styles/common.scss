@@ -23,6 +23,8 @@ body {
 
 .el-badge__content.is-fixed.is-dot{top: 15px;}
 
+.el-table__expanded-cell{padding-top:0 !important; padding-bottom: 10px!important;}
+
 .line{
   height: 1px;
   background-color: #e0e6ed;
@@ -144,6 +146,7 @@ body {
     .body{
       top: 60px;
       left: 24px;
+      //left: 0;
       bottom: 32px;
       position: absolute;
       right: 0;

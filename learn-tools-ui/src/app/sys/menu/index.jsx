@@ -55,7 +55,7 @@ class Index extends React.Component{
                                 }} >编辑</Button>
                                 <Button type="danger" icon="delete" size="small">删除</Button>
                                 <Button  type="success" icon="plus" size="small" onClick={()=>{
-                                    this.setState({ row: { type: 'auth', pid: data.id } })
+                                    this.setState({ row: { type: 'auth', pid: data.id,  dialogVisible: true } })
                                 }} >添加功能菜单</Button>
                             </span>
                         )

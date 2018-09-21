@@ -16,6 +16,7 @@ const Upcourseware = asyncComponent(() => import('../app/Upcourseware/index'));
 const Menu = asyncComponent(() => import('../app/sys/menu/index'));
 const User = asyncComponent(() => import('../app/sys/user/index'));
 const Role = asyncComponent(() => import('../app/sys/role/index'));
+const Options = asyncComponent(() => import('../app/sys/options/index'));
 
 export default () => {
     return(
@@ -25,6 +26,7 @@ export default () => {
                 <Route path={"/menu"} component={Menu} />
                 <Route path={"/user"} component={User} />
                 <Route path={"/role"} component={Role} />
+                <Route path={"/options"} component={Options} />
                 <Route path={"/courseware"} component={Courseware} />
                 <Route path={"/upcourseware"} component={Upcourseware} />
                 <Route path={"*"} component={NotFound} />

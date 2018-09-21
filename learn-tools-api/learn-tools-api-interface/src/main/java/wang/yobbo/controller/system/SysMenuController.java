@@ -36,6 +36,7 @@ public class SysMenuController extends BaseController {
     @Autowired
     private SysMenuService sysMenuService;
 
+    /********************************** 增、更数据 **********************************************/
     @ApiVersion(1)
     @ApiOperation(value = "保存菜单版本1", response = BaseResult.class)
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -74,7 +75,9 @@ public class SysMenuController extends BaseController {
             throw new RuntimeException(e);
         }
     }
+    /********************************************************************************/
 
+    /********************************** 查询数据 **********************************************/
     @ApiVersion(1)
     @ApiOperation(value = "查看菜单列表版本1", response = BaseResult.class)
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -91,4 +94,5 @@ public class SysMenuController extends BaseController {
             throw new RuntimeException(e); //如果异常会统一交给异常处理返回结果
         }
     }
+    /********************************************************************************/
 }
