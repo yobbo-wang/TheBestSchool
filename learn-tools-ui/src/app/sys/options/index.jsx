@@ -16,7 +16,9 @@ class Index extends React.Component {
                 <Tabs.Pane label="系统信息配置" name="1">
                     {<SystemOptions />}
                 </Tabs.Pane>
-                <Tabs.Pane label="消息模板配置" name="2">消息模板配置</Tabs.Pane>
+                <Tabs.Pane label="消息模板配置" name="2">
+                    {<MsgTemplate />}
+                </Tabs.Pane>
             </Tabs>
         )
     }
