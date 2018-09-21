@@ -10,7 +10,8 @@ export default class Navigation extends React.Component {
     }
 
     getItem(){
-        const _navigation_ = this.props._navigation_;
+        const _navigation_ = [{text: "首页", url: "/"}, ...this.props._navigation_];
+        console.log(_navigation_)
         return(
             <Breadcrumb separator="/">
                 {

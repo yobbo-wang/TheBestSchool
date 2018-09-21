@@ -47,19 +47,19 @@ class Header extends React.Component{
                 <Layout.Col span="14" className="header-col">
                     <Menu defaultActive={this.state.menuDefaultActive} theme="dark" className="nav" mode="horizontal" onSelect={this.onSelectMenu.bind(this)}>
                         {
-                            this.state.menu.map((item, index) => {
+                            this.state.menu.map((item) => {
                                 return(
                                     item.children.length == 0 ?
                                         <Menu.Item key={item.id} index={item.id} className="nav-customer" >
-                                            <Link to={{ pathname:item.url, state:[{text: "首页", url: "/"}]}} style={{textDecoration:'none',display:"block"}}>{item.text}</Link>
+                                            <Link to={{ pathname:item.url, state:[{text: item.text, url: item.url}]}} style={{textDecoration:'none',display:"block"}}>{item.text}</Link>
                                         </Menu.Item>
                                         :
                                         <Menu.SubMenu key={item.id} index={item.id} title={item.text}>
                                             {
-                                                item.children.map((item_c, index_c) => {
+                                                item.children.map((item_c) => {
                                                     return (
                                                         <Menu.Item key={item_c.id} index={item_c.id}>
-                                                            <Link to={{ pathname:item_c.url, state:[{text: "首页", url: "/"}, {text: "精品课件"}]}} style={{textDecoration:'none',display:"block"}}>{item_c.text}</Link>
+                                                            <Link to={{ pathname:item_c.url, state:[{text: item.text, url: item.url},{text: item_c.text}]}} style={{textDecoration:'none',display:"block"}}>{item_c.text}</Link>
                                                         </Menu.Item>
                                                     )
                                                 })

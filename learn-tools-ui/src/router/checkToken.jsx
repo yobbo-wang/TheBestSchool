@@ -8,7 +8,6 @@ import http from '../api/http';
  */
 
 export const checkToken = () => {
-    /**************** 开启api校验 ****************/
     const authorization =  getToken().authorization;
     if(authorization == "") {
         hashHistory.replace( '/login' )
@@ -18,9 +17,11 @@ export const checkToken = () => {
             Authorization: authorization
         }
     }
-    http.head(environment.url.checkAuth, options).then(() => {
+    http.head(environment.url.checkAuth, options).then((r) => {
         // 说明校验成功，不做任何处理 //
+        console.log(r)
     }).catch(() => {
+        console.log('Authorization校验失败，跳转登录！！！')
         hashHistory.replace( '/login' )
     })
 }

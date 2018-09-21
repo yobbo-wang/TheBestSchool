@@ -24,7 +24,10 @@ class Index extends React.Component {
     }
 
     render() {
-        const _navigation_ = [{text: "首页", url: "/"}, {text: "数据统计"}]
+        let _navigation_ = this.props.children.props.location.state;
+        if(_navigation_ == undefined) {
+            _navigation_ = [{text: "数据统计"}]
+        }
         return (
             <div className={"main"}>
                 <Header />
