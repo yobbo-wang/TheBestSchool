@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wang.yobbo.system.dao.SysExceptionInfoMapper">
+  <resultMap id="BaseResultMap" type="wang.yobbo.system.model.SysExceptionInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="controller_name" jdbcType="VARCHAR" property="controllerName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="remote_host" jdbcType="VARCHAR" property="remoteHost" />
+    <result column="parameter_map" jdbcType="VARCHAR" property="parameterMap" />
+    <result column="query_string" jdbcType="VARCHAR" property="queryString" />
+    <result column="remote_port" jdbcType="INTEGER" property="remotePort" />
+    <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+    <result column="authorization" jdbcType="VARCHAR" property="authorization" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, controller_name, method_name, remote_host, parameter_map, query_string, remote_port, 
+    user_agent, authorization, create_time
+  </sql>
+  <select id="selectByExample" parameterType="wang.yobbo.system.model.SysExceptionInfoCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_exception_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="page != null">
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_exception_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_exception_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="wang.yobbo.system.model.SysExceptionInfoCriteria">
+    delete from sys_exception_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="wang.yobbo.system.model.SysExceptionInfo">
+    insert into sys_exception_info (id, controller_name, method_name, 
+      remote_host, parameter_map, query_string, 
+      remote_port, user_agent, authorization, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{controllerName,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, 
+      #{remoteHost,jdbcType=VARCHAR}, #{parameterMap,jdbcType=VARCHAR}, #{queryString,jdbcType=VARCHAR}, 
+      #{remotePort,jdbcType=INTEGER}, #{userAgent,jdbcType=VARCHAR}, #{authorization,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="wang.yobbo.system.model.SysExceptionInfo">
+    insert into sys_exception_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="controllerName != null">
+        controller_name,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="remoteHost != null">
+        remote_host,
+      </if>
+      <if test="parameterMap != null">
+        parameter_map,
+      </if>
+      <if test="queryString != null">
+        query_string,
+      </if>
+      <if test="remotePort != null">
+        remote_port,
+      </if>
+      <if test="userAgent != null">
+        user_agent,
+      </if>
+      <if test="authorization != null">
+        authorization,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="controllerName != null">
+        #{controllerName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteHost != null">
+        #{remoteHost,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterMap != null">
+        #{parameterMap,jdbcType=VARCHAR},
+      </if>
+      <if test="queryString != null">
+        #{queryString,jdbcType=VARCHAR},
+      </if>
+      <if test="remotePort != null">
+        #{remotePort,jdbcType=INTEGER},
+      </if>
+      <if test="userAgent != null">
+        #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="authorization != null">
+        #{authorization,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="wang.yobbo.system.model.SysExceptionInfoCriteria" resultType="java.lang.Long">
+    select count(*) from sys_exception_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_exception_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.controllerName != null">
+        controller_name = #{record.controllerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.methodName != null">
+        method_name = #{record.methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remoteHost != null">
+        remote_host = #{record.remoteHost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameterMap != null">
+        parameter_map = #{record.parameterMap,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryString != null">
+        query_string = #{record.queryString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remotePort != null">
+        remote_port = #{record.remotePort,jdbcType=INTEGER},
+      </if>
+      <if test="record.userAgent != null">
+        user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorization != null">
+        authorization = #{record.authorization,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_exception_info
+    set id = #{record.id,jdbcType=INTEGER},
+      controller_name = #{record.controllerName,jdbcType=VARCHAR},
+      method_name = #{record.methodName,jdbcType=VARCHAR},
+      remote_host = #{record.remoteHost,jdbcType=VARCHAR},
+      parameter_map = #{record.parameterMap,jdbcType=VARCHAR},
+      query_string = #{record.queryString,jdbcType=VARCHAR},
+      remote_port = #{record.remotePort,jdbcType=INTEGER},
+      user_agent = #{record.userAgent,jdbcType=VARCHAR},
+      authorization = #{record.authorization,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="wang.yobbo.system.model.SysExceptionInfo">
+    update sys_exception_info
+    <set>
+      <if test="controllerName != null">
+        controller_name = #{controllerName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteHost != null">
+        remote_host = #{remoteHost,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterMap != null">
+        parameter_map = #{parameterMap,jdbcType=VARCHAR},
+      </if>
+      <if test="queryString != null">
+        query_string = #{queryString,jdbcType=VARCHAR},
+      </if>
+      <if test="remotePort != null">
+        remote_port = #{remotePort,jdbcType=INTEGER},
+      </if>
+      <if test="userAgent != null">
+        user_agent = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="authorization != null">
+        authorization = #{authorization,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wang.yobbo.system.model.SysExceptionInfo">
+    update sys_exception_info
+    set controller_name = #{controllerName,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      remote_host = #{remoteHost,jdbcType=VARCHAR},
+      parameter_map = #{parameterMap,jdbcType=VARCHAR},
+      query_string = #{queryString,jdbcType=VARCHAR},
+      remote_port = #{remotePort,jdbcType=INTEGER},
+      user_agent = #{userAgent,jdbcType=VARCHAR},
+      authorization = #{authorization,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

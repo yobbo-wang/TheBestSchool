@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 import wang.yobbo.common.db.DataSourceEnum;
 import wang.yobbo.common.db.DynamicDataSource;
 import wang.yobbo.common.util.SpringContextUtil;
@@ -36,6 +37,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 		}
 	}
 
+	@Transactional(value = "transactionManager")
 	@Override
 	public int deleteByExample(Example example) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
@@ -51,6 +53,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int deleteByPrimaryKey(Serializable id) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -65,6 +68,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int insert(Record record) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -79,6 +83,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int insertSelective(Record record) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -232,6 +237,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int updateByExampleSelective(@Param("record") Record record, @Param("example") Example example) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -246,6 +252,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int updateByExampleWithBLOBs(@Param("record") Record record, @Param("example") Example example)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -260,6 +267,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int updateByExample(@Param("record") Record record, @Param("example") Example example)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -274,6 +282,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int updateByPrimaryKeySelective(Record record)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -288,6 +297,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int updateByPrimaryKeyWithBLOBs(Record record)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -302,6 +312,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int updateByPrimaryKey(Record record)throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		try {
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
@@ -316,6 +327,7 @@ public abstract class BaseServiceImpl<Mapper, Record, Example, ID extends Serial
 	}
 
 	@Override
+	@Transactional(value = "transactionManager")
 	public int deleteByPrimaryKeys(Serializable[] ids) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
 		try {
 			if (ids.length == 0) {

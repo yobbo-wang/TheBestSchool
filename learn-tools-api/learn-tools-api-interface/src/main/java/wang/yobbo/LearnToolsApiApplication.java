@@ -6,9 +6,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import wang.yobbo.common.listener.ApplicationContextListener;
 
 @SpringBootApplication
+@EnableTransactionManagement(proxyTargetClass = true)   //开启事物管理功能
 public class LearnToolsApiApplication {
 
     @Bean

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import wang.yobbo.system.model.SysMenu;
 import wang.yobbo.system.model.SysMenuCriteria;
 import wang.yobbo.system.model.SysUser;
@@ -53,9 +54,11 @@ public class LearnToolsApiInterfaceApplicationTests {
     }
 
     @Test
+    @Transactional
     public void delete(){
         try {
             this.sysUserService.deleteByPrimaryKey("11111");
+            int i = 1/0;
             this.sysUserRoleService.deleteByPrimaryKey(2);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

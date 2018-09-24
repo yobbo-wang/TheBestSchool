@@ -41,24 +41,17 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "保存菜单版本1", response = BaseResult.class)
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public BaseResult saveMenuV1(SysMenu sysMenu, HttpServletRequest request){
-        BaseResult baseResult = new BaseResult();
         try{
             if(StringUtils.isBlank(sysMenu.getText())){
-                baseResult.setSuccess(false);
-                baseResult.setErrorCode("text.must.not.null");
-                return baseResult;
+                return new BaseResult(false, "text.must.not.null");
             }
             if(StringUtils.equals("auth", sysMenu.getType())){
                 if(StringUtils.isBlank(sysMenu.getUrl())){
-                    baseResult.setSuccess(false);
-                    baseResult.setErrorCode("url.must.not.null");
-                    return baseResult;
+                    return new BaseResult(false, "url.must.not.null");
                 }
             }
             if(sysMenu.getSort() == 0){
-                baseResult.setSuccess(false);
-                baseResult.setErrorCode("sort.must.not.zero");
-                return baseResult;
+                return new BaseResult(false, "sort.must.not.zero");
             }
             if(StringUtils.isBlank(sysMenu.getId())){
                 String currentUserID = SystemUtils.getCurrentUserID(request);
@@ -68,8 +61,7 @@ public class SysMenuController extends BaseController {
                 this.sysMenuService.insertSelective(sysMenu);
             }
             this.sysMenuService.updateByPrimaryKeySelective(sysMenu);
-            baseResult.setSuccess(true);
-            return baseResult;
+            return new BaseResult();
         }catch (Exception e){
             LOGGER.error(e.getMessage());
             throw new RuntimeException(e);

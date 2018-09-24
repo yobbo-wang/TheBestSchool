@@ -118,7 +118,7 @@ public class AESUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException("兄弟，配置文件中的密码需要使用AES加密，请使用wang.yobbo.common.util.AESUtil工具类修改这些值！");
+            throw new RuntimeException("配置文件中的密码需要使用AES加密，请使用wang.yobbo.common.util.AESUtil工具类修改这些值！");
             //e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class AESUtil {
 
     public static void main(String[] args) {
         String[] keys = {
-                "", "YJ04051711"
+                "", "6ejLM9R52PtLCs"
         };
         System.out.println("key | AESEncode | AESDecode");
         for (String key : keys) {

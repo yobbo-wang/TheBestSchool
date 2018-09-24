@@ -1,6 +1,7 @@
 package wang.yobbo.common.util;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -64,7 +65,7 @@ public class MybatisGeneratorUtil {
 
         String generatorConfigXml = MybatisGeneratorUtil.class.getResource("/").getPath().replace("/target/classes/", "") + "/src/main/resources/generatorConfig.xml";
         targetProject = basePath + module + "/" + module + "-service";
-        String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + tablePrefix + "_%';";
+        String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + tablePrefix + "%'";
 
         System.out.println("========== 开始生成generatorConfig.xml文件 ==========");
         List<Map<String, Object>> tables = new ArrayList<>();
@@ -80,6 +81,21 @@ public class MybatisGeneratorUtil {
                 table = new HashMap<>(2);
                 table.put("table_name", map.get("TABLE_NAME"));
                 table.put("model_name", StringUtil.lineToHump(ObjectUtils.toString(map.get("TABLE_NAME"))));
+                //查询主键类型
+                String _sql_ = "select data_type from INFORMATION_SCHEMA.COLUMNS where TABLE_schema = '" + database + "' AND table_name LIKE '" + tablePrefix + "%' and column_key = 'PRI'";
+                List<Map> maps = jdbcUtil.selectByParams(_sql_, null);
+                if(maps.size() > 0){
+                    String data_type = maps.get(0).get("DATA_TYPE").toString();
+                    if(StringUtils.equals("int", data_type) ||
+                            StringUtils.equals("tinyint", data_type)||
+                            StringUtils.equals("smallint", data_type)||
+                            StringUtils.equals("mediumint", data_type) ||
+                            StringUtils.equals("bigint", data_type)){
+                        table.put("id_data_type", "Integer");
+                    }else {
+                        table.put("id_data_type", "String");
+                    }
+                }
                 tables.add(table);
             }
             jdbcUtil.release();
@@ -93,9 +109,9 @@ public class MybatisGeneratorUtil {
             context.put("last_insert_id_tables", lastInsertIdTables);
             VelocityUtil.generate(generatorConfig_vm, generatorConfigXml, context);
             // 删除旧代码
-            deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/model"));
-            deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/mapper"));
-            deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/dao"));
+            //deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/model"));
+//            deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/mapper"));
+//            deleteDir(new File(targetProject + "/src/main/java/" + packageName.replaceAll("\\.", "/") + "/dao"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,6 +141,7 @@ public class MybatisGeneratorUtil {
 
         for (int i = 0; i < tables.size(); i++) {
             String model = StringUtil.lineToHump(ObjectUtils.toString(tables.get(i).get("table_name")));
+            String id_data_type =tables.get(i).get("id_data_type").toString();
             String service = servicePath + "/" + model + "Service.java";
             String serviceImpl = serviceImplPath + "/" + model + "ServiceImpl.java";
             // 生成service
@@ -134,6 +151,7 @@ public class MybatisGeneratorUtil {
                 context.put("package_name", packageName);
                 context.put("model", model);
                 context.put("ctime", ctime);
+                context.put("id_data_type", id_data_type);
                 VelocityUtil.generate(service_vm, service, context);
                 System.out.println(service);
             }
@@ -145,6 +163,7 @@ public class MybatisGeneratorUtil {
                 context.put("model", model);
                 context.put("mapper", StringUtil.toLowerCaseFirstOne(model));
                 context.put("ctime", ctime);
+                context.put("id_data_type", id_data_type);
                 VelocityUtil.generate(serviceImpl_vm, serviceImpl, context);
                 System.out.println(serviceImpl);
             }

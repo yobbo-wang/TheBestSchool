@@ -17,9 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 * Created by yobbo on ${ctime}.
 */
 @Service
-@Transactional
 @BaseService
-public class ${model}ServiceImpl extends BaseServiceImpl<${model}Mapper, ${model}, ${model}Criteria> implements ${model}Service {
+public class ${model}ServiceImpl extends BaseServiceImpl<${model}Mapper, ${model}, ${model}Criteria, ${id_data_type}> implements ${model}Service {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(${model}ServiceImpl.class);
 

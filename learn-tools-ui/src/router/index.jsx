@@ -20,8 +20,8 @@ const Options = asyncComponent(() => import('../app/sys/options/index'));
 
 export default () => {
     return(
-        <Router history={hashHistory} >
-            <Route path={"/"} component={Index} onEnter={checkToken}>
+        <Router history={hashHistory} onEnter={checkToken}>
+            <Route path={"/"} component={Index} >
                 <IndexRoute component={Index} />
                 <Route path={"/menu"} component={Menu} />
                 <Route path={"/user"} component={User} />
@@ -29,12 +29,10 @@ export default () => {
                 <Route path={"/options"} component={Options} />
                 <Route path={"/courseware"} component={Courseware} />
                 <Route path={"/upcourseware"} component={Upcourseware} />
-                <Route path={"*"} component={NotFound} />
             </Route>
             <Route path={"/404"} component={NotFound} />
             <Route path={"/login"} component={Login} />
             <Route component={NotFound} />
-            <Redirect to="/" />
         </Router>
     )
 }

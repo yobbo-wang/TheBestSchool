@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 * Created by yobbo on 2018/8/29.
 */
 @Service
-@Transactional
 @BaseService
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole, SysRoleCriteria, String> implements SysRoleService {
 

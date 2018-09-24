@@ -3,6 +3,7 @@ import React from 'react';
 import {Tabs} from 'element-react';
 import SystemOptions from './system/index';
 import MsgTemplate from './msgtemplate/index';
+import ExceptionOptions from './exception/index';
 
 /**
  * 配置系统相关组件
@@ -18,6 +19,9 @@ class Index extends React.Component {
                 </Tabs.Pane>
                 <Tabs.Pane label="消息模板配置" name="2">
                     {<MsgTemplate />}
+                </Tabs.Pane>
+                <Tabs.Pane label="异常相关配置" name="3">
+                    {<ExceptionOptions />}
                 </Tabs.Pane>
             </Tabs>
         )

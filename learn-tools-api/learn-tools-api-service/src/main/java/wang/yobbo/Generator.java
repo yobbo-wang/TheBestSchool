@@ -15,8 +15,8 @@ import java.util.Map;
 public class Generator {
     // 根据命名规范，只修改此常量值即可
     private static String MODULE = "learn-tools-api";
-    private static String DATABASE = "learn_tools";
-    private static String TABLE_PREFIX = "sys_";
+    private static String DATABASE = "test";
+    private static String TABLE_PREFIX = "sys_exception_info";
     private static String PACKAGE_NAME = "wang.yobbo.system";
     private static String JDBC_DRIVER = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.driver");
     private static String JDBC_URL = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.url");

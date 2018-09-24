@@ -23,6 +23,8 @@ import wang.yobbo.filter.JWTLoginFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //放行url
     private static final String[] AUTH_WHITELIST = {
+            //test
+            "/v1/test/run",
             // -- register url
             "/users/signup",
             // -- swagger ui

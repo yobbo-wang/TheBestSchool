@@ -34,18 +34,27 @@ public class BaseResult {
      */
     public Date timestamp = new Date();
 
-    public BaseResult(){}
+    public BaseResult(){
+        this.success = true;
+    }
 
+    /**
+     * 成功
+     * @param data
+     */
     public BaseResult(Object data) {
         this.data = data;
         this.success = true;
     }
 
-    public BaseResult(String errorCode, String errorMsg, Object data) {
+    /**
+     * 错误
+     * @param success
+     * @param errorCode
+     */
+    public BaseResult(boolean success, String errorCode) {
         this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
-        this.data = data;
-        this.success = false;
+        this.success = success;
     }
 
     public boolean isSuccess() {
@@ -78,13 +87,5 @@ public class BaseResult {
 
     public void setData(Object data) {
         this.data = data;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
     }
 }

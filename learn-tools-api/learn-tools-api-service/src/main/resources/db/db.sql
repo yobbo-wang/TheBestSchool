@@ -44,7 +44,7 @@ INSERT INTO `sys_menu` VALUES ('bbbbb', '数据统计', 'auth', '/auth', 'aaaaa'
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu_role`;
 CREATE TABLE `sys_menu_role`  (
-  `id` int(11) NOT NULL DEFAULT '' COMMENT '主键id',
+  `id` int(11) NOT NULL COMMENT '主键id',
   `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色id',
   `menu_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单id',
   PRIMARY KEY USING BTREE (`id`),

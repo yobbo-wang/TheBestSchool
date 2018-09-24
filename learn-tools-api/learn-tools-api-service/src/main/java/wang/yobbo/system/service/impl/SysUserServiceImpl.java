@@ -19,7 +19,6 @@ import java.lang.reflect.InvocationTargetException;
 * Created by yobbo on 2018/8/29.
 */
 @Service
-@Transactional
 @BaseService
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, SysUserCriteria, String> implements SysUserService {
 

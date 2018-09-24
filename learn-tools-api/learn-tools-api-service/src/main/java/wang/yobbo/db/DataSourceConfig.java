@@ -110,6 +110,8 @@ public class DataSourceConfig {
 
     /**
      * 事务配置管理
+     * <p>
+     *     在springBoot入口开启事物管理后，用@Transactional注解在方法或类上开启注解
      * @param dataSource
      * @return
      * @throws Exception

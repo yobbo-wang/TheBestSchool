@@ -2,6 +2,7 @@
 import React from 'react';
 import {Dialog, Button, Form, Input, Checkbox, Message} from 'element-react'
 import {saveUser} from "../../../store/user/action";
+import {inputErrorMsg} from "../../../utils/errorMsgUtil";
 
 class Add extends React.Component{
     constructor(props){
@@ -14,7 +15,7 @@ class Add extends React.Component{
                     { required: true, message: '请输入用户名', trigger: 'blur' }
                 ],
                 name: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                    { required: true, message: inputErrorMsg('name.cannot.null'), trigger: 'blur' }
                 ],
                 mobilePhone: [
                     { required: true, message: '请输入手机号', trigger: 'blur' }

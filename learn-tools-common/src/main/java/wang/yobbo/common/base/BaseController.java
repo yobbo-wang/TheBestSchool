@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public abstract class BaseController {
     private final static Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+
     /**
      * 统一异常处理
-     * @param exception
+     * @param e
      */
     @ExceptionHandler
-    public BaseResult exceptionHandler(Exception exception) {
-        LOGGER.error("统一异常处理：", exception);
+    public BaseResult exceptionHandler(Exception e) {
+        LOGGER.error("统一异常处理：", e);
         BaseResult baseResult = new BaseResult();
         baseResult.setSuccess(false);
         baseResult.setErrorCode("400");

@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 * Created by yobbo on 2018/9/3.
 */
 @Service
-@Transactional
 @BaseService
 public class SysMenuRoleServiceImpl extends BaseServiceImpl<SysMenuRoleMapper, SysMenuRole, SysMenuRoleCriteria, Integer> implements SysMenuRoleService {
 

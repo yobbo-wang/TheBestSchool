@@ -54,22 +54,18 @@
         <jdbcConnection driverClass="${generator.jdbc.driver}"
                         connectionURL="${generator.jdbc.url}"
                         userId="${generator.jdbc.username}"
-                        password="123456" />
+                        password="6ejLM9R52PtLCs" />
 
         <!-- model生成 -->
-        <javaModelGenerator targetPackage="wang.yobbo.system.model" targetProject="D:/ws/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
+        <javaModelGenerator targetPackage="wang.yobbo.system.model" targetProject="/Users/yobbo/workspace/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
 
         <!-- MapperXML生成 -->
-        <sqlMapGenerator targetPackage="wang.yobbo.system.mapper" targetProject="D:/ws/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
+        <sqlMapGenerator targetPackage="wang.yobbo.system.mapper" targetProject="/Users/yobbo/workspace/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
 
         <!-- Mapper接口生成 -->
-        <javaClientGenerator targetPackage="wang.yobbo.system.dao" targetProject="D:/ws/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" type="XMLMAPPER" />
+        <javaClientGenerator targetPackage="wang.yobbo.system.dao" targetProject="/Users/yobbo/workspace/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" type="XMLMAPPER" />
 
         <!-- 需要映射的表 -->
-                                    <table tableName="sys_menu" domainObjectName="SysMenu"></table>
-                                                <table tableName="sys_menu_role" domainObjectName="SysMenuRole"></table>
-                                                <table tableName="sys_role" domainObjectName="SysRole"></table>
-                                                <table tableName="sys_user" domainObjectName="SysUser"></table>
-                                                <table tableName="sys_user_role" domainObjectName="SysUserRole"></table>
+                                    <table tableName="sys_exception_info" domainObjectName="SysExceptionInfo"></table>
                         </context>
 </generatorConfiguration>
