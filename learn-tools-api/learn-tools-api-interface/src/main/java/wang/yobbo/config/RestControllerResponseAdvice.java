@@ -1,6 +1,8 @@
 package wang.yobbo.config;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -10,7 +12,14 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import wang.yobbo.common.base.BaseResult;
+import wang.yobbo.system.model.SysErrorInfo;
+import wang.yobbo.system.model.SysErrorInfoCriteria;
+import wang.yobbo.system.model.SysExceptionInfo;
+import wang.yobbo.system.service.SysErrorInfoService;
+import wang.yobbo.system.service.SysExceptionInfoService;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +31,11 @@ import java.util.Map;
  */
 @ControllerAdvice
 public class RestControllerResponseAdvice implements ResponseBodyAdvice<Object> {
+
+    @Autowired
+    private SysExceptionInfoService sysExceptionInfoService;
+    @Autowired
+    private SysErrorInfoService sysErrorInfoService;
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -60,7 +74,32 @@ public class RestControllerResponseAdvice implements ResponseBodyAdvice<Object> 
                 String authorization =  authorizationArray != null && !authorizationArray.isEmpty() ? authorizationArray.get(0) : "";
                 String controller = methodParameter.getContainingClass().getName(); // 请求Controller
                 String controllerMethod = methodParameter.getMethod().getName(); // 请求Controller方法名
-
+                // 记录异常信息
+                SysExceptionInfo sysExceptionInfo = new SysExceptionInfo();
+                sysExceptionInfo.setAuthorization(authorization);
+                sysExceptionInfo.setControllerName(controller);
+                sysExceptionInfo.setMethodName(controllerMethod);
+                sysExceptionInfo.setCreateTime(new Date());
+                sysExceptionInfo.setQueryString(queryString);
+                sysExceptionInfo.setUserAgent(userAgent);
+                sysExceptionInfo.setRemoteHost(remoteHost);
+                sysExceptionInfo.setRemotePort(remotePort);
+                sysExceptionInfo.setParameterMap(parameterMap != null ? JSONObject.toJSONString(parameterMap) : null);
+                try {
+                    this.sysExceptionInfoService.insertSelective(sysExceptionInfo);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                SysErrorInfoCriteria sysErrorInfoCriteria = new SysErrorInfoCriteria();
+                SysErrorInfoCriteria.Criteria criteria = sysErrorInfoCriteria.createCriteria();
+                criteria.andErrorCodeEqualTo(baseResult.getErrorCode());
+                try {
+                    SysErrorInfo sysErrorInfo = this.sysErrorInfoService.selectFirstByExample(sysErrorInfoCriteria);
+                    baseResult.setErrorMsg(sysErrorInfo != null ? sysErrorInfo.getErrorMsg() : "系统异常，请联系管理员");
+                    return baseResult;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return object;

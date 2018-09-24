@@ -40,6 +40,13 @@ public class SysExceptionInfo implements Serializable {
     private String parameterMap;
 
     /**
+     * 异常类型
+     *
+     * @mbg.generated
+     */
+    private String exceptionType;
+
+    /**
      * 请求参数字符串
      *
      * @mbg.generated
@@ -116,6 +123,14 @@ public class SysExceptionInfo implements Serializable {
         this.parameterMap = parameterMap;
     }
 
+    public String getExceptionType() {
+        return exceptionType;
+    }
+
+    public void setExceptionType(String exceptionType) {
+        this.exceptionType = exceptionType;
+    }
+
     public String getQueryString() {
         return queryString;
     }
@@ -167,6 +182,7 @@ public class SysExceptionInfo implements Serializable {
         sb.append(", methodName=").append(methodName);
         sb.append(", remoteHost=").append(remoteHost);
         sb.append(", parameterMap=").append(parameterMap);
+        sb.append(", exceptionType=").append(exceptionType);
         sb.append(", queryString=").append(queryString);
         sb.append(", remotePort=").append(remotePort);
         sb.append(", userAgent=").append(userAgent);
@@ -193,6 +209,7 @@ public class SysExceptionInfo implements Serializable {
             && (this.getMethodName() == null ? other.getMethodName() == null : this.getMethodName().equals(other.getMethodName()))
             && (this.getRemoteHost() == null ? other.getRemoteHost() == null : this.getRemoteHost().equals(other.getRemoteHost()))
             && (this.getParameterMap() == null ? other.getParameterMap() == null : this.getParameterMap().equals(other.getParameterMap()))
+            && (this.getExceptionType() == null ? other.getExceptionType() == null : this.getExceptionType().equals(other.getExceptionType()))
             && (this.getQueryString() == null ? other.getQueryString() == null : this.getQueryString().equals(other.getQueryString()))
             && (this.getRemotePort() == null ? other.getRemotePort() == null : this.getRemotePort().equals(other.getRemotePort()))
             && (this.getUserAgent() == null ? other.getUserAgent() == null : this.getUserAgent().equals(other.getUserAgent()))
@@ -209,6 +226,7 @@ public class SysExceptionInfo implements Serializable {
         result = prime * result + ((getMethodName() == null) ? 0 : getMethodName().hashCode());
         result = prime * result + ((getRemoteHost() == null) ? 0 : getRemoteHost().hashCode());
         result = prime * result + ((getParameterMap() == null) ? 0 : getParameterMap().hashCode());
+        result = prime * result + ((getExceptionType() == null) ? 0 : getExceptionType().hashCode());
         result = prime * result + ((getQueryString() == null) ? 0 : getQueryString().hashCode());
         result = prime * result + ((getRemotePort() == null) ? 0 : getRemotePort().hashCode());
         result = prime * result + ((getUserAgent() == null) ? 0 : getUserAgent().hashCode());
