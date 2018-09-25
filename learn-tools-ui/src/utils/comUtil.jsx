@@ -28,3 +28,13 @@ export const fromatObjectToformData= (d) =>{
     }
     return data.join('&');
 }
+
+/**
+ * 根据错误码获取错误提示信息，前后端可以共用。错误码信息在配置中去维护
+ * @param code
+ * @returns {*}
+ */
+export const getErrorCode = (code) => {
+    const errorCodeS = window.constants.errorCode;
+    return errorCodeS[code]
+}

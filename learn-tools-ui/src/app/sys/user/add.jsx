@@ -2,7 +2,7 @@
 import React from 'react';
 import {Dialog, Button, Form, Input, Checkbox, Message} from 'element-react'
 import {saveUser} from "../../../store/sys/user/action";
-import {inputErrorMsg} from "../../../utils/errorMsgUtil";
+import {getErrorCode} from "../../../utils/comUtil";
 
 class Add extends React.Component{
     constructor(props){
@@ -12,10 +12,10 @@ class Add extends React.Component{
             form: {},
             rules: {
                 username: [
-                    { required: true, message: '请输入用户名', trigger: 'blur' }
+                    { required: true, message: getErrorCode('system.username.must.not.null'), trigger: 'blur' }
                 ],
                 name: [
-                    { required: true, message: inputErrorMsg('name.cannot.null'), trigger: 'blur' }
+                    { required: true, message: getErrorCode('name.must.not.null'), trigger: 'blur' }
                 ],
                 mobilePhone: [
                     { required: true, message: '请输入手机号', trigger: 'blur' }

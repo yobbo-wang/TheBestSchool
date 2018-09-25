@@ -3,7 +3,7 @@ import React from 'react';
 import {Button, Input, Pagination, Select, Table, Loading} from 'element-react';
 import {connect} from "react-redux";
 import {requestData} from "../../../../store/sys/options/action";
-
+import Add from './add';
 /**
  * 异常、错误码相关配置
  * <P>
@@ -16,6 +16,9 @@ class ExceptionOptions extends React.Component{
         this.state = {
             pageSize: 10,
             currentPage: 1,
+            row:{
+                dialogVisible: false
+            },
             columns: [
                 {
                     label: "异常类型",
@@ -85,6 +88,13 @@ class ExceptionOptions extends React.Component{
         );
     }
 
+    callback(saveStatus){
+        this.setState({ loading : true, row: {dialogVisible: false} });
+        this.props.requestData("errorCodeList").then(() => {
+            this.setState({ loading : false, row: {dialogVisible: false} });
+        });
+    }
+
     render(){
         return (
             <div>
@@ -98,7 +108,10 @@ class ExceptionOptions extends React.Component{
                             <Select.Option label={"参数验证异常"} value={"ParamsException"} />
                         </Select>
                         <Button type="primary" icon="search" style={{marginLeft: 10}}>搜索</Button>
-                        <Button type="success" icon="plus">新增</Button>
+                        <Button type="success" icon="plus" onClick={() =>{
+                            this.setState({row: {form: {}, dialogVisible: true}})
+                        }}>新增</Button>
+                        { <Add callback = {this.callback.bind(this)} row={this.state.row} />  }
                     </div>
                     <Table
                         style={{width: '100%'}}

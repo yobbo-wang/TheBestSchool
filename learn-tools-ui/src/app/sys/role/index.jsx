@@ -72,7 +72,7 @@ class Index extends React.Component {
     callback(){
         this.setState({ loading : true, row: {dialogVisible: false} });
         this.props.requestRoleData("roleList").then(() => {
-            this.setState({ loading : false, row: {dialogVisible: false} });
+            this.setState({ loading : false});
         });
     }
 

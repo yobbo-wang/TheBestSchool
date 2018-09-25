@@ -29,6 +29,7 @@ export default () => {
                 <Route path={"/options"} component={Options} />
                 <Route path={"/courseware"} component={Courseware} />
                 <Route path={"/upcourseware"} component={Upcourseware} />
+                <Route path={"*"} component={NotFound}/>
             </Route>
             <Route path={"/404"} component={NotFound} />
             <Route path={"/login"} component={Login} />

@@ -18,7 +18,9 @@ import wang.yobbo.system.model.SysErrorInfo;
 import wang.yobbo.system.model.SysErrorInfoCriteria;
 import wang.yobbo.system.service.SysErrorInfoService;
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * url: /v1/options/errorInfo
@@ -51,6 +53,26 @@ public class SysOptionsErrorInfoController extends BaseController {
         }
     }
 
+    @ApiVersion(1)
+    @ApiOperation(value = "查看错误码集合版本1", response = BaseResult.class)
+    @RequestMapping(value = "/code", method = RequestMethod.GET)
+    public BaseResult geErrorCodeV1(){
+        SysErrorInfoCriteria sysErrorInfoCriteria = new SysErrorInfoCriteria();
+        sysErrorInfoCriteria.setOrderByClause(" create_time desc ");
+        SysErrorInfoCriteria.Criteria criteria = sysErrorInfoCriteria.createCriteria();
+        criteria.andExceptionTypeEqualTo("Input.Exception");
+        try{
+            List<SysErrorInfo> sysErrorInfos = this.sysErrorInfoService.selectByExample(sysErrorInfoCriteria);
+            Map map = new Hashtable();
+            for(SysErrorInfo sysErrorInfo : sysErrorInfos){
+                map.put(sysErrorInfo.getErrorCode(), sysErrorInfo.getErrorMsg());
+            }
+            return new BaseResult(map);
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException(e); //如果异常会统一交给异常处理返回结果
+        }
+    }
     /*********************************************************************************************/
 
 
