@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
 * SysErrorInfoService实现
-* Created by yobbo on 2018/9/24.
+* Created by yobbo on 2018/9/25.
 */
 @Service
 @BaseService

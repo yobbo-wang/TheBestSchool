@@ -2,9 +2,9 @@
 import React from 'react';
 import {Table, Button, Loading, Message} from 'element-react'
 import Add from './add';
-import {requestRoleData, changeStatus} from "../../../store/role/action";
+import {requestRoleData, changeStatus} from "../../../store/sys/role/action";
 import {connect} from "react-redux";
-import {fetchMenuList} from "../../../store/menu/action";
+import {fetchMenuList} from "../../../store/sys/menu/action";
 
 class Index extends React.Component {
     constructor(props) {

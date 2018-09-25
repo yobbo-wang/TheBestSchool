@@ -35,6 +35,7 @@ const generateUrl = (baseUrl) => {
         changeStatus: baseUrl + version + '/role/change/status', // 更新角色状态
         userList: baseUrl + version + '/user/list', //查询用户列表
         saveUser: baseUrl + version + '/user/save',  //保存或更新角色
+        errorInfo: baseUrl + version + '/options/errorInfo/list', //查询错误码列表
         coursewareList: baseUrl + version + '/courseware/list',
         sysRoleQuery: baseUrl + version + '/sysLoginInterface/signIn',
     }

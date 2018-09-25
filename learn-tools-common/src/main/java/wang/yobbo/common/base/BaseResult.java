@@ -1,6 +1,9 @@
 package wang.yobbo.common.base;
 
+import wang.yobbo.common.util.Page;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -48,6 +51,18 @@ public class BaseResult {
     }
 
     /**
+     * 成功
+     * @param data
+     */
+    public BaseResult(Object data, Page page) {
+        Map map = new HashMap();
+        map.put("rows", data);
+        map.put("page", page);
+        this.data = map;
+        this.success = true;
+    }
+
+    /**
      * 错误
      * @param success
      * @param errorCode
@@ -87,5 +102,13 @@ public class BaseResult {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

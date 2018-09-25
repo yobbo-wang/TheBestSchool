@@ -15,8 +15,6 @@ public class SysErrorInfoCriteria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    protected Page page;
-
     public SysErrorInfoCriteria() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -68,14 +66,6 @@ public class SysErrorInfoCriteria implements Serializable {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
-    }
-
-    public void setPage(Page page) {
-        this.page=page;
-    }
-
-    public Page getPage() {
-        return page;
     }
 
     protected abstract static class GeneratedCriteria implements Serializable {
@@ -316,6 +306,76 @@ public class SysErrorInfoCriteria implements Serializable {
 
         public Criteria andErrorMsgNotBetween(String value1, String value2) {
             addCriterion("error_msg not between", value1, value2, "errorMsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeIsNull() {
+            addCriterion("exception_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeIsNotNull() {
+            addCriterion("exception_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeEqualTo(String value) {
+            addCriterion("exception_type =", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeNotEqualTo(String value) {
+            addCriterion("exception_type <>", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeGreaterThan(String value) {
+            addCriterion("exception_type >", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("exception_type >=", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeLessThan(String value) {
+            addCriterion("exception_type <", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeLessThanOrEqualTo(String value) {
+            addCriterion("exception_type <=", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeLike(String value) {
+            addCriterion("exception_type like", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeNotLike(String value) {
+            addCriterion("exception_type not like", value, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeIn(List<String> values) {
+            addCriterion("exception_type in", values, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeNotIn(List<String> values) {
+            addCriterion("exception_type not in", values, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeBetween(String value1, String value2) {
+            addCriterion("exception_type between", value1, value2, "exceptionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionTypeNotBetween(String value1, String value2) {
+            addCriterion("exception_type not between", value1, value2, "exceptionType");
             return (Criteria) this;
         }
 

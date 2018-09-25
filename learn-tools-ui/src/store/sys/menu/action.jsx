@@ -1,6 +1,6 @@
 import * as types from './type';
-import http from '../../api/http'
-import {environment, getToken} from '../../api/environment'
+import http from '../../../api/http'
+import {environment, getToken} from '../../../api/environment'
 
 
 /**

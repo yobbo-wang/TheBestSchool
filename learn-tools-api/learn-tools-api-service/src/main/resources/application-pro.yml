@@ -1,10 +1,10 @@
-#数据源一
+#数据源一[数据库已加密]
 master:
   jdbc:
-    url: jdbc:mysql://db4free.net:3306/learn-tools?characterEncoding=utf8
+    url: jdbc:mysql://132.232.64.127:3306/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     driverClassName: com.mysql.jdbc.Driver
-    username: learn_user
-    password: e1Hkm3oWzLTeky08EQ+PcA==
+    username: root
+    password: mQCiBQuTD/D1eiSvN/gFWA==
     initialSize: 1
     minIdle: 1
     maxActive: 20
@@ -12,15 +12,15 @@ master:
     timeBetweenEvictionRunsMillis: 60000
 slave:
   jdbc:
-      url: jdbc:mysql://db4free.net:3307/learn-tools?characterEncoding=utf8
-      driverClassName: com.mysql.jdbc.Driver
-      username: learn_user
-      password: e1Hkm3oWzLTeky08EQ+PcA==
-      initialSize: 1
-      minIdle: 1
-      maxActive: 20
-      maxWaitMillis: 60000
-      timeBetweenEvictionRunsMillis: 60000
+    url: jdbc:mysql://132.232.64.127:3306/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    driverClassName: com.mysql.jdbc.Driver
+    username: root
+    password: mQCiBQuTD/D1eiSvN/gFWA==
+    initialSize: 1
+    minIdle: 1
+    maxActive: 20
+    maxWaitMillis: 60000
+    timeBetweenEvictionRunsMillis: 60000
 
 #跨域域名限制访问
 admin:

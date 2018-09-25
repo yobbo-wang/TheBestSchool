@@ -30,6 +30,9 @@ CREATE TABLE `sys_error_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ALTER TABLE `test`.`sys_error_info`
+ADD UNIQUE INDEX(`error_code`);
+
 -- ----------------------------
 -- Table structure for sys_excepton_info
 -- ----------------------------
@@ -114,7 +117,7 @@ DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `id` varchar(32) NOT NULL DEFAULT '' COMMENT '用户ID',
   `username` varchar(15) NOT NULL DEFAULT '' COMMENT '用户昵称(用来登录，是唯一不可重复)',
-  `password` varchar(32) NOT NULL DEFAULT '12345678' COMMENT '用户名密码（md5加密），默认12345678',
+  `password` varchar(32) NOT NULL DEFAULT 'e10adc3949ba59abbe56e057f20f883e' COMMENT '用户名密码（md5加密），默认123456',
   `name` varchar(15) NOT NULL DEFAULT '' COMMENT '用户名',
   `mobile_phone` varchar(11) DEFAULT '' COMMENT '用户手机号',
   `email` varchar(50) DEFAULT NULL COMMENT '用户邮箱',

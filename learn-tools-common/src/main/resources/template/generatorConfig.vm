@@ -26,7 +26,8 @@
             <property name="replaceString" value="Criteria" />
         </plugin>
 
-        <plugin type="wang.yobbo.common.plugin.MySQLPaginationPlugin"></plugin>
+        <!-- 分页已使用 pagehelper代替 -->
+##        <plugin type="wang.yobbo.common.plugin.MySQLPaginationPlugin"></plugin>
 
         <!-- 生成在XML中的<cache>元素 -->
         <plugin type="org.mybatis.generator.plugins.CachePlugin">

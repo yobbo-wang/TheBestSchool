@@ -1,6 +1,6 @@
-import {environment, getToken} from "../../api/environment";
-import * as types from "../role/type";
-import http from "../../api/http";
+import {environment, getToken} from "../../../api/environment";
+import * as types from "./type";
+import http from "../../../api/http";
 
 export const saveRole = (params) => {
     let options = {

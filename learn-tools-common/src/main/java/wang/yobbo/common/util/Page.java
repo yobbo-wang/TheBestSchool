@@ -42,14 +42,6 @@ public class Page implements Serializable {
 	 * 总共页数.
 	 */
 	private int pageCount;
-	/** 
-	 * 
-	 */
-	private String sortname;
-	/** 
-	 * 
-	 */
-	private String sortorder;
 
 	/** 
 	 * 
@@ -57,16 +49,16 @@ public class Page implements Serializable {
 	public Page() {
 	}
 	/**
-	 * 构造函数.
+	 * 计算分页码和结束位置
 	 * @param begin
 	 * @param length
 	 */
-	public Page(int begin, int length) {
-		this.begin = begin;
-		this.length = length;
-		this.end = this.begin + this.length;
-		this.pageNo = (int) Math.floor((this.begin * 1.0d) / this.length) + 1;
-	}
+//	public Page(int begin, int length) {
+//		this.begin = begin;
+//		this.length = length;
+//		this.end = this.begin + this.length;
+//		this.pageNo = (int) Math.floor((this.begin * 1.0d) / this.length) + 1;
+//	}
 
 	/**
 	 * @param begin
@@ -74,16 +66,17 @@ public class Page implements Serializable {
 	 * @param totalRecords
 	 */
 	public Page(int begin, int length, int totalRecords) {
-		this(begin, length);
+//		this(begin, length);
 		this.totalRecords = totalRecords;
 	}
 
 	/**
-	 * 设置页数，自动计算数据范围.
+	 * 根据当前分页码和长度计算分页参数
 	 * @param pageNo
 	 */
-	public Page(int pageNo) {
+	public Page(int pageNo, int length) {
 		this.pageNo = pageNo;
+		this.length = length;
 		pageNo = pageNo > 0 ? pageNo : 1;
 		this.begin = this.length * (pageNo - 1);
 		this.end = this.length * pageNo;
@@ -196,41 +189,10 @@ public class Page implements Serializable {
 		this.pageCount = pageCount;
 	}
 
-	/**
-	 * @return the sortname
-	 */
-	public String getSortname() {
-		return sortname;
-	}
-
-	/**
-	 * @param sortname
-	 *            the sortname to set
-	 */
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	/**
-	 * @return the sortorder
-	 */
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	/**
-	 * @param sortorder
-	 *            the sortorder to set
-	 */
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
 	@Override
 	public String toString() {
 		return "Page [begin=" + begin + ", end=" + end + ", length=" + length
 				+ ", totalRecords=" + totalRecords + ", pageNo=" + pageNo
-				+ ", pageCount=" + pageCount + ", sortname=" + sortname
-				+ ", sortorder=" + sortorder + "]";
+				+ ", pageCount=" + pageCount + "]";
 	}
 }

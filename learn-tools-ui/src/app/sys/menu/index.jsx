@@ -2,7 +2,7 @@
 import React from 'react';
 import {Button, Loading, Table} from 'element-react'
 import Add from './add';
-import {requestMenuData} from '../../../store/menu/action';
+import {requestMenuData} from '../../../store/sys/menu/action';
 import {connect} from "react-redux";
 
 class Index extends React.Component{

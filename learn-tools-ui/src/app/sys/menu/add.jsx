@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Dialog, Button, Form, Input, InputNumber, Message} from 'element-react'
-import { saveMenu } from '../../../store/menu/action';
+import { saveMenu } from '../../../store/sys/menu/action';
 
 export default class Add extends React.Component{
     constructor(props){

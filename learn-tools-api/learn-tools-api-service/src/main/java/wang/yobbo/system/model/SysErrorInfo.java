@@ -26,6 +26,13 @@ public class SysErrorInfo implements Serializable {
     private String errorMsg;
 
     /**
+     * 异常类型
+     *
+     * @mbg.generated
+     */
+    private String exceptionType;
+
+    /**
      * 创建人id
      *
      * @mbg.generated
@@ -65,6 +72,14 @@ public class SysErrorInfo implements Serializable {
         this.errorMsg = errorMsg;
     }
 
+    public String getExceptionType() {
+        return exceptionType;
+    }
+
+    public void setExceptionType(String exceptionType) {
+        this.exceptionType = exceptionType;
+    }
+
     public String getCreateUser() {
         return createUser;
     }
@@ -90,6 +105,7 @@ public class SysErrorInfo implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", errorCode=").append(errorCode);
         sb.append(", errorMsg=").append(errorMsg);
+        sb.append(", exceptionType=").append(exceptionType);
         sb.append(", createUser=").append(createUser);
         sb.append(", createTime=").append(createTime);
         sb.append("]");
@@ -111,6 +127,7 @@ public class SysErrorInfo implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getErrorCode() == null ? other.getErrorCode() == null : this.getErrorCode().equals(other.getErrorCode()))
             && (this.getErrorMsg() == null ? other.getErrorMsg() == null : this.getErrorMsg().equals(other.getErrorMsg()))
+            && (this.getExceptionType() == null ? other.getExceptionType() == null : this.getExceptionType().equals(other.getExceptionType()))
             && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
@@ -122,6 +139,7 @@ public class SysErrorInfo implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getErrorCode() == null) ? 0 : getErrorCode().hashCode());
         result = prime * result + ((getErrorMsg() == null) ? 0 : getErrorMsg().hashCode());
+        result = prime * result + ((getExceptionType() == null) ? 0 : getExceptionType().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         return result;

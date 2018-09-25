@@ -6,7 +6,7 @@ import wang.yobbo.system.model.SysErrorInfoCriteria;
 
 /**
 * SysErrorInfoService接口
-* Created by yobbo on 2018/9/24.
+* Created by yobbo on 2018/9/25.
 */
 public interface SysErrorInfoService extends BaseService<SysErrorInfo, SysErrorInfoCriteria, Integer> {
 

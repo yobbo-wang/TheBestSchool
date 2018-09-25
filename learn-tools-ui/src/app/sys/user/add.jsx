@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Dialog, Button, Form, Input, Checkbox, Message} from 'element-react'
-import {saveUser} from "../../../store/user/action";
+import {saveUser} from "../../../store/sys/user/action";
 import {inputErrorMsg} from "../../../utils/errorMsgUtil";
 
 class Add extends React.Component{

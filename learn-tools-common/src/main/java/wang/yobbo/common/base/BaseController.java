@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 控制器基类
- *   restful api安全验证等
+ * <p>
+ *      用于处理异常情况
  */
 @RestController
 public abstract class BaseController {

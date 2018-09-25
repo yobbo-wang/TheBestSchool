@@ -2,8 +2,8 @@
 import React from 'react';
 import {Table, Button, Loading, Pagination} from 'element-react'
 import Add from './add.jsx';
-import {requestData} from '../../../store/user/action';
-import {fetchRoleList} from '../../../store/role/action';
+import {requestData} from '../../../store/sys/user/action';
+import {fetchRoleList} from '../../../store/sys/role/action';
 import {connect} from "react-redux";
 
 class Body extends React.Component {

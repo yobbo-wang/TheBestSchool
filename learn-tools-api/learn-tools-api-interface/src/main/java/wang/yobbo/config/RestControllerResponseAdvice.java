@@ -20,6 +20,7 @@ import wang.yobbo.system.service.SysExceptionInfoService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,8 @@ public class RestControllerResponseAdvice implements ResponseBodyAdvice<Object> 
             BaseResult baseResult = (BaseResult) object;
             if(baseResult != null
                     && !baseResult.isSuccess()
-                    && StringUtils.isNotBlank(baseResult.getErrorCode())){
+                    && StringUtils.isNotBlank(baseResult.getErrorCode())
+                    && !StringUtils.equals("400", baseResult.getErrorCode())){
                 ServletServerHttpRequest request = ((ServletServerHttpRequest) serverHttpRequest);
                 Map<String, String[]> parameterMap = request.getServletRequest().getParameterMap(); // 请求参数
                 String queryString = request.getServletRequest().getQueryString(); // 请求参数字符串
@@ -96,11 +98,11 @@ public class RestControllerResponseAdvice implements ResponseBodyAdvice<Object> 
                 try {
                     SysErrorInfo sysErrorInfo = this.sysErrorInfoService.selectFirstByExample(sysErrorInfoCriteria);
                     baseResult.setErrorMsg(sysErrorInfo != null ? sysErrorInfo.getErrorMsg() : "系统异常，请联系管理员");
-                    return baseResult;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+            return  baseResult;
         }
         return object;
     }

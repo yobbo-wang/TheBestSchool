@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Button, Checkbox, Dialog, Form, Input, Message} from 'element-react'
-import {saveRole, queryMenuIdByRoleId} from "../../../store/role/action";
+import {saveRole, queryMenuIdByRoleId} from "../../../store/sys/role/action";
 
 class Add extends React.Component{
     constructor(props){

@@ -1,10 +1,10 @@
-#数据源一[数据库已加密]
+#数据源一
 master:
   jdbc:
-    url: jdbc:mysql://132.232.64.127:3306/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    url: jdbc:mysql://dbserver:3306/learn_tools?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password: mQCiBQuTD/D1eiSvN/gFWA==
+    password: rWd3Hb+AzNg3IXF1b5vD+g==
     initialSize: 1
     minIdle: 1
     maxActive: 20
@@ -12,10 +12,10 @@ master:
     timeBetweenEvictionRunsMillis: 60000
 slave:
   jdbc:
-    url: jdbc:mysql://132.232.64.127:3306/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    url: jdbc:mysql://dbserver:3306/learn_tools?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password: mQCiBQuTD/D1eiSvN/gFWA==
+    password: rWd3Hb+AzNg3IXF1b5vD+g==
     initialSize: 1
     minIdle: 1
     maxActive: 20
@@ -27,3 +27,9 @@ admin:
   host: http://127.0.0.1:3000
 app:
   host: http://127.0.0.1:3400
+
+#mybatis配置
+mybatis:
+  typeAliasesPackage: wang.yobbo.**.model
+  mapperLocations: classpath*:wang/yobbo/**/mapper/*Mapper.xml
+  configLocation: classpath:mybatis-config.xml

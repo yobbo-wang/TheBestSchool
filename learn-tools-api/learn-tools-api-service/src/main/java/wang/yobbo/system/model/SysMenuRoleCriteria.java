@@ -14,8 +14,6 @@ public class SysMenuRoleCriteria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    protected Page page;
-
     public SysMenuRoleCriteria() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -67,14 +65,6 @@ public class SysMenuRoleCriteria implements Serializable {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
-    }
-
-    public void setPage(Page page) {
-        this.page=page;
-    }
-
-    public Page getPage() {
-        return page;
     }
 
     protected abstract static class GeneratedCriteria implements Serializable {

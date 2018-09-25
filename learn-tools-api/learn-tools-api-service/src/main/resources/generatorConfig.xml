@@ -57,15 +57,15 @@
                         password="6ejLM9R52PtLCs" />
 
         <!-- model生成 -->
-        <javaModelGenerator targetPackage="wang.yobbo.system.model" targetProject="/Users/yobbo/workspace/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
+        <javaModelGenerator targetPackage="wang.yobbo.system.model" targetProject="D:/ws/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
 
         <!-- MapperXML生成 -->
-        <sqlMapGenerator targetPackage="wang.yobbo.system.mapper" targetProject="/Users/yobbo/workspace/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
+        <sqlMapGenerator targetPackage="wang.yobbo.system.mapper" targetProject="D:/ws/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" />
 
         <!-- Mapper接口生成 -->
-        <javaClientGenerator targetPackage="wang.yobbo.system.dao" targetProject="/Users/yobbo/workspace/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" type="XMLMAPPER" />
+        <javaClientGenerator targetPackage="wang.yobbo.system.dao" targetProject="D:/ws/youxuetang/learn-tools-api/learn-tools-api-service/src/main/java" type="XMLMAPPER" />
 
         <!-- 需要映射的表 -->
-                                    <table tableName="sys_exception_info" domainObjectName="SysExceptionInfo"></table>
+                                    <table tableName="sys_error_info" domainObjectName="SysErrorInfo"></table>
                         </context>
 </generatorConfiguration>

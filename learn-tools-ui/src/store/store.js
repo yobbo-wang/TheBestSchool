@@ -3,9 +3,10 @@ import thunk from 'redux-thunk';
 
 import * as mainData from './main/reducer';
 import * as coursewareData from './courseware/reducer'
-import * as usersData from './user/reducer';
-import * as menuData from './menu/reducer';
-import * as roleData from './role/reducer';
+import * as usersData from './sys/user/reducer';
+import * as menuData from './sys/menu/reducer';
+import * as roleData from './sys/role/reducer';
+import * as errorCodeList from './sys/options/reducer';
 
 const store = createStore(
     combineReducers({
@@ -13,7 +14,8 @@ const store = createStore(
         ...coursewareData,
         ...usersData,
         ...menuData,
-        ...roleData
+        ...roleData,
+        ...errorCodeList
     }),
     applyMiddleware(thunk)
 );

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Layout, Menu, Badge } from 'element-react';
 import { Link } from 'react-router';
-import {queryMenuByUID} from "../../store/menu/action";
+import {queryMenuByUID} from "../../store/sys/menu/action";
 
 /**
  * menu
