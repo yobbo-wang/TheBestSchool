@@ -2,14 +2,13 @@
  * Created by hao.cheng on 2018/8/8.
  */
 import React from 'react';
-import {setCookie} from "../../utils/cookieUtil";
 import {Form ,Input,Button }from 'element-react';
 import '../../resource/styles/login.css';
 import loginImg from  '../../resource/images/login-img.png';
 import logo from '../../resource/images/login_logo.png';
 import http from '../../api/http';
 import {environment} from '../../api/environment';
-import { hashHistory } from 'react-router'
+import { hashHistory } from 'react-router-dom'
 
 export default class Login extends React.Component {
     constructor(props){
@@ -40,9 +39,10 @@ export default class Login extends React.Component {
                 /******************** 调用远程api登录 *********************/
                 let result = http.post(environment.url.loginUrl, {params: {username: this.state.form.username, password: this.state.form.pwd}});
                 result.then((data) => {
-                    setCookie('auth', data.Authorization, new Date().getTime() + 7*24*60*60*1000)
+                    localStorage.setItem("auth", data.Authorization);
+                    localStorage.setItem("expiryDate", data.expiryDate);
                     let path = this.props.location.state && this.props.location.state.path ? this.props.location.state.path : '/';
-                    hashHistory.replace("/");
+                    this.props.history.push({ pathname: `${path}`, state: {}})
                 }, error => {
                     this.setState({loginIng: false});
                     alert('登录失败！')

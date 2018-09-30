@@ -3,12 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { requestData } from '../../store/main/action'
-import Header from '../component/header';
-import Navigation from '../component/navigation'
+import Header from '../../component/common/header';
+import Navigation from '../../component/common/navigation'
 import Body from './body';
-import Footer from "../component/footer";
+import Footer from "../../component/common/footer";
 
-class Index extends React.Component {
+class Home extends React.Component {
     static propTypes = {
     }
 
@@ -48,4 +48,4 @@ export default connect(state => ({
     mainData: state.mainData,
 }), {
     requestData
-})(Index);
+})(Home);

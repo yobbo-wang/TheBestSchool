@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import {Button, Input, Pagination, Table, Tag} from 'element-react';
-import {Redirect} from 'react-router';
+import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 
 import { queryCourseWareDate } from '../../store/courseware/action'

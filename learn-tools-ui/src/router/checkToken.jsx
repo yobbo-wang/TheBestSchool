@@ -1,5 +1,5 @@
 import React from 'react';
-import { hashHistory } from 'react-router'
+// import { hashHistory } from 'react-router'
 import {environment ,getToken} from "../api/environment";
 import http from '../api/http';
 
@@ -9,7 +9,7 @@ import http from '../api/http';
 export const checkToken = () => {
     const authorization =  getToken().authorization;
     if(authorization == "") {
-        hashHistory.replace( '/login' )
+        // hashHistory.replace( '/login' )
     }
     let options = {
         headers: {
@@ -21,7 +21,7 @@ export const checkToken = () => {
         inputErrorMsg();
     }).catch(() => {
         console.log('Authorization校验失败，跳转登录！！！')
-        hashHistory.replace( '/login' )
+        // hashHistory.replace( '/login' )
     })
 }
 

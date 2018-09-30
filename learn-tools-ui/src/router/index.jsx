@@ -3,37 +3,84 @@
  *  router config
  */
 import React from 'react';
-import {hashHistory, IndexRoute, Redirect, Route, Router} from 'react-router';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import asyncComponent from '../utils/asyncComponent';
-import {checkToken} from './checkToken';
 
-import Index from '../app/main/Index';
+import Header from '../component/common/header'
+import Body from '../component/main/body';
+import Footer from '../component/common/footer';
+import {getToken} from "../api/environment";
+import PrivateRouter from './PrivateRouter';
 
-const Login = asyncComponent(() => import('../app/component/Login'));
-const NotFound = asyncComponent(() => import('../app/component/NotFound'));
-const Courseware = asyncComponent(() => import('../app/courseware/index'));
-const Upcourseware = asyncComponent(() => import('../app/Upcourseware/index'));
-const Menu = asyncComponent(() => import('../app/sys/menu/index'));
-const User = asyncComponent(() => import('../app/sys/user/index'));
-const Role = asyncComponent(() => import('../app/sys/role/index'));
-const Options = asyncComponent(() => import('../app/sys/options/index'));
+const Login = asyncComponent(() => import('../component/common/Login'));
+const NotFound = asyncComponent(() => import('../component/common/NotFound'));
+const Courseware = asyncComponent(() => import('../component/courseware/index'));
+const Upcourseware = asyncComponent(() => import('../component/upcourseware/index'));
+const Menu = asyncComponent(() => import('../component/system/menu/index'));
+const User = asyncComponent(() => import('../component/system/user/index'));
+const Role = asyncComponent(() => import('../component/system/role/index'));
 
 export default () => {
+    const authorization =  localStorage.getItem("auth"); // token
+    const expiryDate = localStorage.getItem("expiryDate");
+    // TODO 计算有效时间
+    if(!authorization) {
+        return (
+            <article>
+                <HashRouter>
+                    <div>
+                        <Route path={"/login"} component={Login}/>
+                        <Route component={NotFound}/>
+                    </div>
+                </HashRouter>
+            </article>
+        )
+    }
+
     return(
-        <Router history={hashHistory}>
-            <Route path={"/"} component={Index} onEnter={checkToken}>
-                <IndexRoute component={Index} />
-                <Route path={"/menu"} component={Menu} />
-                <Route path={"/user"} component={User} />
-                <Route path={"/role"} component={Role} />
-                <Route path={"/options"} component={Options} />
-                <Route path={"/courseware"} component={Courseware} />
-                <Route path={"/upcourseware"} component={Upcourseware} />
-                <Route path={"*"} component={NotFound}/>
-            </Route>
-            <Route path={"/404"} component={NotFound} />
-            <Route path={"/login"} component={Login} />
-            <Route component={NotFound} />
-        </Router>
+        <div className={"main"}>
+            <HashRouter>
+                <div>
+                    <Route component={Header}/>
+                    <div className={"body"}>
+                        <Switch>
+                            <Route path={"/"} exact component={Body} />
+                            <Route path={"/courseware"} children={() => (
+                                <Switch>
+                                    <Route exact path={"/courseware"} component={Courseware}/>
+                                    <Route component={NotFound} />
+                                </Switch>
+                            )} />
+                            <Route path={"/upcourseware"} children={() => (
+                                <Switch>
+                                    <Route exact path={"/upcourseware"} component={Upcourseware}/>
+                                    <Route component={NotFound} />
+                                </Switch>
+                            )} />
+                            <Route path={"/menu"} children={() => (
+                                <Switch>
+                                    <Route exact path={"/menu"} component={Menu}/>
+                                    <Route component={NotFound} />
+                                </Switch>
+                            )} />
+                            <Route path={"/user"} children={() => (
+                                <Switch>
+                                    <Route exact path={"/user"} component={User}/>
+                                    <Route component={NotFound} />
+                                </Switch>
+                            )} />
+                            <Route path={"/role"} children={() => (
+                                <Switch>
+                                    <Route exact path={"/role"} component={Role}/>
+                                    <Route component={NotFound} />
+                                </Switch>
+                            )} />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </div>
+                    <Footer />
+                </div>
+            </HashRouter>
+        </div>
     )
 }
